@@ -15,7 +15,7 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
          System.out.println(h.classifyHand());
         */
     
-      double runs = 10000000;
+      int runs = 10000000;
       for(int j = 0; j < runs; j++)
       {
          Deck d = new Deck();
