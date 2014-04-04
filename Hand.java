@@ -83,7 +83,7 @@ public class Hand
     * Assume orderByRank has been called
     * Returns number of pairs in hand
     */
-   public int numPairs()
+   private int numPairs()
    {
       int numPairs = 0;
       
@@ -98,26 +98,24 @@ public class Hand
       return numPairs;
    }
    
-   public boolean isThree()
+   private boolean isThree()
    {
-      for(int i = 0; i < hand.size() - 2; i++)
-      {
-         if(compareRank(i, i + 1) == 0 && compareRank(i, i + 2) == 0)
-         {
-            return true;
-         }
-      }
+      if(hand.size() < 3) 
+         return false;
+      
+      if(compareRank(0, 2) == 0 || compareRank(1,3) == 0  || compareRank(2,4) == 0)
+         return true;  
+      
       return false;
    }
    
-   public boolean isStraight()
+   private boolean isStraight()
    {
       if(hand.size() < 5)
          return false;
-      else
+      
+      for(int i = 0; i < hand.size()- 1; i++)
       {
-         for(int i = 0; i < hand.size()- 1; i++)
-         {
             if(i == 3)
             {
                if(hand.get(3).getValue() == 5 && hand.get(4).getValue() == 14)
@@ -127,46 +125,46 @@ public class Hand
             }
             if(hand.get(i+1).getValue() != hand.get(i).getValue() + 1)
                return false;
-         } 
-       }
-       return true;
+      } 
+      return true;    
    }
    
    
-   public boolean isFour()
+   private boolean isFour()
    {
-      for(int i = 0; i < hand.size() - 3; i++)
-      {
-         if(compareRank(i, i + 1) == 0 && compareRank(i, i + 2) == 0 && compareRank(i, i+3) == 0)
-         {
-            return true;
-         }
-      }
+      if(hand.size() < 4)
+         return false;
+      
+      if(compareRank(0,3) == 0 || compareRank(1,4) == 0)
+         return true;
+     
       return false;
    }
 
    
-   public boolean isFlush()
+   private boolean isFlush()
    {
       if(hand.size() < 5)
          return false;
-      else
-      {
-         if(compareSuit(0,1) && compareSuit(0,2) && compareSuit(0,3) && compareSuit(0,4))
-            return true;
-      }
+      
+      if(compareSuit(0,1) && compareSuit(0,2) && compareSuit(0,3) && compareSuit(0,4))
+         return true;
+   
       return false;
    }  
    
-   public boolean isFullHouse()
+   private boolean isFullHouse()
    {
-      if(isThree() && numPairs() == 2)
+      if(hand.get(0).getValue() == hand.get(2).getValue() && hand.get(3).getValue() == hand.get(4).getValue())
          return true;
       
+      if(hand.get(0).getValue() == hand.get(1).getValue() && hand.get(2).getValue() == hand.get(4).getValue())
+         return true;
+    
       return false;
    }
    
-   public boolean isStraightFlush()
+   private boolean isStraightFlush()
    {
       if(isStraight() && isFlush())
          return true;
@@ -174,9 +172,9 @@ public class Hand
       return false;
    }
    
-   public boolean isRoyalFlush()
+   private boolean isRoyalFlush()
    {
-      if(isStraightFlush() && hand.get(0).getValue() == 10)
+      if(hand.get(0).getValue() == 10 && isFlush())
          return true;
       
       return false;
