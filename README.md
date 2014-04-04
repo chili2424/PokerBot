@@ -15,6 +15,6 @@ large portions of the code ourselves, but instead only do minor changes/edits.
 
 HOW TO EDIT:
 Any changes that are made MUST be commented so that other users see what you did.
-You must include the date/time/author of the change and a simple discription of the code.
+You must include the date/time/author of the change and a simple description of the change.
 
 
