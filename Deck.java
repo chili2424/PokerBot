@@ -14,8 +14,27 @@ public class Deck
             deck.add(new Card(i, j));
          }
       }
+      shuffleDeck();
    }
    
+   public void shuffleDeck()
+   {
+      Card[] tempDeck; 
+      tempDeck = new Card[52];
+     
+      for(int i = 0; i < 52; i++)
+      {
+         int r = rand.nextInt(52 - i);
+         tempDeck[i] = deck.get(r);
+         deck.remove(r);
+      }
+      
+      for(int i = 0; i < 52; i++)
+      {
+         deck.add(tempDeck[i]);
+      }
+   }
+
    public Card dealCard()
    {
       Random rand = new Random();
