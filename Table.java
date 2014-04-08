@@ -64,22 +64,34 @@ public class Table
       return handDiff;
    }
    
+   public Hand bestHand(ArrayList<Card> allCards)
+   {
+      ArrayList<Hand> hands = possibleHands(allCards); 
+      int bestHandIndex = 0;
+      for(int i = 0; i < hands.size() - 1; i++)
+      {
+         if(compareHands(hands.get(bestHandIndex), hands.get(i+1)) < 0)
+            bestHandIndex = i + 1;    
+      }    
+      return hands.get(bestHandIndex);    
+   }
    
-   public ArrayList<Hand> possibleHands(ArrayList<Card> cards)
-   {  
+   public ArrayList<Hand> possibleHands(ArrayList<Card> allCards)
+   {    
       ArrayList<Hand> hands = new ArrayList<Hand>();
-      for(int i = 0; i < cards.size(); i++){
-         for(int j = i + 1; j < cards.size(); j++){
-            for(int k = j + 1; k < cards.size(); k++){ 
-               for(int l = k + 1; l < cards.size(); l++){
-                  for(int m = l + 1; m < cards.size(); m++){ 
+      for(int i = 0; i < allCards.size(); i++){
+         for(int j = i + 1; j < allCards.size(); j++){
+            for(int k = j + 1; k < allCards.size(); k++){ 
+               for(int l = k + 1; l < allCards.size(); l++){
+                  for(int m = l + 1; m < allCards.size(); m++){ 
                      Hand h = new Hand();
-                     h.addCard(cards.get(i));
-                     h.addCard(cards.get(j));
-                     h.addCard(cards.get(k));
-                     h.addCard(cards.get(l));
-                     h.addCard(cards.get(m));
+                     h.addCard(allCards.get(i));
+                     h.addCard(allCards.get(j));
+                     h.addCard(allCards.get(k));
+                     h.addCard(allCards.get(l));
+                     h.addCard(allCards.get(m));
                      hands.add(h); }}}}} 
       return hands;
    }
+  
 }

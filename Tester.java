@@ -107,6 +107,9 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
          hands.get(i).printHand();
          System.out.println(" ");
       }
+      
+      System.out.println("Best Hand: ");
+      t.bestHand(cards).printHand();
        
       
    }

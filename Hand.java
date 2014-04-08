@@ -9,7 +9,7 @@ public class Hand
    
    public void addCard(Card c)
    {
-      if(hand.size() == 7)
+      if(hand.size() == 5)
       {
          throw new RuntimeException();
       }

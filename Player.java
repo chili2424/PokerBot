@@ -1,6 +1,8 @@
+import java.util.ArrayList;
+
 public class Player
 {
-   private Hand allCards;
+   private ArrayList<Card> allCards = new ArrayList<Card>();
    private Hand bestHand; //Best 5 card-hand 
    private String name;
    private int money;
@@ -15,7 +17,7 @@ public class Player
    
    public void addToAllCards(Card c)
    {
-      allCards.addCard(c);
+      allCards.add(c);
    }
    
    public void setBestHand(Hand h)
@@ -28,7 +30,7 @@ public class Player
       return name;
    }
    
-   public Hand getAllCards()
+   public ArrayList<Card> getAllCards()
    {
       return allCards;
    }
@@ -52,4 +54,5 @@ public class Player
    {
       active = a; 
    }
-}
+   
+ }
