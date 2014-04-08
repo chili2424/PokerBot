@@ -63,4 +63,23 @@ public class Table
       
       return handDiff;
    }
+   
+   
+   public ArrayList<Hand> possibleHands(ArrayList<Card> cards)
+   {  
+      ArrayList<Hand> hands = new ArrayList<Hand>();
+      for(int i = 0; i < cards.size(); i++){
+         for(int j = i + 1; j < cards.size(); j++){
+            for(int k = j + 1; k < cards.size(); k++){ 
+               for(int l = k + 1; l < cards.size(); l++){
+                  for(int m = l + 1; m < cards.size(); m++){ 
+                     Hand h = new Hand();
+                     h.addCard(cards.get(i));
+                     h.addCard(cards.get(j));
+                     h.addCard(cards.get(k));
+                     h.addCard(cards.get(l));
+                     h.addCard(cards.get(m));
+                     hands.add(h); }}}}} 
+      return hands;
+   }
 }
