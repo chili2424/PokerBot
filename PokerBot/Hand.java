@@ -3,7 +3,9 @@ import java.util.ArrayList;
 
 public class Hand
 {
-   ArrayList<Card> hand = new ArrayList<Card>();
+   private ArrayList<Card> hand = new ArrayList<Card>();
+   private int multiplesRank1 = 0;
+   private int multiplesRank2 = 0;
    
    public void addCard(Card c)
    {
@@ -18,6 +20,8 @@ public class Hand
    public void clearHand()
    {
       hand.clear();
+      multiplesRank1 = 0;
+      multiplesRank2 = 0;
    }
    
    public Card getCard(int i)
@@ -92,7 +96,12 @@ public class Hand
          if(compareRank(i, i + 1) == 0)
          {
             numPairs++;
-            i += 1;
+            if(multiplesRank1 == 0)
+               multiplesRank1 = hand.get(i).getValue();
+            else
+               multiplesRank2 = hand.get(i).getValue();
+               
+            i++;
          }
       }
       return numPairs;
@@ -104,7 +113,10 @@ public class Hand
          return false;
       
       if(compareRank(0, 2) == 0 || compareRank(1,3) == 0  || compareRank(2,4) == 0)
-         return true;  
+      {
+         multiplesRank1 = hand.get(2).getValue();
+         return true;
+      }
       
       return false;
    }
@@ -136,7 +148,10 @@ public class Hand
          return false;
       
       if(compareRank(0,3) == 0 || compareRank(1,4) == 0)
+      {
+         multiplesRank1 = hand.get(2).getValue();
          return true;
+      }
      
       return false;
    }
@@ -156,10 +171,18 @@ public class Hand
    private boolean isFullHouse()
    {
       if(hand.get(0).getValue() == hand.get(2).getValue() && hand.get(3).getValue() == hand.get(4).getValue())
+      {
+         multiplesRank1 = hand.get(0).getValue();
+         multiplesRank2 = hand.get(3).getValue();
          return true;
+      }
       
       if(hand.get(0).getValue() == hand.get(1).getValue() && hand.get(2).getValue() == hand.get(4).getValue())
+      {
+         multiplesRank1 = hand.get(3).getValue();
+         multiplesRank2 = hand.get(0).getValue();
          return true;
+      }
     
       return false;
    }
@@ -180,7 +203,42 @@ public class Hand
       return false;
    }
    
-   public String classifyHand()
+   public int classifyHand()
+   {
+      if(isRoyalFlush())
+         return 9;
+    
+      else if(isStraightFlush())
+         return 8;
+       
+      else if(isFour())
+         return 7;
+      
+      else if(isFullHouse())
+         return 6;
+      
+      else if(isFlush())
+         return 5;
+      
+      else if(isStraight())
+         return 4;
+      
+      else if(isThree())
+         return 3;
+      
+      else if(numPairs() == 2)
+         return 2;
+      
+      else if(numPairs() == 1)
+         return 1;
+      
+      else
+         return 0;
+         
+   }
+
+   
+   public String handToString()
    {
       if(isRoyalFlush())
          return "Royal Flush";
@@ -213,13 +271,22 @@ public class Hand
          return "High Card";
          
    }
-   
-   
+     
    public void printHand()
    {
       for(int i = 0; i < hand.size(); i++)
       {
-         System.out.print(hand.get(i).toString() + " ");
+         System.out.println(hand.get(i).toString() + " ");
       }
+   }
+   
+   public int getMR1()
+   {
+      return multiplesRank1;
+   }
+   
+   public int getMR2()
+   {
+      return multiplesRank2;
    }
 }

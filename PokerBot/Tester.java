@@ -4,30 +4,40 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
    public static void main(String[] args)
    {
 
-         Hand h = new Hand();
-        
-        /* h.addCard(new Card(9,0));
-         h.addCard(new Card(10,0));
-         h.addCard(new Card(11,0));
-         h.addCard(new Card(12,0));
-         h.addCard(new Card(13,1));
+         Hand h1 = new Hand();
+         Hand h2 = new Hand();
+         Table t = new Table();
+       
+         h1.addCard(new Card(10,1));
+         h1.addCard(new Card(11,1));
+         h1.addCard(new Card(12,1));
+         h1.addCard(new Card(13,1));
+         h1.addCard(new Card(14,1));
          
-         System.out.println(h.classifyHand());
-        */
+         h2.addCard(new Card(10,1));
+         h2.addCard(new Card(11,1));
+         h2.addCard(new Card(12,1));
+         h2.addCard(new Card(13,1));
+         h2.addCard(new Card(14,1));
+         
+         System.out.println(t.compareHands(h1,h2));
+         //System.out.println(h.classifyHand());
+        /*     
     
-      double runs = 10000000;
+      double runs = 5;
       for(int j = 0; j < runs; j++)
       {
          Deck d = new Deck();
                
          for(int i = 0; i < 5; i++){
-            h.addCard(d.dealCard());
+            h1.addCard(d.dealCard());
+            h2.addCard(d.dealCard());
          }
          
          //if(h.isFlush())
            // flush++;
                   
-        String handType = h.classifyHand();
+        String handType = h.handToString();
          if(handType == "Royal Flush")
             royal++;
          else if(handType == "Straight Flush")
@@ -48,12 +58,19 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
             onePair++;
          else if(handType == "High Card")
             highCard++;
-                    
-        h.clearHand();
+         
         
-      }
+        h1.printHand();
+        System.out.println();
+        h2.printHand();
+        System.out.println(t.compareHands(h1, h2) + "\n");            
+        h1.clearHand();
+        h2.clearHand();
+        
+      }*/
       
-      System.out.println("High card error: " + (100*(highCard*100/runs - 50.1253)/50.1253));
+      
+      /*System.out.println("High card error: " + (100*(highCard*100/runs - 50.1253)/50.1253));
       System.out.println("One pair error: " + (100*(onePair*100/runs - 42.3728)/42.3728));
       System.out.println("Two pair error: " + (100*(twoPair*100/runs - 4.7619)/4.7619));
       System.out.println("Triple error: " + (100*(three*100/runs - 2.11)/2.11));
@@ -64,7 +81,7 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
       System.out.println("Four error: " + (100*(four*100/runs - .0240)/.0240));
       System.out.println("Straight flush error: " + (100*(straightFlush*100/runs - .00139)/.00139));
       System.out.println("Royal error: " + (100*(royal*100/runs - .000154)/.000154));
-      
+      */
      
       
       

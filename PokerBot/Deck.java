@@ -21,6 +21,7 @@ public class Deck
    {
       Card[] tempDeck; 
       tempDeck = new Card[52];
+      Random rand = new Random();
      
       for(int i = 0; i < 52; i++)
       {
