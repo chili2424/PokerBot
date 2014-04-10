@@ -212,7 +212,6 @@ public class Table
             n = 0;
          else
          {
-           //set pos to closet active player to dealer
            for(int i = dealer + 1; i < players.size() + dealer; i++)
            {
                if(i == 9) 

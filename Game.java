@@ -7,8 +7,8 @@ public class Game
       int bigBlind = 20, smallBlind = 10, initMoney = 1500;
       ArrayList<Player> players = new ArrayList<Player>();
       players.add(new Player("User", initMoney));
-      players.add(new Player("Alpha", initMoney));
-   //   players.add(new Player("Bravo", initMoney));
+      players.add(new AI("Alpha", initMoney));
+      players.add(new AI("Bravo", initMoney));
    //   players.add(new Player("Charlie", initMoney));
    //   players.add(new Player("Delta", initMoney));
    //   players.add(new Player("Echo", initMoney));
@@ -37,7 +37,10 @@ public class Game
          }
          else
          {
-            //AI makes decision. t.handleDecision(AI's decision)
+            
+            //AI = t.getPlayer(getCurrentBetter());
+            //AI.returnDecision(this table); 
+            //t.handleDecision(AI's decision)
             //t.handleDecision will hanlde everything that needs to be done for the current better, and 
             //moves current better onto the next active player
          
