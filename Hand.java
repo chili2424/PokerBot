@@ -7,6 +7,20 @@ public class Hand
    private int multiplesRank1 = 0;
    private int multiplesRank2 = 0;
    
+   public Hand()
+   {
+   }
+   
+   public Hand(Card c1, Card c2, Card c3, Card c4, Card c5)
+   {
+      hand.add(c1);
+      hand.add(c2);
+      hand.add(c3);
+      hand.add(c4);
+      hand.add(c5);
+      orderByRank();
+   }
+   
    public void addCard(Card c)
    {
       if(hand.size() == 5)
@@ -16,6 +30,7 @@ public class Hand
       hand.add(c);
       orderByRank();
    }
+   
    
    public void clearHand()
    {

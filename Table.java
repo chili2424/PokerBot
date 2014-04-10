@@ -2,12 +2,24 @@ import java.util.ArrayList;
 
 public class Table
 {
-   private ArrayList<Player> players = new ArrayList<Player>();
+   private ArrayList<Player> players;
    private int pot;
    private Deck deck;
    private int smallBlind;
    private int bigBlind;
    private int dealer;
+   private int highestBet;
+   private ArrayList<Card> tableCards = new ArrayList<Card>();
+   
+   public Table(ArrayList<Player> p, int sB, int bB)
+   {
+      players = p;
+      smallBlind = sB;
+      bigBlind = bB;
+      
+      deck = new Deck();
+      pot = dealer = 0;
+   }
    
    /*
     * Returns positive int if hand1 is better than hand2
@@ -64,34 +76,147 @@ public class Table
       return handDiff;
    }
    
-   public Hand bestHand(ArrayList<Card> allCards)
+   //Takes in a hand of arbitrary size
+   public void findBestHand(Player p)
    {
-      ArrayList<Hand> hands = possibleHands(allCards); 
-      int bestHandIndex = 0;
-      for(int i = 0; i < hands.size() - 1; i++)
+      int size = p.getAllCards().size();
+      Hand curHand;
+      Hand bestHand = new Hand(p.getAllCards().get(0), p.getAllCards().get(1), p.getAllCards().get(2),
+       p.getAllCards().get(3), p.getAllCards().get(4));
+       
+      if(size > 5)
       {
-         if(compareHands(hands.get(bestHandIndex), hands.get(i+1)) < 0)
-            bestHandIndex = i + 1;    
-      }    
-      return hands.get(bestHandIndex);    
+         for(int i = 0; i < size; i++)
+            for(int j = i + 1; j < size; j++)
+               for(int k = j + 1; k < size; k++)
+                  for(int l = k + 1; l < size; l++)
+                     for(int m = l + 1; m < size; m++)
+                     {
+                        curHand = new Hand(p.getAllCards().get(i), p.getAllCards().get(j), p.getAllCards().get(k),
+                         p.getAllCards().get(l), p.getAllCards().get(m));
+                         
+                      /*   System.out.println("Best: ");
+                         bestHand.printHand();
+                         System.out.println("Cur: ");
+                         curHand.printHand();  
+                         */
+                         
+                        if(compareHands(curHand, bestHand) > 0){
+                       //    System.out.println("changed");
+                           bestHand = curHand;
+                        }
+                     }
+          p.setBestHand(bestHand);
+      }
    }
    
-   public ArrayList<Hand> possibleHands(ArrayList<Card> allCards)
-   {    
-      ArrayList<Hand> hands = new ArrayList<Hand>();
-      for(int i = 0; i < allCards.size(); i++){
-         for(int j = i + 1; j < allCards.size(); j++){
-            for(int k = j + 1; k < allCards.size(); k++){ 
-               for(int l = k + 1; l < allCards.size(); l++){
-                  for(int m = l + 1; m < allCards.size(); m++){ 
-                     Hand h = new Hand();
-                     h.addCard(allCards.get(i));
-                     h.addCard(allCards.get(j));
-                     h.addCard(allCards.get(k));
-                     h.addCard(allCards.get(l));
-                     h.addCard(allCards.get(m));
-                     hands.add(h); }}}}} 
-      return hands;
+   public void dealPreFlop()
+   {
+      for(Player p : players)
+      {
+         p.setMoneyIn(0);
+         p.addToPreFlop(deck.dealCard());
+         p.addToPreFlop(deck.dealCard());     
+      }
    }
-  
+   
+   public void dealFlop()
+   {
+      Card c1 = deck.dealCard();
+      Card c2 = deck.dealCard();
+      Card c3 = deck.dealCard();
+      
+      tableCards.add(c1);
+      tableCards.add(c2);
+      tableCards.add(c3);
+      
+      for(Player p : players)
+      {
+         p.setMoneyIn(0);
+         p.addToAllCards(c1);
+         p.addToAllCards(c2);
+         p.addToAllCards(c3);
+      }
+   }
+   
+   public void dealTurn()
+   {
+      Card c1 = deck.dealCard();
+      
+      tableCards.add(c1);
+      
+      for(Player p : players)
+      {
+         p.setMoneyIn(0);
+         p.addToAllCards(c1);
+      }
+   }
+   
+   public void dealRiver()
+   {
+      dealTurn();
+   }
+      
+   public void resetTable()
+   {
+      deck = new Deck();
+      for(Player p : players)
+      {
+         p.clearCards();
+         p.setActive(true);
+      }
+      moveDealer();
+   }
+   
+   //handle side pots
+   public void handleBlinds()
+   {  
+      if(dealer == players.size() - 1)    
+      {
+         pot += players.get(0).takeMoney(smallBlind);
+         pot += players.get(1).takeMoney(bigBlind);
+      }      
+      else if(dealer == players.size() - 2)
+      {
+         pot += players.get(dealer + 1).takeMoney(smallBlind);
+         pot += players.get(0).takeMoney(bigBlind);
+      }
+      else
+      { 
+         pot += players.get(dealer + 1).takeMoney(smallBlind);
+         pot += players.get(dealer + 2).takeMoney(bigBlind);
+      }
+   }
+   
+   
+   public void moveDealer()
+   {
+      if(dealer == players.size() - 1)
+         dealer = 0;
+      else
+         dealer++;
+   }
+   
+   public int firstToAct()
+   {
+      int pos;
+      int n;
+      
+      if(tableCards.size() == 0)
+         n = 3;
+      else
+         if(players.size() == 2)
+            n = 0;
+         else
+            n = 1;
+         
+      pos = dealer + n;
+      if(pos >= players.size())
+         return pos - players.size();
+      else
+         return pos;
+   }
+   
+   
+   
 }

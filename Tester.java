@@ -1,16 +1,24 @@
-import java.util.ArrayList;
-
 public class Tester
 {
 static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFlush, royal, highCard;
    public static void main(String[] args)
    {
+         Player p = new Player();
          Table t = new Table();
-       /*  
-         Hand h1 = new Hand();
-         Hand h2 = new Hand();
+         
+         p.addToAllCards(new Card(4, 1));
+         p.addToAllCards(new Card(4, 2));
+         p.addToAllCards(new Card(4, 1));
+         p.addToAllCards(new Card(3, 1));
+         p.addToAllCards(new Card(2, 3));
+         p.addToAllCards(new Card(14, 1));
+         p.addToAllCards(new Card(5, 3));
+         
+         t.findBestHand(p);
+         System.out.println("Final: ");
+         p.getBestHand().printHand();
        
-         h1.addCard(new Card(10,1));
+        /* h1.addCard(new Card(10,1));
          h1.addCard(new Card(11,1));
          h1.addCard(new Card(12,1));
          h1.addCard(new Card(13,1));
@@ -24,7 +32,7 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
          
          System.out.println(t.compareHands(h1,h2));
          //System.out.println(h.classifyHand());
-           
+             
     
       double runs = 5;
       for(int j = 0; j < runs; j++)
@@ -87,30 +95,8 @@ static int onePair, twoPair, three, fullHouse, straight, flush, four, straightFl
      
       
       
-      
-      
-      //test posssibleHands()
-      
-      ArrayList<Card> cards = new ArrayList<Card>();
-      cards.add(new Card(7,1));
-      cards.add(new Card(6,1));
-      cards.add(new Card(5,1));
-      cards.add(new Card(4,1));
-      cards.add(new Card(3,1));
-      cards.add(new Card(2,1));
-      cards.add(new Card(8,1));
-      
-      ArrayList<Hand> hands = t.possibleHands(cards);
-      
-      for(int i = 0; i < hands.size(); i++)
-      {
-         hands.get(i).printHand();
-         System.out.println(" ");
-      }
-      
-      System.out.println("Best Hand: ");
-      t.bestHand(cards).printHand();
-       
+    
+    
       
    }
 }
