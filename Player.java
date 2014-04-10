@@ -90,6 +90,11 @@ public class Player
       active = a; 
    }
    
+   public boolean isActive()
+   {
+      return active;
+   }
+   
    public void clearCards()
    {
       allCards.clear();
@@ -100,6 +105,11 @@ public class Player
    {
       moneyIn = m;
    }  
+   
+   public int getMoneyIn()
+   {
+      return moneyIn;
+   }
    
    public void check()
    {
@@ -120,5 +130,6 @@ public class Player
    
    public int raise(int min)
    {
-      
+      return min;
+   }
 }
