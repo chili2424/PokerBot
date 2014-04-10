@@ -10,6 +10,7 @@ public class Table
    private int dealer;
    private int highestBet;
    private ArrayList<Card> tableCards = new ArrayList<Card>();
+   private int currentBetter;
    
    public Table(ArrayList<Player> p, int sB, int bB)
    {
@@ -95,16 +96,8 @@ public class Table
                         curHand = new Hand(p.getAllCards().get(i), p.getAllCards().get(j), p.getAllCards().get(k),
                          p.getAllCards().get(l), p.getAllCards().get(m));
                          
-                      /*   System.out.println("Best: ");
-                         bestHand.printHand();
-                         System.out.println("Cur: ");
-                         curHand.printHand();  
-                         */
-                         
-                        if(compareHands(curHand, bestHand) > 0){
-                       //    System.out.println("changed");
+                        if(compareHands(curHand, bestHand) > 0)
                            bestHand = curHand;
-                        }
                      }
           p.setBestHand(bestHand);
       }
@@ -118,6 +111,7 @@ public class Table
          p.addToPreFlop(deck.dealCard());
          p.addToPreFlop(deck.dealCard());     
       }
+      currentBetter = firstToAct();
    }
    
    public void dealFlop()
@@ -132,11 +126,15 @@ public class Table
       
       for(Player p : players)
       {
-         p.setMoneyIn(0);
-         p.addToAllCards(c1);
-         p.addToAllCards(c2);
-         p.addToAllCards(c3);
+         if(p.isActive())
+         {
+            p.setMoneyIn(0);
+            p.addToAllCards(c1);
+            p.addToAllCards(c2);
+            p.addToAllCards(c3);
+         }
       }
+      currentBetter = firstToAct();
    }
    
    public void dealTurn()
@@ -147,9 +145,13 @@ public class Table
       
       for(Player p : players)
       {
-         p.setMoneyIn(0);
-         p.addToAllCards(c1);
+        if(p.isActive())
+        {
+           p.setMoneyIn(0);
+           p.addToAllCards(c1);
+        }
       }
+      currentBetter = firstToAct();
    }
    
    public void dealRiver()
@@ -186,6 +188,7 @@ public class Table
          pot += players.get(dealer + 1).takeMoney(smallBlind);
          pot += players.get(dealer + 2).takeMoney(bigBlind);
       }
+      highestBet = bigBlind;
    }
    
    
@@ -200,7 +203,7 @@ public class Table
    public int firstToAct()
    {
       int pos;
-      int n;
+      int n = -10000;
       
       if(tableCards.size() == 0)
          n = 3;
@@ -208,14 +211,41 @@ public class Table
          if(players.size() == 2)
             n = 0;
          else
-            n = 1;
-         
+         {
+           //set pos to closet active player to dealer
+           for(int i = dealer + 1; i < players.size() + dealer; i++)
+           {
+               if(i == 9) 
+                  i = 0;
+               
+               if(players.get(i).isActive())
+                  return i;
+           }
+         }
+             
       pos = dealer + n;
       if(pos >= players.size())
          return pos - players.size();
       else
          return pos;
    }
+   
+   public int getCurrentBetter()
+   {
+      return currentBetter;
+   }
+   
+   public boolean isTurnOver()
+   {
+      for(Player p : players)
+      {
+         if(p.isActive() && p.getMoneyIn() != highestBet)
+            return false;
+      }
+      
+      // NOT FINISHED!!!!!!!
+   }
+      
    
    
    
