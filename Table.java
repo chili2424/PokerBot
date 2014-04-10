@@ -245,8 +245,14 @@ public class Table
       
       // NOT FINISHED!!!!!!!
    }
+   
+   public void handleDecision(Decision)
+   {
+      // if fold, set current better to not active and move current better
+      // if call, take money from current better and move current better
+      // if raise, set new highestBet, take money, and move current better
+   }
       
-   
-   
+     
    
 }
