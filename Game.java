@@ -29,7 +29,8 @@ public class Game
       System.out.println("First Better Position:");
       System.out.println(t.firstToAct());
       
-         
+      while(!t.isTurnOver())
+      {   
          if(t.getCurrentBetter() == 0)
          {
             //prompt user for decision
@@ -37,8 +38,11 @@ public class Game
          else
          {
             //AI makes decision. t.handleDecision(AI's decision)
+            //t.handleDecision will hanlde everything that needs to be done for the current better, and 
+            //moves current better onto the next active player
          
          }
+      }
       
       
       /*handle first round of bets
