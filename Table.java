@@ -116,6 +116,8 @@
    
       public void dealFlop()
       {
+         highestBet = 0;
+         
          Card c1 = deck.dealCard();
          Card c2 = deck.dealCard();
          Card c3 = deck.dealCard();
@@ -139,6 +141,8 @@
    
       public void dealTurn()
       {
+         highestBet = 0;
+         
          Card c1 = deck.dealCard();
       
          tableCards.add(c1);
@@ -317,5 +321,14 @@
       public int getPot()
       {
          return pot;
+      }
+      
+      public void printTableCards()
+      {
+         for(Card c : tableCards)
+         {
+            System.out.println(c.toString());
+          
+         }
       }
 }
