@@ -4,17 +4,18 @@ public class Game
 {
    public static void main(String[] args)
    {
-      int bigBlind = 20, smallBlind = 10, initMoney = 1500;
+      int bigBlind = 20, smallBlind = 10, initMoney = 1500, decision;
       ArrayList<Player> players = new ArrayList<Player>();
       players.add(new Player("User", initMoney));
       players.add(new AI("Alpha", initMoney));
       players.add(new AI("Bravo", initMoney));
-   //   players.add(new Player("Charlie", initMoney));
-   //   players.add(new Player("Delta", initMoney));
+      players.add(new AI("Charlie", initMoney));
+      players.add(new AI("Delta", initMoney));
    //   players.add(new Player("Echo", initMoney));
    //   players.add(new Player("FoxTrot", initMoney));
    //   players.add(new Player("Golf", initMoney));
    //   players.add(new Player("Hotel", initMoney));
+      AI bot;
       
       Table t = new Table(players, smallBlind, bigBlind); 
       t.handleBlinds();
@@ -29,21 +30,42 @@ public class Game
       System.out.println("First Better Position:");
       System.out.println(t.firstToAct());
       
+      
       while(!t.isTurnOver())
       {   
-         if(t.getCurrentBetter() == 0)
-         {
-            //prompt user for decision
-         }
-         else
+         if(t.getCurPlayer() == 0)
          {
             
-            //AI = t.getPlayer(getCurrentBetter());
-            //AI.returnDecision(this table); 
-            //t.handleDecision(AI's decision)
-            //t.handleDecision will hanlde everything that needs to be done for the current better, and 
-            //moves current better onto the next active player
-         
+            System.out.println(" ");
+
+            
+            System.out.println("User money in: " + t.getPlayer(0).getMoneyIn());
+            System.out.println("User's money: " + t.getPlayer(0).getMoney());
+
+            
+            System.out.println("User decision: " + (t.getHighestBet() - t.getPlayer(0).getMoneyIn()));
+            t.handleDecision(t.getHighestBet() - t.getPlayer(0).getMoneyIn());
+            
+            
+           
+                        
+            
+
+
+         }
+         else
+         {    
+             
+             System.out.println(" ");
+             bot = (AI)t.getPlayer(t.getCurPlayer());
+             decision = bot.makeDecision(t);
+             t.handleDecision(decision);
+             
+             System.out.println(bot.getName() + " decision: " + decision);
+             System.out.println("Money: " + bot.getMoney());
+             
+             System.out.println("Pot size: " +  t.getPot());
+
          }
       }
       

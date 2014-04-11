@@ -5,7 +5,13 @@ public class AI extends Player
       super(name, m);
    }   
 
-
-//meaningless comment
+   public int makeDecision(Table t)
+   {
+       System.out.println("Money In: " + getMoneyIn());
+      //for now, return call
+      return t.getHighestBet() - getMoneyIn();
+    
+  
+   }
 
 }
