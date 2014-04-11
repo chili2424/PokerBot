@@ -108,7 +108,6 @@
       {
          for(Player p : players)
          {
-            p.setMoneyIn(0);
             p.addToPreFlop(deck.dealCard());
             p.addToPreFlop(deck.dealCard());     
          }
@@ -291,12 +290,14 @@
          }
          else if(decision > 0)
          {
-            System.out.println("decision: " + decision);
+            
+
             pot += players.get(curPlayer).takeMoney(decision);
+            players.get(curPlayer).setMoneyIn(players.get(curPlayer).getMoneyIn() + decision);
             
-            System.out.println(players.get(curPlayer).getMoney());
-            
-            highestBet = decision - players.get(curPlayer).getMoneyIn();
+           
+            highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
+           
             players.get(curPlayer).setMoneyIn(highestBet);
          }
          moveCurPlayer();
