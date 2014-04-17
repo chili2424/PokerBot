@@ -3,7 +3,7 @@
    public class Table
    {
       private ArrayList<Player> players;
-      private int pot;
+      private ArrayList<Pot> pots;
       private Deck deck;
       private int smallBlind;
       private int bigBlind;
@@ -20,7 +20,8 @@
          bigBlind = bB;
       
          deck = new Deck();
-         pot = dealer = 0;
+         pots = new ArrayList<Pot>();
+         dealer = 0;
          activeCount = players.size();
       }
    
@@ -175,17 +176,20 @@
             p.clearCards();
             p.setActive(true);
          }
-         moveDealer();
+        // moveDealer();
          activeCount = players.size();
+         tableCards.clear();
+         pots.clear();
       }
    
-   //handle side pots
+   //handle not having enough for blinds
       public void handleBlinds()
       {  
+         int sB, bB;
          if(dealer == players.size() - 1)    
          {
-            pot += players.get(0).takeMoney(smallBlind);
-            pot += players.get(1).takeMoney(bigBlind);
+            pot += players.get(sB = 0).takeMoney(smallBlind);
+            pot += players.get(bB = 1).takeMoney(bigBlind);
             
             players.get(0).setMoneyIn(smallBlind);
             players.get(1).setMoneyIn(bigBlind);
@@ -193,21 +197,22 @@
          }      
          else if(dealer == players.size() - 2)
          {
-            pot += players.get(dealer + 1).takeMoney(smallBlind);
-            pot += players.get(0).takeMoney(bigBlind);
+            pot += players.get(sB = dealer + 1).takeMoney(smallBlind);
+            pot += players.get(bB = 0).takeMoney(bigBlind);
             
             players.get(dealer + 1).setMoneyIn(smallBlind);
             players.get(0).setMoneyIn(bigBlind);
          }
          else
          { 
-            pot += players.get(dealer + 1).takeMoney(smallBlind);
-            pot += players.get(dealer + 2).takeMoney(bigBlind);
+            pot += players.get(sB = dealer + 1).takeMoney(smallBlind);
+            pot += players.get(bB = dealer + 2).takeMoney(bigBlind);
             
             players.get(dealer + 1).setMoneyIn(smallBlind);
             players.get(dealer + 2).setMoneyIn(bigBlind);
          }
          highestBet = bigBlind;
+         pots.add(new Pot(bigBlind, bigBlind + smallBlind, bB));
       }
    
    
@@ -221,8 +226,65 @@
    
       public int firstToAct()
       {
+        if(tableCards.size() == 0 && players.size() > 2)
+        {
+            //first to act is 3 after dealer
+            if(dealer == players.size() - 1)
+               return 2;
+            
+            if(dealer == players.size() - 2)
+               return 1;
+               
+            if(dealer == players.size() - 3)
+               return 0;
+            
+            return dealer + 3;     
+        }
+        
+        if(tableCards.size() == 0 && players.size() == 2)
+        {
+            if(dealer == 0)
+               return 1;
+            
+            if(dealer == 1)
+               return 0;
+        }
+        
+        
+        if(tableCards.size() > 0 && players.size() > 2)
+        {
+            //first to act is 3 after dealer
+               for(int i = dealer + 1; i <= players.size() + dealer; i++)
+               {
+                  if(i == players.size()) 
+                     i = 0;
+               
+                  if(players.get(i).isActive())
+                     return i;
+               }
+    
+        }
+        
+        
+        if(tableCards.size() > 0 && players.size() == 2)
+        {
+            //first to act is 3 after dealer
+            return dealer;     
+        }
+        
+        return -1;
+
+        
+        
+        
+        
+        
+        
+        
+        
+         /*
          int pos;
-         int n = -10000;
+         int n = -1;
       
          if(tableCards.size() == 0)
             n = 3;
@@ -245,7 +307,7 @@
          if(pos >= players.size())
             return pos - players.size();
          else
-            return pos;
+            return pos;*/
       }
    
       public int getCurPlayer()
@@ -255,11 +317,6 @@
    
       public boolean isTurnOver()
       {
-         //if(tableCards.size() == 0 && (dealer < players.size() - 2 && curPlayer == dealer + 2 || dealer >= players.size() - 2 && 
-         //curPlayer == dealer + 2 - players.size()) && highestBet == bigBlind)
-         //{
-           // return false;
-         //}
          for(Player p : players)
          {
             if(p.isActive() && p.getMoneyIn() != highestBet)
@@ -293,26 +350,64 @@
       //-1 means fold, 0 means check, a positive number means player wants to bet that amount
       public void handleDecision(int decision)
       {
-         if(decision == -1)
+         int moneyTaken;
+         
+         if(decision < 0)
          {
             players.get(curPlayer).setActive(false);
             activeCount--;
          }
          else if(decision > 0)
          {
+            //handle betting less than highest bet
+            //if decision < highest bet, assume that player is going all in
+            if(pots.size() > 1)
+               adjustPots();
             
-
-            pot += players.get(curPlayer).takeMoney(decision);
-            players.get(curPlayer).setMoneyIn(players.get(curPlayer).getMoneyIn() + decision);
+            moneyTaken = players.get(curPlayer).takeMoney(decision);
+            pot += moneyTaken; // deal with this
+            players.get(curPlayer).setMoneyIn(players.get(curPlayer).getMoneyIn() + moneyTaken);
             
-           
             highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
-           
             players.get(curPlayer).setMoneyIn(highestBet);
+            
+            if(decision < highestBet - players.get(curPlayer).getMoneyIn())
+            {
+               if(pots.get(pots.size() - 1).checkAmount(curPlayer) != 0)
+               {
+                  createSidePot();
+                  pots.get(pots.size() - 1).setLimit(decision);
+               }
+            }
          }
+         
          moveCurPlayer();
       }
       
+      public void createSidePot()
+      {
+         Pot p = new Pot();
+         pots.add(p);
+         p.setInelligible(curPlayer);
+      }
+      
+      public void adjustPots()
+      {
+         int sum = 0;
+         for(int i = 0; i < pots.size(); i++)
+            sum += pots.get(i).getLimit();
+            
+         if(players.get(curPlayer).getMoneyIn() > sum)
+         {
+            for(i = 0; i < pots.size(); i++)
+            {
+               if(pots.get(i).checkAmount(curPlayer) > pots.get(i).getLimit())
+               {
+                  pots.get(i+1).addAmount(curPlayer, pots.get(i).setAmount(curPlayer));//setAmount changes amount in pot i, returns the difference
+               }
+            }
+         }
+      }
       
       public int getHighestBet()
       {
@@ -341,5 +436,22 @@
       public int activeCount()
       {
          return activeCount;
+      }
+      
+      public void removePlayers()
+      {
+         for(int i = 0; i < players.size(); i++)
+         {
+            if(players.get(i).getMoney() == 0)
+            {
+               players.remove(i);
+               i = -1;
+            }
+         }
+      }
+      
+      public int getDealer()
+      {
+         return dealer;
       }
 }

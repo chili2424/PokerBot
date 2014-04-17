@@ -11,8 +11,8 @@ public class AI extends Player
    {
       Random rand = new Random();
       int num = rand.nextInt(4);
-      //if(num > 0)
-        // return t.getHighestBet() - getMoneyIn();
+      if(num > 0)
+        return t.getHighestBet() - getMoneyIn();
       
       return -1;
     

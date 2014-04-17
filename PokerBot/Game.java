@@ -8,7 +8,7 @@
    
       public static void main(String[] args)
       {
-         int bigBlind = 20, smallBlind = 10, initMoney = 1500;
+         int bigBlind = 20, smallBlind = 10, initMoney = 200;
          ArrayList<Player> players = new ArrayList<Player>();
          players.add(new Player("User", initMoney));
          players.add(new AI("Alpha", initMoney));
@@ -25,14 +25,10 @@
          while(players.size() > 1)
          {
             System.out.println("\nNew Hand\n");
+            System.out.println("Dealer: " + t.getPlayer(t.getDealer()).getName());
             t.handleBlinds();
             t.dealPreFlop();
-         
-         
-         
-            System.out.println("PreFlop:");
-            players.get(0).getPreFlop().printHand();
-            
+               
          
             runTurn(t);
          
@@ -74,6 +70,19 @@
             System.out.println("The winning hand is: ");
             winner.getBestHand().printHand();
             winner.addMoney(t.getPot());
+           
+            if(t.getPlayer(t.getDealer()).getMoney() > 0)
+               t.moveDealer();
+            
+            t.removePlayers();
+            System.out.println("Still Active: ");
+            for(Player p: players)
+            {
+               System.out.println(p.getName());
+               System.out.println(p.getMoney());
+
+            }
+            //go through and determine who wins pots
             t.resetTable();
          }
       }
@@ -88,7 +97,7 @@
       
          while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
          {   
-            if(t.getCurPlayer() == 0)
+            if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
             {
             
                System.out.println(" ");
@@ -108,7 +117,7 @@
                t.handleDecision(decision);
             
             }
-            else
+            else if(t.getPlayer(t.getCurPlayer()).getName() != "User" && t.getPlayer(t.getCurPlayer()).getMoney() > 0)
             {    
              
                System.out.println(" ");
@@ -128,6 +137,8 @@
                System.out.println("Pot size: " +  t.getPot());
             
             }
+            else
+               t.moveCurPlayer();
          
             numPlayed++;
          }
