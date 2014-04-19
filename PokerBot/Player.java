@@ -9,6 +9,7 @@ public class Player
    private int money;
    private boolean active;
    private int moneyIn;
+   private int potContribution;
    
    public Player(){}
    
@@ -132,5 +133,30 @@ public class Player
    public int raise(int min)
    {
       return min;
+   }
+   
+   public int getPotCont()
+   {
+      return potContribution;
+   }
+   
+   public void addToPotCont(int n)
+   {
+      potContribution += n;
+   }
+   
+   public int takeFromPotCont(int n)
+   {
+      if(n > potContribution)
+      {
+         int temp = potContribution;
+         potContribution = 0;
+         return temp;
+      }
+      else
+      {
+         potContribution -= n;
+         return n;
+      }
    }
 }

@@ -3,7 +3,6 @@
    public class Table
    {
       private ArrayList<Player> players;
-      private ArrayList<Pot> pots;
       private Deck deck;
       private int smallBlind;
       private int bigBlind;
@@ -12,6 +11,7 @@
       private ArrayList<Card> tableCards = new ArrayList<Card>();
       private int curPlayer;
       private int activeCount;
+      private int pot;
    
       public Table(ArrayList<Player> p, int sB, int bB)
       {
@@ -20,7 +20,6 @@
          bigBlind = bB;
       
          deck = new Deck();
-         pots = new ArrayList<Pot>();
          dealer = 0;
          activeCount = players.size();
       }
@@ -111,7 +110,8 @@
          for(Player p : players)
          {
             p.addToPreFlop(deck.dealCard());
-            p.addToPreFlop(deck.dealCard());     
+            p.addToPreFlop(deck.dealCard());  
+            p.addToPotCont(p.getMoneyIn());   
          }
          curPlayer = firstToAct();
       }
@@ -131,7 +131,8 @@
          for(Player p : players)
          {
             if(p.isActive())
-            {
+            {  
+               p.addToPotCont(p.getMoneyIn());   
                p.setMoneyIn(0);
                p.addToAllCards(c1);
                p.addToAllCards(c2);
@@ -152,7 +153,8 @@
          for(Player p : players)
          {
             if(p.isActive())
-            {
+            { 
+               p.addToPotCont(p.getMoneyIn());   
                p.setMoneyIn(0);
                p.addToAllCards(c1);
                findBestHand(p);
@@ -179,7 +181,6 @@
         // moveDealer();
          activeCount = players.size();
          tableCards.clear();
-         pots.clear();
       }
    
    //handle not having enough for blinds
@@ -212,7 +213,6 @@
             players.get(dealer + 2).setMoneyIn(bigBlind);
          }
          highestBet = bigBlind;
-         pots.add(new Pot(bigBlind, bigBlind + smallBlind, bB));
       }
    
    
@@ -274,40 +274,6 @@
         
         return -1;
 
-        
-        
-        
-        
-        
-        
-        
-        
-         /*
-         int pos;
-         int n = -1;
-      
-         if(tableCards.size() == 0)
-            n = 3;
-         else
-            if(players.size() == 2)
-               n = 0;
-            else
-            {
-               for(int i = dealer + 1; i <= players.size() + dealer; i++)
-               {
-                  if(i == players.size()) 
-                     i = 0;
-               
-                  if(players.get(i).isActive())
-                     return i;
-               }
-            }
-             
-         pos = dealer + n;
-         if(pos >= players.size())
-            return pos - players.size();
-         else
-            return pos;*/
       }
    
       public int getCurPlayer()
@@ -361,8 +327,6 @@
          {
             //handle betting less than highest bet
             //if decision < highest bet, assume that player is going all in
-            if(pots.size() > 1)
-               adjustPots();
             
             moneyTaken = players.get(curPlayer).takeMoney(decision);
             pot += moneyTaken; // deal with this
@@ -370,45 +334,11 @@
             
             highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
             players.get(curPlayer).setMoneyIn(highestBet);
-            
-            if(decision < highestBet - players.get(curPlayer).getMoneyIn())
-            {
-               if(pots.get(pots.size() - 1).checkAmount(curPlayer) != 0)
-               {
-                  createSidePot();
-                  pots.get(pots.size() - 1).setLimit(decision);
-               }
-            }
-         }
-         
+         }           
          moveCurPlayer();
       }
       
-      public void createSidePot()
-      {
-         Pot p = new Pot();
-         pots.add(p);
-         p.setInelligible(curPlayer);
-      }
-      
-      public void adjustPots()
-      {
-         int sum = 0;
-         for(int i = 0; i < pots.size(); i++)
-            sum += pots.get(i).getLimit();
-            
-         if(players.get(curPlayer).getMoneyIn() > sum)
-         {
-            for(i = 0; i < pots.size(); i++)
-            {
-               if(pots.get(i).checkAmount(curPlayer) > pots.get(i).getLimit())
-               {
-                  pots.get(i+1).addAmount(curPlayer, pots.get(i).setAmount(curPlayer));//setAmount changes amount in pot i, returns the difference
-               }
-            }
-         }
-      }
-      
+
       public int getHighestBet()
       {
          return highestBet;
@@ -454,4 +384,54 @@
       {
          return dealer;
       }
+      
+      public ArrayList<Player> sortPlayersByHands()
+      {
+         ArrayList<Player> sortedP = new ArrayList<Player>();
+         Player p;
+         
+         Player bestPlayer = players.get(0);
+         
+         for(int i = 0; i < players.size(); i++)
+         {
+            for(int j = 1; j < players.size(); j++)
+               if(!sortedP.contains(players.get(i))  &&  compareHands(players.get(i).getBestHand(), bestPlayer.getBestHand()) > 0 &&
+               players.get(i).isActive()) 
+                  bestPlayer = players.get(i); 
+               else if(!sortedP.contains(players.get(i))  &&  compareHands(players.get(i).getBestHand(), bestPlayer.getBestHand()) == 0 &&
+               players.get(i).isActive()) 
+                  if(players.get(i).getPotCont() > bestPlayer.getPotCont())
+                     bestPlayer = players.get(i);
+                     
+            sortedP.add(bestPlayer);
+            bestPlayer = players.get(0);
+         }    
+         for(int i = 0; i < players.size(); i++)
+         {
+            if(!players.get(i).isActive())
+            {
+               sortedP.add(players.get(i));
+            }
+         }
+               
+         return sortedP; 
+      }
+      
+      
+      public void handleWinners()
+      {
+         ArrayList<Player> sortedP = sortPlayersByHands();
+         
+         for(int i = 0; i < sortedP.size(); i++)
+         {
+            for(Player p : players)
+            {
+               sortedP.get(i).addMoney(p.takeFromPotCont(sortedP.get(i).getPotCont()));
+            }
+         } 
+      }
+      
+      
+      
+      
 }

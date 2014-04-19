@@ -50,7 +50,7 @@
          
             runTurn(t);
             
-            Player winner = t.getPlayer(t.getCurPlayer());
+        /*    Player winner = t.getPlayer(t.getCurPlayer());
             //Handle winner, allocate the monies.
             //NEED TO IMPLEMENT TIE LATER.
             if(t.activeCount() > 1)
@@ -72,9 +72,9 @@
             winner.addMoney(t.getPot());
            
             if(t.getPlayer(t.getDealer()).getMoney() > 0)
-               t.moveDealer();
+               t.moveDealer(); */
             
-            t.removePlayers();
+         /*   t.removePlayers();
             System.out.println("Still Active: ");
             for(Player p: players)
             {
@@ -82,7 +82,8 @@
                System.out.println(p.getMoney());
 
             }
-            //go through and determine who wins pots
+         */  
+            t.removePlayers()
             t.resetTable();
          }
       }
