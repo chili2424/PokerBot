@@ -7,7 +7,7 @@ public class Player
    private Hand preFlop = new Hand(); 
    private String name;
    private int money;
-   private boolean active;
+   private boolean active = true;
    private int moneyIn;
    private int potContribution;
    
@@ -112,29 +112,7 @@ public class Player
    {
       return moneyIn;
    }
-   
-   public void check()
-   {
-      System.out.println(name + " checks.");
-   }
-   
-   public void fold()
-   {
-      setActive(false);
-      System.out.println(name + "folds.");
-   }
-   
-   public int call(int max)
-   {
-      System.out.println(name + "calls.");
-      return takeMoney(max - moneyIn);
-   }
-   
-   public int raise(int min)
-   {
-      return min;
-   }
-   
+      
    public int getPotCont()
    {
       return potContribution;
@@ -159,4 +137,10 @@ public class Player
          return n;
       }
    }
+   
+   public void setPotCont(int n)
+   {
+      potContribution = n;
+   }
+  
 }

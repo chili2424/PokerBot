@@ -385,52 +385,123 @@
          return dealer;
       }
       
-      public ArrayList<Player> sortPlayersByHands()
+      public int[][] getSortedPlayers()
       {
-         ArrayList<Player> sortedP = new ArrayList<Player>();
-         Player p;
-         
-         Player bestPlayer = players.get(0);
+         //sort players by best hand, descending. If ties, sort players in columns by ascending contribution.
+         //int in array is index of player 
+         int[][] sortedP = new int[players.size()][players.size()];
          
          for(int i = 0; i < players.size(); i++)
+            for(int j = 0; j < players.size(); j++)
+               sortedP[i][j] = -100;
+
+             
+         //once a player's position in sortedP is set, add their index to this array list for checking purposes
+         ArrayList<Integer> beenSorted = new ArrayList<Integer>();
+         
+         int curBestPlayer;
+         ArrayList<Integer> foldedPlayers = new ArrayList<Integer>();
+         ArrayList<Integer> tiedPlayers = new ArrayList<Integer>();
+         int initBP;
+         int totalTies = 0;
+         
+         for(int i = 0; i < players.size() - foldedPlayers.size() - totalTies; i++)
          {
-            for(int j = 1; j < players.size(); j++)
-               if(!sortedP.contains(players.get(i))  &&  compareHands(players.get(i).getBestHand(), bestPlayer.getBestHand()) > 0 &&
-               players.get(i).isActive()) 
-                  bestPlayer = players.get(i); 
-               else if(!sortedP.contains(players.get(i))  &&  compareHands(players.get(i).getBestHand(), bestPlayer.getBestHand()) == 0 &&
-               players.get(i).isActive()) 
-                  if(players.get(i).getPotCont() > bestPlayer.getPotCont())
-                     bestPlayer = players.get(i);
-                     
-            sortedP.add(bestPlayer);
-            bestPlayer = players.get(0);
-         }    
-         for(int i = 0; i < players.size(); i++)
-         {
-            if(!players.get(i).isActive())
+            //set curBestlayer to someone who hasn't been sorted
+            curBestPlayer = 0;
+            while(beenSorted.contains(curBestPlayer))
+               curBestPlayer++;
+            
+            System.out.println("i iteteration: " + i + " Cur best player: " + curBestPlayer);
+            //check if cur best player is active. if he is, add him to the end of the array. 
+            if(!players.get(curBestPlayer).isActive())
             {
-               sortedP.add(players.get(i));
+               foldedPlayers.add(curBestPlayer);
+               beenSorted.add(curBestPlayer);
+               i--;
+               continue;
             }
-         }
+            
+                  
+            for(int j = 0; j < players.size(); j++)
+            {
+               //don't bother comparing cur best player to itself or anyone who's been sorted already  
+               if(j == curBestPlayer || beenSorted.contains(j)) 
+                  continue;
                
-         return sortedP; 
-      }
-      
-      
-      public void handleWinners()
-      {
-         ArrayList<Player> sortedP = sortPlayersByHands();
+               else if(!players.get(j).isActive())
+               {
+                  System.out.println("Folded: " + j);
+                  foldedPlayers.add(j);
+                  beenSorted.add(j);
+                  continue;
+               }
+                 
+               //if player has better hand than curr best player, he's the new cur best player
+               else if( compareHands(players.get(j).getBestHand(), players.get(curBestPlayer).getBestHand()) > 0 )
+               {
+                  curBestPlayer = j;
+                  tiedPlayers.clear();
+               }
+               
+               else if( compareHands(players.get(j).getBestHand(), players.get(curBestPlayer).getBestHand()) == 0 )
+               {
+                  tiedPlayers.add(j);
+                  tiedPlayers.add(curBestPlayer);
+                  totalTies++;
+               }    
+             }     
+             
+             //if people tied this loop through, then sort them all by contribution, ascending and add to row
+             if(tiedPlayers.size() > 0)
+             {
+                    
+               for(int q = 0; q < tiedPlayers.size(); q++)
+               {
+                  for(int s = tiedPlayers.size() - 1; s > q; s--)
+                  {
+                     if(players.get(tiedPlayers.get(s)).getPotCont() < players.get(tiedPlayers.get(q)).getPotCont())
+                     {
+                        int p = tiedPlayers.get(s);
+                        tiedPlayers.set(s, tiedPlayers.get(q));
+                        tiedPlayers.set(q, p);
+                     }
+                  }
+               }
+                          
+                 
+               for(int z = 0; z < tiedPlayers.size(); z++)
+               {
+                  sortedP[i][z] = tiedPlayers.get(z);
+                  beenSorted.add(tiedPlayers.get(z));
+               } 
+                                                                          
+               tiedPlayers.clear();
+             }
+             else
+             {
+               sortedP[i][0] =  curBestPlayer;
+               beenSorted.add(curBestPlayer);  
+               System.out.println(curBestPlayer + " added to position " + i);
+             } 
+                                       
+         }
          
-         for(int i = 0; i < sortedP.size(); i++)
+         //add folded players to end
+         int startPoint =  players.size() - foldedPlayers.size() - totalTies;
+         while(foldedPlayers.size() > 0)
          {
-            for(Player p : players)
-            {
-               sortedP.get(i).addMoney(p.takeFromPotCont(sortedP.get(i).getPotCont()));
-            }
-         } 
+            sortedP[startPoint][0] = foldedPlayers.get(0);
+            startPoint++;
+            foldedPlayers.remove(0);
+         }
+
+         return sortedP;
+               
       }
       
+      
+            
       
       
       
