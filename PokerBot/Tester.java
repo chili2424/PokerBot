@@ -12,8 +12,9 @@ public class Tester
          
       
          
-         Hand h0 = new Hand(new Card(1,1), new Card(2,3), new Card(3, 2), new Card(4,1), new Card(5,2));
-         Hand h1 = new Hand(new Card(1,1), new Card(2,3), new Card(3, 2), new Card(4,1), new Card(5,2));
+         Hand h0 = new Hand(new Card(14,1), new Card(13,3), new Card(10, 2), new Card(6,1), new Card(6,2));
+         Hand h1 = new Hand(new Card(14,1), new Card(13,3), new Card(10, 2), new Card(6,1), new Card(6,2));
+        // Hand h1 = new Hand(new Card(1,1), new Card(2,3), new Card(3, 2), new Card(4,1), new Card(5,2));
          Hand h2 = new Hand(new Card(5,1), new Card(2,3), new Card(5, 2), new Card(5,3), new Card(10,4));
          Hand h3 = new Hand(new Card(7,1), new Card(7,3), new Card(7, 2), new Card(5,3), new Card(10,4));
          
@@ -22,11 +23,13 @@ public class Tester
          p2.setBestHand(h2);
          p3.setBestHand(h3);
          
-         p0.setPotCont(10);
+         p0.setPotCont(100);
          p1.setPotCont(80);
+         p2.setPotCont(20);
+         p3.setPotCont(20);
          
-         p0.setActive(false);
-         p2.setActive(false);
+         //p0.setActive(false);
+         //p2.setActive(false);
        
          
          ArrayList<Player> players = new ArrayList<Player>();
@@ -40,13 +43,16 @@ public class Tester
        
         Table t = new Table(players, 0, 0);
         
-        int[][] sortedP = t.getSortedPlayers();
         
+
+        ArrayList<ArrayList<Integer>> sortedP = t.getSortedPlayers();
+        t.handleWinners();
+        
+       System.out.println(""); 
         for(int i = 0; i < 4; i++)
         {
-            for(int j = 0; j < 4; j++)
-               System.out.print(sortedP[i][j] + " ");
-            System.out.println();
+            System.out.println(t.getPlayer(i).getMoney());
+            
         }
          
         

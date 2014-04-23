@@ -12,12 +12,13 @@
       private int curPlayer;
       private int activeCount;
       private int pot;
+      private int highestRaise;
    
       public Table(ArrayList<Player> p, int sB, int bB)
       {
          players = p;
          smallBlind = sB;
-         bigBlind = bB;
+         bigBlind = highestRaise = bB;
       
          deck = new Deck();
          dealer = 0;
@@ -61,13 +62,16 @@
                   {
                      int h1Kicker = 0;
                      int h2Kicker = 0;
-                     for(int i = 0; i < 5; i = i + 2)
+                     for(int i = 0; i < 5; i++)
                      {  
                         if(h1.getCard(i).getValue() != h1.getMR1() && h1.getCard(i).getValue() != h1.getMR2())
                            h1Kicker = h1.getCard(i).getValue();
                      
                         if(h2.getCard(i).getValue() != h2.getMR1() && h2.getCard(i).getValue() != h2.getMR2())
                            h2Kicker = h2.getCard(i).getValue();
+                           
+                        if(h1Kicker != h2Kicker)
+                           break;
                      }              
                      handDiff = h1Kicker - h2Kicker;
                   }      
@@ -110,8 +114,7 @@
          for(Player p : players)
          {
             p.addToPreFlop(deck.dealCard());
-            p.addToPreFlop(deck.dealCard());  
-            p.addToPotCont(p.getMoneyIn());   
+            p.addToPreFlop(deck.dealCard());   
          }
          curPlayer = firstToAct();
       }
@@ -119,25 +122,25 @@
       public void dealFlop()
       {
          highestBet = 0;
+         highestRaise = bigBlind;
          
          Card c1 = deck.dealCard();
          Card c2 = deck.dealCard();
          Card c3 = deck.dealCard();
-      
+        
          tableCards.add(c1);
          tableCards.add(c2);
          tableCards.add(c3);
       
          for(Player p : players)
          {
-            if(p.isActive())
-            {  
+             
                p.addToPotCont(p.getMoneyIn());   
                p.setMoneyIn(0);
                p.addToAllCards(c1);
                p.addToAllCards(c2);
                p.addToAllCards(c3);
-            }
+            
          }
          curPlayer = firstToAct();
       }
@@ -145,6 +148,7 @@
       public void dealTurn()
       {
          highestBet = 0;
+         highestRaise = bigBlind;
          
          Card c1 = deck.dealCard();
       
@@ -152,13 +156,12 @@
       
          for(Player p : players)
          {
-            if(p.isActive())
-            { 
+             
                p.addToPotCont(p.getMoneyIn());   
                p.setMoneyIn(0);
                p.addToAllCards(c1);
                findBestHand(p);
-            }
+         
          }
          curPlayer = firstToAct();
       }
@@ -178,9 +181,10 @@
             p.clearCards();
             p.setActive(true);
          }
-        // moveDealer();
+         moveDealer();
          activeCount = players.size();
          tableCards.clear();
+         highestRaise = bigBlind;
       }
    
    //handle not having enough for blinds
@@ -192,8 +196,8 @@
             pot += players.get(sB = 0).takeMoney(smallBlind);
             pot += players.get(bB = 1).takeMoney(bigBlind);
             
-            players.get(0).setMoneyIn(smallBlind);
-            players.get(1).setMoneyIn(bigBlind);
+            //players.get(0).setMoneyIn(smallBlind);
+            //players.get(1).setMoneyIn(bigBlind);
             
          }      
          else if(dealer == players.size() - 2)
@@ -201,16 +205,16 @@
             pot += players.get(sB = dealer + 1).takeMoney(smallBlind);
             pot += players.get(bB = 0).takeMoney(bigBlind);
             
-            players.get(dealer + 1).setMoneyIn(smallBlind);
-            players.get(0).setMoneyIn(bigBlind);
+            //players.get(dealer + 1).setMoneyIn(smallBlind);
+            //players.get(0).setMoneyIn(bigBlind);
          }
          else
          { 
             pot += players.get(sB = dealer + 1).takeMoney(smallBlind);
             pot += players.get(bB = dealer + 2).takeMoney(bigBlind);
             
-            players.get(dealer + 1).setMoneyIn(smallBlind);
-            players.get(dealer + 2).setMoneyIn(bigBlind);
+           // players.get(dealer + 1).setMoneyIn(smallBlind);
+            //players.get(dealer + 2).setMoneyIn(bigBlind);
          }
          highestBet = bigBlind;
       }
@@ -226,8 +230,8 @@
    
       public int firstToAct()
       {
-        if(tableCards.size() == 0 && players.size() > 2)
-        {
+         if(tableCards.size() == 0 && players.size() > 2)
+         {
             //first to act is 3 after dealer
             if(dealer == players.size() - 1)
                return 2;
@@ -239,41 +243,41 @@
                return 0;
             
             return dealer + 3;     
-        }
+         }
         
-        if(tableCards.size() == 0 && players.size() == 2)
-        {
+         if(tableCards.size() == 0 && players.size() == 2)
+         {
             if(dealer == 0)
                return 1;
             
             if(dealer == 1)
                return 0;
-        }
+         }
         
         
-        if(tableCards.size() > 0 && players.size() > 2)
-        {
+         if(tableCards.size() > 0 && players.size() > 2)
+         {
             //first to act is 3 after dealer
-               for(int i = dealer + 1; i <= players.size() + dealer; i++)
-               {
-                  if(i == players.size()) 
-                     i = 0;
+            for(int i = dealer + 1; i <= players.size() + dealer; i++)
+            {
+               if(i == players.size()) 
+                  i = 0;
                
-                  if(players.get(i).isActive())
-                     return i;
-               }
-    
-        }
+               if(players.get(i).isActive())
+                  return i;
+            }
+         
+         }
         
         
-        if(tableCards.size() > 0 && players.size() == 2)
-        {
+         if(tableCards.size() > 0 && players.size() == 2)
+         {
             //first to act is 3 after dealer
             return dealer;     
-        }
+         }
         
-        return -1;
-
+         return -1;
+      
       }
    
       public int getCurPlayer()
@@ -285,7 +289,8 @@
       {
          for(Player p : players)
          {
-            if(p.isActive() && p.getMoneyIn() != highestBet)
+            
+            if(p.isActive() && p.getMoneyIn() != highestBet && p.getMoney() != 0)
                return false;
          }
          return true;
@@ -316,7 +321,7 @@
       //-1 means fold, 0 means check, a positive number means player wants to bet that amount
       public void handleDecision(int decision)
       {
-         int moneyTaken;
+         //int moneyTaken;
          
          if(decision < 0)
          {
@@ -325,20 +330,34 @@
          }
          else if(decision > 0)
          {
-            //handle betting less than highest bet
+           //handle betting less than highest bet
             //if decision < highest bet, assume that player is going all in
             
-            moneyTaken = players.get(curPlayer).takeMoney(decision);
-            pot += moneyTaken; // deal with this
-            players.get(curPlayer).setMoneyIn(players.get(curPlayer).getMoneyIn() + moneyTaken);
+            pot += players.get(curPlayer).takeMoney(decision);
+            //pot += moneyTaken; // deal with this
             
-            highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
-            players.get(curPlayer).setMoneyIn(highestBet);
+              //added stuff
+            if(decision != highestBet - players.get(curPlayer).getMoneyIn())
+            {
+               if(tableCards.size() == 0 && players.get(curPlayer).getMoneyIn() == 0)       
+                  if(highestBet < bigBlind)
+                     highestRaise = bigBlind;
+               else
+                  highestRaise = decision - highestBet;
+             //  System.out.println("Highest raise is now " + highestRaise);
+            }
+               
+            //players.get(curPlayer).setMoneyIn(players.get(curPlayer).getMoneyIn() + moneyTaken);
+            
+          
+            if(players.get(curPlayer).getMoneyIn() > highestBet)
+               highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
+            //players.get(curPlayer).setMoneyIn(highestBet);
          }           
          moveCurPlayer();
       }
       
-
+   
       public int getHighestBet()
       {
          return highestBet;
@@ -362,7 +381,7 @@
           
          }
       }
-
+   
       public int activeCount()
       {
          return activeCount;
@@ -370,6 +389,7 @@
       
       public void removePlayers()
       {
+         
          for(int i = 0; i < players.size(); i++)
          {
             if(players.get(i).getMoney() == 0)
@@ -377,6 +397,7 @@
                players.remove(i);
                i = -1;
             }
+           
          }
       }
       
@@ -385,124 +406,129 @@
          return dealer;
       }
       
-      public int[][] getSortedPlayers()
+      public ArrayList<ArrayList<Integer>> getSortedPlayers()
       {
          //sort players by best hand, descending. If ties, sort players in columns by ascending contribution.
          //int in array is index of player 
-         int[][] sortedP = new int[players.size()][players.size()];
+         ArrayList<ArrayList<Integer>> sortedP = new ArrayList<ArrayList<Integer>>();
+         sortedP.add(new ArrayList<Integer>());
          
-         for(int i = 0; i < players.size(); i++)
-            for(int j = 0; j < players.size(); j++)
-               sortedP[i][j] = -100;
-
-             
-         //once a player's position in sortedP is set, add their index to this array list for checking purposes
+         int bestHand;
+         
          ArrayList<Integer> beenSorted = new ArrayList<Integer>();
          
-         int curBestPlayer;
-         ArrayList<Integer> foldedPlayers = new ArrayList<Integer>();
-         ArrayList<Integer> tiedPlayers = new ArrayList<Integer>();
-         int initBP;
-         int totalTies = 0;
-         
-         for(int i = 0; i < players.size() - foldedPlayers.size() - totalTies; i++)
+         for(int i = 0; i < players.size(); i++)
          {
-            //set curBestlayer to someone who hasn't been sorted
-            curBestPlayer = 0;
-            while(beenSorted.contains(curBestPlayer))
-               curBestPlayer++;
-            
-            System.out.println("i iteteration: " + i + " Cur best player: " + curBestPlayer);
-            //check if cur best player is active. if he is, add him to the end of the array. 
-            if(!players.get(curBestPlayer).isActive())
-            {
-               foldedPlayers.add(curBestPlayer);
-               beenSorted.add(curBestPlayer);
-               i--;
-               continue;
-            }
-            
-                  
+            bestHand = 0;
+            while(beenSorted.contains(bestHand))
+               bestHand++;
             for(int j = 0; j < players.size(); j++)
             {
-               //don't bother comparing cur best player to itself or anyone who's been sorted already  
-               if(j == curBestPlayer || beenSorted.contains(j)) 
-                  continue;
-               
-               else if(!players.get(j).isActive())
-               {
-                  System.out.println("Folded: " + j);
-                  foldedPlayers.add(j);
-                  beenSorted.add(j);
-                  continue;
-               }
-                 
-               //if player has better hand than curr best player, he's the new cur best player
-               else if( compareHands(players.get(j).getBestHand(), players.get(curBestPlayer).getBestHand()) > 0 )
-               {
-                  curBestPlayer = j;
-                  tiedPlayers.clear();
-               }
-               
-               else if( compareHands(players.get(j).getBestHand(), players.get(curBestPlayer).getBestHand()) == 0 )
-               {
-                  tiedPlayers.add(j);
-                  tiedPlayers.add(curBestPlayer);
-                  totalTies++;
-               }    
-             }     
-             
-             //if people tied this loop through, then sort them all by contribution, ascending and add to row
-             if(tiedPlayers.size() > 0)
-             {
-                    
-               for(int q = 0; q < tiedPlayers.size(); q++)
-               {
-                  for(int s = tiedPlayers.size() - 1; s > q; s--)
+               if(!beenSorted.contains(j) && compareHands(players.get(j).getBestHand(), players.get(bestHand).getBestHand()) > 0)
+                  bestHand = j;
+            }
+            if(sortedP.get(0).size() == 0)
+               sortedP.get(0).add(bestHand);
+            else if(compareHands(players.get(bestHand).getBestHand(), players.get(sortedP.get(sortedP.size() - 1).get(0)).getBestHand()) == 0)
+            {
+               for(int k = 0; k < sortedP.get(sortedP.size() - 1).size(); k++)
+                  if(players.get(sortedP.get(sortedP.size() - 1).get(k)).getPotCont() > players.get(bestHand).getPotCont())
                   {
-                     if(players.get(tiedPlayers.get(s)).getPotCont() < players.get(tiedPlayers.get(q)).getPotCont())
-                     {
-                        int p = tiedPlayers.get(s);
-                        tiedPlayers.set(s, tiedPlayers.get(q));
-                        tiedPlayers.set(q, p);
-                     }
+                     sortedP.get(sortedP.size() - 1).add(k, bestHand);
+                     k = sortedP.get(sortedP.size() - 1).size();;
                   }
-               }
-                          
-                 
-               for(int z = 0; z < tiedPlayers.size(); z++)
-               {
-                  sortedP[i][z] = tiedPlayers.get(z);
-                  beenSorted.add(tiedPlayers.get(z));
-               } 
-                                                                          
-               tiedPlayers.clear();
-             }
-             else
-             {
-               sortedP[i][0] =  curBestPlayer;
-               beenSorted.add(curBestPlayer);  
-               System.out.println(curBestPlayer + " added to position " + i);
-             } 
-                                       
+               if(!sortedP.get(sortedP.size() - 1).contains(bestHand))
+                  sortedP.get(sortedP.size() - 1).add(bestHand);
+            }
+            else
+            {
+               sortedP.add(new ArrayList<Integer>());
+               sortedP.get(sortedP.size() - 1).add(bestHand);
+            }
+            beenSorted.add(bestHand);
          }
-         
-         //add folded players to end
-         int startPoint =  players.size() - foldedPlayers.size() - totalTies;
-         while(foldedPlayers.size() > 0)
+            
+         int temp;
+         int size = sortedP.size();
+         int count = 0;
+         for(int i = 0; i < size; i++)
          {
-            sortedP[startPoint][0] = foldedPlayers.get(0);
-            startPoint++;
-            foldedPlayers.remove(0);
-         }
-
-         return sortedP;
+            for(int j = 0; j < sortedP.get(i).size() && count < players.size(); j++)
+            {
+               if(!players.get(sortedP.get(i).get(j)).isActive())
+               {
                
+                  temp = sortedP.get(i).get(j);
+                  sortedP.get(i).remove(j);
+                  if(sortedP.get(i).size() == 0)
+                     sortedP.remove(i);
+                  sortedP.add(new ArrayList<Integer>());
+                  sortedP.get(sortedP.size() - 1).add(temp);
+                  count++;
+                  i=-1;// unsure, used to be i = 0
+                  break;//unsure, added this, THINK ABOUT IT YO...
+               }
+            }
+         }
+         return sortedP;              
       }
       
+      public void handleWinners()
+      {
+         ArrayList<ArrayList<Integer>> sortedP = getSortedPlayers();
+         int potCont;
+         
+         for(int i = 0; i < sortedP.size(); i++)
+            for(int j = 0; j < sortedP.get(i).size(); j++)
+            {
+               potCont = players.get(sortedP.get(i).get(j)).getPotCont();
+               int totalWinnings = removePotConts(potCont);
+               int indiWinnings = totalWinnings / (sortedP.get(i).size() - j);
+               
+               for(int k = j; k < sortedP.get(i).size(); k++)
+                  players.get(sortedP.get(i).get(k)).addMoney(indiWinnings);
+                  
+               System.out.println("\n" + players.get(j).getName() + ": " + players.get(j).getMoney());       
+               players.get(j).getBestHand().printHand();
+               
+               
+            }          
+           
+      }
+    
+    public void setAllBestHands()
+    {
+      for(Player p : players)
+         findBestHand(p); 
+    }
       
-            
       
-      
-      
-}
+     private int removePotConts(int n)
+     {
+         int sum = 0;
+         for(Player p : players)
+            sum += p.takeFromPotCont(n);
+         return sum;
+     }
+     
+     public int getHighestRaise()
+     {
+        return highestRaise;
+     }
+     
+     public void setHighestRaise(int r)
+     {
+        highestRaise = r;
+     }
+     
+     public void raiseBlinds()
+     {
+         bigBlind *= 2;
+         smallBlind *= 2;
+     }
+     
+  
+         
+                     
+}     
+          

@@ -7,16 +7,16 @@ public class Card
    {
       switch(s){
          case 0:
-            suit = "Spades";
+            suit = "s";
             break;
          case 1:
-            suit = "Hearts";
+            suit = "h";
             break;
          case 2:
-            suit = "Clubs";
+            suit = "c";
             break;
          case 3:
-            suit = "Diamonds";
+            suit = "d";
             break;
       }
       
@@ -38,23 +38,23 @@ public class Card
    {
       if(value == 11)
       {
-         return "Jack of " + suit;
+         return "J" + suit;
       }
       else if(value == 12)
       {
-         return "Queen of " + suit;
+         return "Q" + suit;
       }
       else if(value == 13)
       {
-         return "King of " + suit;
+         return "K" + suit;
       }
       else if(value == 14)
       {
-         return "Ace of " + suit;
+         return "A" + suit;
       }
       else
       {
-         return Integer.toString(value) + " of " + suit;
+         return Integer.toString(value) + suit;
       }
    }
 }

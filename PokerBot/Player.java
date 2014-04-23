@@ -83,6 +83,7 @@ public class Player
       {
          money -= m;
       }
+      moneyIn += paid;
       return paid;
    }
    

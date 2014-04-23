@@ -10,12 +10,11 @@ public class AI extends Player
    public int makeDecision(Table t)
    {
       Random rand = new Random();
-      int num = rand.nextInt(4);
+      int num = rand.nextInt(6);
       if(num > 0)
         return t.getHighestBet() - getMoneyIn();
       
       return -1;
-    
   
    }
 
