@@ -23,6 +23,12 @@ public class Card
       this.value = value;
    }
    
+   public Card(int value, String s)
+   {
+      this.value = value;
+      suit = s;
+   }
+   
    public String getSuit()
    {
       return suit;
@@ -56,6 +62,14 @@ public class Card
       {
          return Integer.toString(value) + suit;
       }
+   }
+   
+   public boolean equals(Card c)
+   {
+      if(c.getValue() == value && c.getSuit() == suit)
+         return true;
+         
+      return false;
    }
 }
          

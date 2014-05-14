@@ -24,6 +24,28 @@
          dealer = 0;
          activeCount = players.size();
       }
+      
+      public int getBigBlind()
+      {
+         return bigBlind;
+      }
+   
+      public Deck getDeck()
+      {
+         return deck;
+      }
+   
+      public ArrayList<Card> getTableCards()
+      {
+         return tableCards;
+      }
+   
+      public void addToTableCards(Card c)
+      {
+         tableCards.add(c);
+         for(Player p : players)
+            p.addToAllCards(c);         
+      }
    
    /*
     * Returns positive int if hand1 is better than hand2
@@ -35,6 +57,11 @@
          int h1Type = h1.classifyHand();
          int h2Type = h2.classifyHand();
          int handDiff = h1Type - h2Type;
+         
+        // System.out.println("\nh1:");
+        // h1.printHand();
+        // System.out.println("\nh2:");
+        // h2.printHand();
       
          if(handDiff == 0)
          {
@@ -65,15 +92,22 @@
                      for(int i = 0; i < 5; i++)
                      {  
                         if(h1.getCard(i).getValue() != h1.getMR1() && h1.getCard(i).getValue() != h1.getMR2())
+                        {
                            h1Kicker = h1.getCard(i).getValue();
-                     
+                        //   System.out.println("h1Kicker is set to" + h1.getCard(i).getValue());
+                        }
                         if(h2.getCard(i).getValue() != h2.getMR1() && h2.getCard(i).getValue() != h2.getMR2())
                            h2Kicker = h2.getCard(i).getValue();
+                          // System.out.println("h1Kicker is set to" + h1.getCard(i).getValue());
                            
-                        if(h1Kicker != h2Kicker)
+                        if(h1Kicker != h2Kicker && h1Kicker != 0 && h2Kicker != 0)
                            break;
-                     }              
+                     }
+                  //   System.out.println("h1kicker: " + h1Kicker);
+                  //   System.out.println("h2kicker: " + h2Kicker);
+                                   
                      handDiff = h1Kicker - h2Kicker;
+                    // System.out.println("Hand diff: " + handDiff);
                   }      
                       
                   break;
@@ -135,11 +169,11 @@
          for(Player p : players)
          {
              
-               p.addToPotCont(p.getMoneyIn());   
-               p.setMoneyIn(0);
-               p.addToAllCards(c1);
-               p.addToAllCards(c2);
-               p.addToAllCards(c3);
+            p.addToPotCont(p.getMoneyIn());   
+            p.setMoneyIn(0);
+            p.addToAllCards(c1);
+            p.addToAllCards(c2);
+            p.addToAllCards(c3);
             
          }
          curPlayer = firstToAct();
@@ -151,19 +185,22 @@
          highestRaise = bigBlind;
          
          Card c1 = deck.dealCard();
+      //   System.out.println("Deck cards dealt");
       
          tableCards.add(c1);
+     //    System.out.println("Table card added");
       
          for(Player p : players)
          {
-             
-               p.addToPotCont(p.getMoneyIn());   
-               p.setMoneyIn(0);
-               p.addToAllCards(c1);
-               findBestHand(p);
-         
+            p.addToPotCont(p.getMoneyIn());   
+            p.setMoneyIn(0);
+            p.addToAllCards(c1);
+       //     System.out.println("SHIT");
+            findBestHand(p);
+      //      System.out.println("FUCK");
          }
          curPlayer = firstToAct();
+     //    System.out.println("First to act called");
       }
    
       public void dealRiver()
@@ -342,8 +379,8 @@
                if(tableCards.size() == 0 && players.get(curPlayer).getMoneyIn() == 0)       
                   if(highestBet < bigBlind)
                      highestRaise = bigBlind;
-               else
-                  highestRaise = decision - highestBet;
+                  else
+                     highestRaise = decision - highestBet;
              //  System.out.println("Highest raise is now " + highestRaise);
             }
                
@@ -366,6 +403,11 @@
       public Player getPlayer(int i)
       {
          return players.get(i);
+      }
+      
+      public ArrayList<Player> getPlayers()
+      {
+         return players;
       }
       
       public int getPot()
@@ -488,47 +530,54 @@
                for(int k = j; k < sortedP.get(i).size(); k++)
                   players.get(sortedP.get(i).get(k)).addMoney(indiWinnings);
                   
-               System.out.println("\n" + players.get(j).getName() + ": " + players.get(j).getMoney());       
-               players.get(j).getBestHand().printHand();
                
                
-            }          
+               
+            } 
+            
+            System.out.println("\n" + players.get(sortedP.get(0).get(0)).getName() + ": " + players.get(sortedP.get(0).get(0)).getMoney());       
+            players.get(sortedP.get(0).get(0)).getBestHand().printHand();         
            
       }
     
-    public void setAllBestHands()
-    {
-      for(Player p : players)
-         findBestHand(p); 
-    }
+      public void setAllBestHands()
+      {
+         for(Player p : players)
+            findBestHand(p); 
+      }
       
       
-     private int removePotConts(int n)
-     {
+      private int removePotConts(int n)
+      {
          int sum = 0;
          for(Player p : players)
             sum += p.takeFromPotCont(n);
          return sum;
-     }
+      }
      
-     public int getHighestRaise()
-     {
-        return highestRaise;
-     }
+      public int getHighestRaise()
+      {
+         return highestRaise;
+      }
      
-     public void setHighestRaise(int r)
-     {
-        highestRaise = r;
-     }
+      public void setHighestRaise(int r)
+      {
+         highestRaise = r;
+      }
      
-     public void raiseBlinds()
-     {
+      public void raiseBlinds()
+      {
          bigBlind *= 2;
          smallBlind *= 2;
-     }
+      }
      
-  
-         
-                     
-}     
+      public int numTableCards()
+      {
+         return tableCards.size();
+      }
+   
+    
+   
+                        
+   }     
           

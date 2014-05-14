@@ -6,10 +6,25 @@ public class Hand
    private ArrayList<Card> hand = new ArrayList<Card>();
    private int multiplesRank1 = 0;
    private int multiplesRank2 = 0;
+   private double preflopEV;
    
-   public Hand()
+   public Hand(){}
+   
+   public Hand(Card c1, Card c2, double expected)
    {
+      preflopEV = expected;
+      hand.add(c1);
+      hand.add(c2);
+      orderByRank();
    }
+   
+   public Hand(Card c1, Card c2)
+   {
+      hand.add(c1);
+      hand.add(c2);
+      orderByRank();
+   }
+
    
    public Hand(Card c1, Card c2, Card c3, Card c4, Card c5)
    {
@@ -303,5 +318,32 @@ public class Hand
    public int getMR2()
    {
       return multiplesRank2;
+   }
+   
+   public int equals(Hand h)
+   {
+     boolean sameSuit = true;
+     
+     if(getSize() != h.getSize())
+      return 0;
+     
+     for(int i = 0; i < h.getSize(); i++)
+     {
+         if(hand.get(i).getValue() != h.getCard(i).getValue())
+             return 0; 
+         if(hand.get(i).getSuit() != h.getCard(i).getSuit())
+             sameSuit = false;
+     } 
+     if(sameSuit == true)
+        return 2;
+     else if(h.getCard(0).getSuit() != h.getCard(1).getSuit())
+        return 1; 
+     else 
+        return 0;  
+   }
+   
+   public double getEV()
+   {
+      return preflopEV;
    }
 }

@@ -8,17 +8,18 @@
    
       public static void main(String[] args)
       {
-         int bigBlind = 20, smallBlind = 10, initMoney = 200;
+         int bigBlind = 20, smallBlind = 10, initMoney = 400;
          ArrayList<Player> players = new ArrayList<Player>();
          players.add(new Player("User", initMoney));
          players.add(new AI("Alpha", initMoney));
          players.add(new AI("Bravo", initMoney));
          players.add(new AI("Charlie", initMoney));
          players.add(new AI("Delta", initMoney));
-      //   players.add(new Player("Echo", initMoney));
-      //   players.add(new Player("FoxTrot", initMoney));
-      //   players.add(new Player("Golf", initMoney));
-      //   players.add(new Player("Hotel", initMoney));
+         players.add(new AI("Echo", initMoney));
+         players.add(new AI("FoxTrot", initMoney));
+         players.add(new AI("Golf", initMoney));
+      //   players.add(new AI("Hotel", initMoney));
+         
       
          int handsPlayed = 1;
          Table t = new Table(players, smallBlind, bigBlind);
@@ -65,31 +66,40 @@
          Scanner sc = new Scanner(System.in);
          int numPlayed = 0;
          int initActive = t.activeCount();
-      
+         Data data = new Data();
+         
          while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
          {   
             if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
             {
-            
                System.out.println(" ");
             
                System.out.println("User: ");
                System.out.println("Preflop Hand: ");
                t.getPlayer(0).getPreFlop().printHand();
+               if(t.numTableCards() >= 3)
+                   System.out.println("\nHand Strength: " + data.handStrength(t));
+
+      
            //    System.out.println("\nBest hand: ");
           //     t.getPlayer(0).getBestHand().printHand();
             //   System.out.println("money in: " + t.getPlayer(0).getMoneyIn());
             
-               System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
             
+               System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
+              
+               
                decision = sc.nextInt();
-               while(decision >= 0 && decision != t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() &&
-                decision < t.getHighestRaise() + t.getHighestBet())
-               {
+               if(decision == -2) // -2 is the new "call"
+                  decision = t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
                   
+               while(decision >= 0 && decision != t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() &&
+                decision < t.getHighestRaise() + t.getHighestBet() && decision != t.getPlayer(t.getCurPlayer()).getMoney())
+               {     
                   System.out.println("Invalid bet");
                   decision = sc.nextInt();
                }
+               
               // System.out.println("User bet: " + decision);
                t.handleDecision(decision);
             
@@ -100,9 +110,13 @@
                System.out.println(" ");
                bot = (AI)t.getPlayer(t.getCurPlayer());
                System.out.println(bot.getName());
-           //    System.out.println("Preflop Hand: ");
-          //     t.getPlayer(t.getCurPlayer()).getPreFlop().printHand();
-          //     System.out.println("\nBest hand: ");
+               System.out.println("Preflop Hand: ");
+               t.getPlayer(t.getCurPlayer()).getPreFlop().printHand();
+               if(t.numTableCards() >= 3)
+                   System.out.println("\nHand Strength: " + data.handStrength(t));
+               
+  
+            //     System.out.println("\nBest hand: ");
            //    t.getPlayer(t.getCurPlayer()).getBestHand().printHand();
                decision = bot.makeDecision(t);
                t.handleDecision(decision);
