@@ -2,10 +2,7 @@
    import java.util.Scanner;
 
    public class Game
-   {
-   
-   
-   
+   { 
       public static void main(String[] args)
       {
          int bigBlind = 20, smallBlind = 10, initMoney = 400;
@@ -18,7 +15,7 @@
          players.add(new AI("Echo", initMoney));
          players.add(new AI("FoxTrot", initMoney));
          players.add(new AI("Golf", initMoney));
-      //   players.add(new AI("Hotel", initMoney));
+         players.add(new AI("Hotel", initMoney));
          
       
          int handsPlayed = 1;

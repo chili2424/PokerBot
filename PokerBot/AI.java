@@ -37,25 +37,25 @@
             if(returnRatio > 3)
             {
                if(randInt > 10)
-                  return raiseAmount(handStrength, t);
+                  return raiseAmount(handStrength, t, toCall);
             }
                
             else if(returnRatio > 2.5)
             {
                if(randInt > 30)
-                  return raiseAmount(handStrength, t);
+                  return raiseAmount(handStrength, t, toCall);
             }
                   
             else if(returnRatio > 1.5)
             {
                if(randInt > 80)
-                  return raiseAmount(handStrength, t);
+                  return raiseAmount(handStrength, t, toCall);
             }
                      
             else if(returnRatio > 1)
             {
                if(randInt > 95)
-                  return raiseAmount(handStrength, t);
+                  return raiseAmount(handStrength, t, toCall);
             }
                         
             else if(returnRatio <= 1)
@@ -77,23 +77,23 @@
             if(handStrength >= critPercent * highMult)
             {
                if(randInt > 10) 
-                  return raiseAmount(handStrength, t);          
+                  return raiseAmount(handStrength, t, toCall);          
             }
             else if(handStrength >= critPercent * lowMult)
             {
                if(randInt > 65)
-                  return raiseAmount(handStrength, t);         
+                  return raiseAmount(handStrength, t, toCall);         
             }
             else
             {
                if(randInt > 95)
-                  return raiseAmount(handStrength, t);
+                  return raiseAmount(handStrength, t, toCall);
             }
             return 0;     
          }
       }
    
-      public int raiseAmount(double handStrength, Table t)
+      public int raiseAmount(double handStrength, Table t, int callAmount)
       {
          Random r = new Random();
          double mult = 1.5;   
@@ -101,10 +101,20 @@
          double ratio = handStrength / critPercent;
          int bet;
          int rand = (int)((.10 * t.getPot()) * r.nextDouble());
+         int toCall = callAmount;
+         int potThreshold = 6 * t.getBigBlind();
+         int estHandStrength = critPercent;
       
          int baseBet = (int)(.5 * t.getPot());
          if(t.getPot() < 3 * t.getBigBlind())
             return t.getBigBlind();
+            
+         if(t.getPot() > potThreshold)
+         {
+            if(toCall > .75 * t.getPot())
+            {
+               estHandStrength *= 1.5;
+            }
       
          if(ratio > 1)
             bet = (int)(baseBet + (ratio * rand));              

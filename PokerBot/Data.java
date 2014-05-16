@@ -50,7 +50,51 @@
          preflopHands.add(new Hand(new Card(13, 0), new Card(8, 0), .01));//K8 s
          preflopHands.add(new Hand(new Card(13, 0), new Card(10, 1), .01));//KT
          preflopHands.add(new Hand(new Card(9, 0), new Card(8, 0), 0));//98 s  
-         preflopHands.add(new Hand(new Card(14, 0), new Card(2, 0), 0));//A2 s    
+         preflopHands.add(new Hand(new Card(14, 0), new Card(2, 0), 0));//A2 s
+         
+         preflopHands.add(new Hand(new Card(7, 0), new Card(8, 0), -.02));//78 s
+         preflopHands.add(new Hand(new Card(12, 0), new Card(10, 1), -.02));//Q10 
+         preflopHands.add(new Hand(new Card(12, 0), new Card(8, 0), -.02));//Q8 s
+         preflopHands.add(new Hand(new Card(4, 0), new Card(4, 1), -.03));//44
+         //mental note for A9 offsuit -.03
+         //J8 s -.03
+         //K6s-K4s -.05
+         //Q7s -.06
+         //K9 -.07
+         //A8 -.07
+         //J7s -.07
+        //Q6 s -.08
+        //K3s -.08
+        //Q9 -.08
+        //J9 -.09
+        //Q5s K2s -.09
+        //Q3s -.1
+        //J8 89 108 79 A7 107 Q4s -.1
+        //Q8 J5s 106 75 J4s K8 68 K7 J6s 58 106 67  -.11
+        //A4 -.12
+        //A3 -.13
+        //A2 -.15
+         preflopHands.add(new Hand(new Card(6, 0), new Card(7, 0), -.03));//67s
+         preflopHands.add(new Hand(new Card(11, 0), new Card(10, 1), -.03));//J10
+         preflopHands.add(new Hand(new Card(7, 0), new Card(9, 0), -.04));//79s
+         preflopHands.add(new Hand(new Card(10, 0), new Card(7, 0), -.05));//107s
+         preflopHands.add(new Hand(new Card(6, 0), new Card(5, 0), -.07));//56s
+         preflopHands.add(new Hand(new Card(9, 0), new Card(10, 1), -.07));//109
+         preflopHands.add(new Hand(new Card(6, 0), new Card(8, 0), -.07));//68 s  
+         preflopHands.add(new Hand(new Card(3, 0), new Card(3, 1), -.07));//33
+         preflopHands.add(new Hand(new Card(5, 0), new Card(4, 0), -.08));//54 s
+         
+         preflopHands.add(new Hand(new Card(5, 0), new Card(7, 0), -.09));//57s
+         preflopHands.add(new Hand(new Card(2, 0), new Card(2, 1), -.09));//22
+         preflopHands.add(new Hand(new Card(4, 0), new Card(6, 0), -.09));//64s
+         preflopHands.add(new Hand(new Card(6, 0), new Card(9, 0), -.09));//69s
+         
+         preflopHands.add(new Hand(new Card(4, 0), new Card(7, 0), -.11));//74s
+         preflopHands.add(new Hand(new Card(5, 0), new Card(3, 0), -.11));//53s
+         preflopHands.add(new Hand(new Card(3, 0), new Card(6, 0), -.11));//63s
+         preflopHands.add(new Hand(new Card(5, 0), new Card(8, 0), -.12));//58s
+         preflopHands.add(new Hand(new Card(3, 0), new Card(4, 0), -.13));//43s
+         preflopHands.add(new Hand(new Card(2, 0), new Card(3, 0), -.15));//23s    
       }
         
       public double findEV(Hand h)

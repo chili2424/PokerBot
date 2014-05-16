@@ -89,25 +89,39 @@
                   {
                      int h1Kicker = 0;
                      int h2Kicker = 0;
-                     for(int i = 0; i < 5; i++)
-                     {  
-                        if(h1.getCard(i).getValue() != h1.getMR1() && h1.getCard(i).getValue() != h1.getMR2())
+                     int jStart = 4;
+                     int kStart = 4;
+                     int j;
+                     int k;
+                     for(int i = 4; i >= 0; i--)
+                     {    
+                        for(j = jStart; j > 0; j--)  
                         {
-                           h1Kicker = h1.getCard(i).getValue();
-                        //   System.out.println("h1Kicker is set to" + h1.getCard(i).getValue());
+                           if(h1.getCard(j).getValue() != h1.getMR1() && h1.getCard(j).getValue() != h1.getMR2())
+                           {
+                              h1Kicker = h1.getCard(j).getValue();
+                              break;
+                           }
                         }
-                        if(h2.getCard(i).getValue() != h2.getMR1() && h2.getCard(i).getValue() != h2.getMR2())
-                           h2Kicker = h2.getCard(i).getValue();
-                          // System.out.println("h1Kicker is set to" + h1.getCard(i).getValue());
+                  
+                         for(k = kStart; k > 0; k--)  
+                         {
+                           if(h2.getCard(k).getValue() != h2.getMR1() && h2.getCard(k).getValue() != h2.getMR2())
+                           {
+                              h2Kicker = h2.getCard(k).getValue();
+                              break;
+                           }
+                         }
                            
                         if(h1Kicker != h2Kicker && h1Kicker != 0 && h2Kicker != 0)
                            break;
-                     }
-                  //   System.out.println("h1kicker: " + h1Kicker);
-                  //   System.out.println("h2kicker: " + h2Kicker);
-                                   
+                        
+                        jStart = j;
+                        kStart = k;
+                               
+                     }                          
                      handDiff = h1Kicker - h2Kicker;
-                    // System.out.println("Hand diff: " + handDiff);
+                   
                   }      
                       
                   break;

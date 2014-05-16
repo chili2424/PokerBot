@@ -20,17 +20,22 @@ public class Tester
          p0.addToAllCards(new Card(8,0));
          p0.addToAllCards(new Card(13,0));
          p0.addToAllCards(new Card(8,1));
-         p0.addToAllCards(new Card(5,0));
+     //    p0.addToAllCards(new Card(5,0));
          p0.addToAllCards(new Card(3,0));
          p0.addToAllCards(new Card(3,3));
-         p0.addToAllCards(new Card(5,3));
-        
+      //   p0.addToAllCards(new Card(5,3));
+      
+      Hand h1 = new Hand(new Card(3,0), new Card(1,0), new Card(1,1), new Card(7,1), new Card(7,2));
+      Hand h2 = new Hand(new Card(1,0), new Card(6,2), new Card(1,1), new Card(7,3), new Card(7,4));
+      
+     
          
        //  System.out.print(p1.getBestHand().handToString());
        
         Table t = new Table(players, 0, 0);
-        t.findBestHand(p0);
-        p0.getBestHand().printHand();
+        System.out.println(t.compareHands(h1,h2));
+      //  t.findBestHand(p0);
+      //  p0.getBestHand().printHand();
         
 
         t.getPlayer(0).getPreFlop().printHand();         
