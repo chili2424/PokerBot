@@ -1,3 +1,7 @@
+/**
+*Defines a Card, which has a rank (2-14) and a suit(s,h,d,c).
+*/
+
 public class Card
 {
    private String suit;
@@ -29,17 +33,31 @@ public class Card
       suit = s;
    }
    
+   /**
+   *Returns suit of card.
+   *
+   *@return suit as a String.
+   */
    public String getSuit()
    {
       return suit;
    }
    
+   /**
+   *Returns rank of card.
+   *
+   *@return rank of card as integer value.
+   */
    public int getValue()
    {
       return value;
    }
    
-   //Convert the |value| of a card to the correct string.
+   /**
+   *Overrides Object's toString method.
+   *
+   *@return suit and rank as a letter/character pair.
+   */
    public String toString()
    {
       if(value == 11)
@@ -64,6 +82,11 @@ public class Card
       }
    }
    
+   /**
+   *Overrides Object's equals method.
+   *
+   *@return true if and only if rank and suit both match.
+   */
    public boolean equals(Card c)
    {
       if(c.getValue() == value && c.getSuit() == suit)

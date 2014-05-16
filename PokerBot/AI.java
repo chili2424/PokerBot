@@ -103,7 +103,7 @@
          int rand = (int)((.10 * t.getPot()) * r.nextDouble());
          int toCall = callAmount;
          int potThreshold = 6 * t.getBigBlind();
-         int estHandStrength = critPercent;
+         double estHandStrength = critPercent;
       
          int baseBet = (int)(.5 * t.getPot());
          if(t.getPot() < 3 * t.getBigBlind())
@@ -115,20 +115,22 @@
             {
                estHandStrength *= 1.5;
             }
-      
-         if(ratio > 1)
-            bet = (int)(baseBet + (ratio * rand));              
-         else 
-            bet = (int)(baseBet - (ratio * rand));
-      
-         System.out.println("Highest Bet: " + t.getHighestBet());
-      
-         if(bet < t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn())
-         {
-            bet = 2 * t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
          }
-         return bet;
+         
+            if(ratio > 1)
+               bet = (int)(baseBet + (ratio * rand));              
+            else 
+               bet = (int)(baseBet - (ratio * rand));
+         
+            System.out.println("Highest Bet: " + t.getHighestBet());
+         
+            if(bet < t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn())
+            {
+               bet = 2 * t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
+            }
+            return bet;
+         
+         }
       
       }
    
-   }

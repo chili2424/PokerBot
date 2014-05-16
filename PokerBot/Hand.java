@@ -1,5 +1,8 @@
-import java.util.ArrayList;
+/**
+*Defines a Hand as an ArrayList of Cards.
+*/
 
+import java.util.ArrayList;
 
 public class Hand
 {
@@ -36,17 +39,24 @@ public class Hand
       orderByRank();
    }
    
-   public void addCard(Card c)
+   /**
+   *Adds specified Card to Hand.
+   *
+   *@param c Card to be added to Hand.
+   *@throws Runtime Exception if Hand is already full.
+   */
+   public void addCard(Card c) throws RuntimeException
    {
       if(hand.size() == 5)
-      {
-         throw new RuntimeException();
-      }
+         throw new RuntimeException("Error: Hand is already full.");
+         
       hand.add(c);
       orderByRank();
    }
    
-   
+   /**
+   *Resets Hand.
+   */
    public void clearHand()
    {
       hand.clear();
@@ -54,62 +64,79 @@ public class Hand
       multiplesRank2 = 0;
    }
    
-   public Card getCard(int i)
+   /**
+   *Returns Card.
+   *
+   *@param i Index from which to retrieve Card.
+   *@return Card at index.
+   *@throws RntimeException if given invalid index.
+   */
+   public Card getCard(int i) throws RuntimeException
    {
-      /*Pugene added && i > -1 because you shouldn't be able to index less than 0*/
-      if(i < hand.size() && i > -1)
-      {
-         return hand.get(i);
-      }
-      else
-      {
-         throw new RuntimeException();
-      }
+   
+      if(i > hand.size() || i <= -1)
+         throw new RuntimeException("Error: Invalid Index, cannot get Card.");
+         
+      return hand.get(i);
    }
    
+   /**
+   *Returns size of Hand.
+   *
+   *@return Size of Hand.
+   */
    public int getSize()
    {
       return hand.size();
    }
    
+   /**
+   *Orders Cards by Rank.
+   */
    public void orderByRank()
    {
       Card c;
       
       for(int i = 0; i < hand.size(); i++)
-      {
          for(int j = hand.size() - 1; j > i; j--)
-         {
             if(hand.get(j).getValue() < hand.get(i).getValue())
             {
                c = hand.get(j);
                hand.set(j, hand.get(i));
                hand.set(i, c);
             }
-         }
-      }
+            
    }
    
    /**
-   *Compares cards i & j in hand.
+   *Compares cards at specified locations in Hand.
+   *
+   *@param i location of first Card.
+   *@param j location of second Card.
+   *@return true if Hands belond to same Suit.
+   *@throws RuntimeException if passed invalid indecies.
    */
-   public boolean compareSuit(int i, int j)
+   public boolean compareSuit(int i, int j) throws RuntimeException
    {
-      /*Pugene: Make sure that i and j are not negative and the same*/
       if(i < 0 && j < 0 && i == j)
-      {
-         System.out.println("compareSuit: You passed me bad parameters");
-      }
+         throw new RuntimeException("Error: Invalid indecies passed to compareSuit.");
+      
       return (hand.get(i).getSuit()).equals(hand.get(j).getSuit());
    }
    
-   public int compareRank(int i, int j)
+   /**
+   *Compares cards at specified locations in Hand.
+   *
+   *@param i location of first Card.
+   *@param j location of second Card.
+   *@return true if Hands are of the same Rank.
+   *@throws RuntimeException if passed invalid indecies.
+   */
+   public int compareRank(int i, int j) throws RuntimeException
    {
-      /*Pugene: Make sure that i and j are not negative and the same*/
       if(i < 0 && j < 0 && i == j)
-      {
-         System.out.println("compareRank: You passed me bad parameters");
-      }
+         throw new RuntimeException("Error: Invalid indecies passed to compareRank.");
+         
       return hand.get(i).getValue() - hand.get(j).getValue();
    }
    
@@ -158,15 +185,15 @@ public class Hand
       
       for(int i = 0; i < hand.size()- 1; i++)
       {
-            if(i == 3)
+         if(i == 3)
+         {
+            if(hand.get(3).getValue() == 5 && hand.get(4).getValue() == 14)
             {
-               if(hand.get(3).getValue() == 5 && hand.get(4).getValue() == 14)
-               {
-                  return true;
-               }
+               return true;
             }
-            if(hand.get(i+1).getValue() != hand.get(i).getValue() + 1)
-               return false;
+         }
+         if(hand.get(i+1).getValue() != hand.get(i).getValue() + 1)
+            return false;
       } 
       return true;    
    }
@@ -237,7 +264,7 @@ public class Hand
    {
       if(isRoyalFlush())
          return 9;
-    
+      
       else if(isStraightFlush())
          return 8;
        
@@ -272,7 +299,7 @@ public class Hand
    {
       if(isRoyalFlush())
          return "Royal Flush";
-    
+      
       else if(isStraightFlush())
          return "Straight Flush";
        
@@ -322,24 +349,24 @@ public class Hand
    
    public int equals(Hand h)
    {
-     boolean sameSuit = true;
+      boolean sameSuit = true;
      
-     if(getSize() != h.getSize())
-      return 0;
+      if(getSize() != h.getSize())
+         return 0;
      
-     for(int i = 0; i < h.getSize(); i++)
-     {
+      for(int i = 0; i < h.getSize(); i++)
+      {
          if(hand.get(i).getValue() != h.getCard(i).getValue())
-             return 0; 
+            return 0; 
          if(hand.get(i).getSuit() != h.getCard(i).getSuit())
-             sameSuit = false;
-     } 
-     if(sameSuit == true)
-        return 2;
-     else if(h.getCard(0).getSuit() != h.getCard(1).getSuit())
-        return 1; 
-     else 
-        return 0;  
+            sameSuit = false;
+      } 
+      if(sameSuit == true)
+         return 2;
+      else if(h.getCard(0).getSuit() != h.getCard(1).getSuit())
+         return 1; 
+      else 
+         return 0;  
    }
    
    public double getEV()
