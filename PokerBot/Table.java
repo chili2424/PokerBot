@@ -18,6 +18,13 @@ public class Table
    private int pot;
    private int highestRaise;
 
+   /**
+   *Initializes players and small/big blind amounts.
+   *
+   *@param p ArrayList of players at table.
+   *@param sB Amount of initial small blind.
+   *@param bB Amount of initial big blind.
+   */
    public Table(ArrayList<Player> p, int sB, int bB)
    {
       players = p;

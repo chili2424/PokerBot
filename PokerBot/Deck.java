@@ -9,6 +9,9 @@ public class Deck
 {
    private ArrayList<Card> deck = new ArrayList<Card>();
 
+   /**
+   *Initializes entire 52 card deck.
+   */
    public Deck()
    {
       for(int i = 2; i < 15; i++)

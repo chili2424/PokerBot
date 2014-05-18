@@ -7,6 +7,13 @@ public class Card
    private String suit;
    private int value;
    
+   /**
+   *Initializes suit and rank of Card, takes in suit
+   *as number between 0-3.
+   *
+   *@param value Indicates ranking of card.
+   *@param s Indicates suit of card.
+   */
    public Card(int value, int s)
    {
       switch(s){
@@ -27,6 +34,12 @@ public class Card
       this.value = value;
    }
    
+   /**
+   *Initializes rank and suit of Card, takes in string to indicate suit.
+   *
+   *@param value Indicates rank of card.
+   *@param s Indicates suit of card.
+   */
    public Card(int value, String s)
    {
       this.value = value;

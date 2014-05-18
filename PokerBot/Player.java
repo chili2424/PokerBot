@@ -17,6 +17,12 @@ public class Player
    
    public Player(){}
    
+   /**
+   *Initializes Player's name and money.
+   *
+   *@param name Player's name.
+   *@param money Player's money.
+   */
    public Player(String name, int money)
    {
       this.name = name;
