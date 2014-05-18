@@ -141,8 +141,9 @@ public class Hand
    }
    
    /**
-    * Assume orderByRank has been called
-    * Returns number of pairs in hand
+    * Returns number of pairs in hand, sets MR1 and MR2 as necessary.
+    *
+    * @return number of pairs in hand.
     */
    private int numPairs()
    {
@@ -165,7 +166,7 @@ public class Hand
    }
    
    /**
-   *Checks if hand has three of a kind.
+   *Checks if hand has three of a kind, sets MR1.
    *
    *@return True if hand has three of a kind.
    */
@@ -183,6 +184,11 @@ public class Hand
       return false;
    }
    
+   /**
+   *Checks if hand has a straight.
+   *
+   *@return True if hand has 5 Cards, each with rank one higher than the previous Card.
+   */
    private boolean isStraight()
    {
       if(hand.size() < 5)
@@ -191,19 +197,20 @@ public class Hand
       for(int i = 0; i < hand.size()- 1; i++)
       {
          if(i == 3)
-         {
             if(hand.get(3).getValue() == 5 && hand.get(4).getValue() == 14)
-            {
                return true;
-            }
-         }
+      
          if(hand.get(i+1).getValue() != hand.get(i).getValue() + 1)
             return false;
       } 
       return true;    
    }
    
-   
+   /**
+   *Checks if hand has four of a kind, sets MR1.
+   *
+   *@return True if hand has four of a kind.
+   */
    private boolean isFour()
    {
       if(hand.size() < 4)
@@ -218,7 +225,11 @@ public class Hand
       return false;
    }
 
-   
+   /**
+   *Checks if hand is a flush.
+   *
+   *@return True if hand has 5 cards of the same Suit.
+   */
    private boolean isFlush()
    {
       if(hand.size() < 5)
@@ -230,6 +241,11 @@ public class Hand
       return false;
    }  
    
+   /**
+   *Checks if hand is a full house, sets MR1 and MR2.
+   *
+   *@return True if hand has three of a kind and a pair.
+   */
    private boolean isFullHouse()
    {
       if(hand.get(0).getValue() == hand.get(2).getValue() && hand.get(3).getValue() == hand.get(4).getValue())
@@ -249,6 +265,11 @@ public class Hand
       return false;
    }
    
+   /**
+   *Checks if hand is a straight flush.
+   *
+   *@return True if hand has a straight, with every card of the same suit.
+   */
    private boolean isStraightFlush()
    {
       if(isStraight() && isFlush())
@@ -257,6 +278,10 @@ public class Hand
       return false;
    }
    
+   /**Checks if hand is a royal flush.
+   *
+   *@return True if hand has a striaght flush of of cards with ranks 10-Ace.
+   */
    private boolean isRoyalFlush()
    {
       if(hand.get(0).getValue() == 10 && isFlush())
@@ -265,6 +290,11 @@ public class Hand
       return false;
    }
    
+   /**
+   *Ranks hand on a scale of 0-9.
+   *
+   *@return Hand ranking.
+   */ 
    public int classifyHand()
    {
       if(isRoyalFlush())
@@ -299,7 +329,11 @@ public class Hand
          
    }
 
-   
+   /**
+   *Returns hand type.
+   *
+   *@return Hand type.
+   */ 
    public String handToString()
    {
       if(isRoyalFlush())
@@ -333,7 +367,10 @@ public class Hand
          return "High Card";
          
    }
-     
+   
+   /**
+   *Prints every Card in this Hand.
+   */  
    public void printHand()
    {
       for(int i = 0; i < hand.size(); i++)
@@ -342,16 +379,32 @@ public class Hand
       }
    }
    
+   /**
+   *Returns the rank of one set of multiples in hand.
+   *
+   *@return Rank of one set of multiples in hand.
+   */
    public int getMR1()
    {
       return multiplesRank1;
    }
    
+   /**
+   *Returns the rank of one set of multiples in hand.
+   *
+   *@return Rank of one set of multiples in hand.
+   */
    public int getMR2()
    {
       return multiplesRank2;
    }
    
+   /**
+   *Compares two hands for equality of ranking and suits of Cards.
+   *
+   *@return 2 if Cards are exactly the same, 1 if Hands have cards of equal values, but 1 or both 
+   *is not suitedare not suited, 0 if Hands are not equal at all
+   */
    public int equals(Hand h)
    {
       boolean sameSuit = true;
@@ -374,6 +427,11 @@ public class Hand
          return 0;  
    }
    
+   /**
+   *Returns expected return rate from bets based on cards in hand.
+   *
+   *@return Expected Value
+   */
    public double getEV()
    {
       return preflopEV;
