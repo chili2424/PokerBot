@@ -164,6 +164,11 @@ public class Hand
       return numPairs;
    }
    
+   /**
+   *Checks if hand has three of a kind.
+   *
+   *@return True if hand has three of a kind.
+   */
    private boolean isThree()
    {
       if(hand.size() < 3) 
