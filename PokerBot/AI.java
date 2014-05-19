@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class AI extends Player
 {
+   private final static int FOLD = -1;
+   private final static int THRESHOLD = 6;
    /**
    *Initializes player.
    */
@@ -34,7 +36,7 @@ public class AI extends Player
          EV = data.findEV(super.getPreFlop());
       
          if(EV < 0)
-            return -1;
+            return FOLD;
          else
             return toCall;    
       }
@@ -75,11 +77,10 @@ public class AI extends Player
          else if(returnRatio <= 1)
          {
             if(randInt > 10)
-               return -1;
+               return FOLD;
          }
       
          return toCall;
-      
       }  
       else 
       {
@@ -108,8 +109,6 @@ public class AI extends Player
       }
    }
 
-/**************couldn't decide how to make initializations look least shitty**************/
-
    /**
    *Uses factors such as hand strength to determine ideal amount to raise by.
    *
@@ -126,7 +125,7 @@ public class AI extends Player
       
       rand = (int)((.10 * t.getPot()) * r.nextDouble());
       toCall = callAmount;
-      potThreshold = 6 * t.getBigBlind();
+      potThreshold = THRESHOLD * t.getBigBlind();
       mult = 1.5;
       estHandStrength = critPercent = mult / (double)t.activeCount();
       ratio = handStrength / critPercent;

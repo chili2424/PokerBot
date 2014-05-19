@@ -6,6 +6,10 @@ public class Card
 {
    private String suit;
    private int value;
+   private static final int SPADE = 0;
+   private static final int HEART = 1;
+   private static final int CLUB = 2;
+   private static final int DIAMOND = 3;
    
    /**
    *Initializes suit and rank of Card, takes in suit
@@ -17,16 +21,16 @@ public class Card
    public Card(int value, int s)
    {
       switch(s){
-         case 0:
+         case SPADE:
             suit = "s";
             break;
-         case 1:
+         case HEART:
             suit = "h";
             break;
-         case 2:
+         case CLUB:
             suit = "c";
             break;
-         case 3:
+         case DIAMOND:
             suit = "d";
             break;
       }

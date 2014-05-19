@@ -8,14 +8,17 @@ import java.util.Random;
 public class Deck
 {
    private ArrayList<Card> deck = new ArrayList<Card>();
+   private static final int RANKS = 15;
+   private static final int SUITS = 4;
+   private static final int NUM_CARDS = 52;
 
    /**
    *Initializes entire 52 card deck.
    */
    public Deck()
    {
-      for(int i = 2; i < 15; i++)
-         for(int j = 0; j < 4; j++)
+      for(int i = 2; i < RANKS; i++)
+         for(int j = 0; j < SUITS; j++)
             deck.add(new Card(i, j));
             
    }
@@ -56,17 +59,17 @@ public class Deck
    public void shuffleDeck()
    {
       Card[] tempDeck; 
-      tempDeck = new Card[52];
+      tempDeck = new Card[NUM_CARDS];
       Random rand = new Random();
    
-      for(int i = 0; i < 52; i++)
+      for(int i = 0; i < NUM_CARDS; i++)
       {
-         int r = rand.nextInt(52 - i);
+         int r = rand.nextInt(NUM_CARDS - i);
          tempDeck[i] = deck.get(r);
          deck.remove(r);
       }
    
-      for(int i = 0; i < 52; i++)
+      for(int i = 0; i < NUM_CARDS; i++)
          deck.add(tempDeck[i]);
    }
 

@@ -9,6 +9,7 @@ public class Game
 { 
    public static void main(String[] args)
    {
+      final int RAISE_BLINDS = 15;
       int bigBlind = 20, smallBlind = 10, initMoney = 400, handsPlayed = 1;
       Table t;
       ArrayList<Player> players = new ArrayList<Player>();
@@ -26,7 +27,7 @@ public class Game
       t = new Table(players, smallBlind, bigBlind);
       while(players.size() > 1)
       {
-         if(handsPlayed % 15 == 0)
+         if(handsPlayed % RAISE_BLINDS == 0)
             t.raiseBlinds();
          
          System.out.println("\nNew Hand\n");
@@ -62,6 +63,8 @@ public class Game
 
    private static void runTurn(Table t)
    {
+      final int CALL = -2;
+      final int FLOP = 3;
       int decision;
       AI bot;  
       Scanner sc = new Scanner(System.in);
@@ -78,14 +81,14 @@ public class Game
             System.out.println("User: ");
             System.out.println("Preflop Hand: ");
             t.getPlayer(0).getPreFlop().printHand();
-            if(t.numTableCards() >= 3)
+            if(t.numTableCards() >= FLOP)
                System.out.println("\nHand Strength: " + data.handStrength(t));
          
             System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
            
             
             decision = sc.nextInt();
-            if(decision == -2) // -2 is the new "call"
+            if(decision == CALL)
                decision = t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
                
             while(decision >= 0 && decision != t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() &&
@@ -106,7 +109,7 @@ public class Game
             System.out.println(bot.getName());
             System.out.println("Preflop Hand: ");
             t.getPlayer(t.getCurPlayer()).getPreFlop().printHand();
-            if(t.numTableCards() >= 3)
+            if(t.numTableCards() >= FLOP)
                System.out.println("\nHand Strength: " + data.handStrength(t));
             
             decision = bot.makeDecision(t);
