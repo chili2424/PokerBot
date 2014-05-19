@@ -13,6 +13,12 @@ public class Hand
    
    public Hand(){}
    
+   /**
+   *Initializes theoretical hand to be used for Monte Carlo simulations.
+   *
+   *@param c1, c2 Cards in hand.
+   *@param expected Expected long term return value of bets placed on this hand.
+   */
    public Hand(Card c1, Card c2, double expected)
    {
       preflopEV = expected;
@@ -21,6 +27,10 @@ public class Hand
       orderByRank();
    }
    
+   /**Initializes preflop hand.
+   *
+   *@param c1, c2 First Cards in hand.
+   */
    public Hand(Card c1, Card c2)
    {
       hand.add(c1);
@@ -28,7 +38,11 @@ public class Hand
       orderByRank();
    }
 
-   
+   /**
+   *Initializes hand and orders card by rank.
+   *
+   *@param c1, c2, c3, c4, c5 Cards in Hand.
+   */
    public Hand(Card c1, Card c2, Card c3, Card c4, Card c5)
    {
       hand.add(c1);

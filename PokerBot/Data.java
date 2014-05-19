@@ -1,3 +1,7 @@
+/**
+*Does calculations to assist AI in making decisions.
+*/
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,6 +11,7 @@ public class Data
    private ArrayList<Player> playerDataBase = new ArrayList<Player>();
    private final static int RUNS = 100000;
 
+   /****************how the fuck do we describe this*****************/
    public Data()
    {
       preflopHands.add(new Hand(new Card(14, 0), new Card(14, 1), 2.32));//aces
@@ -129,37 +134,37 @@ public class Data
  
 // public void addToPlayerDataBase(
 
-
-//returns a double from 0 to 1, representing a percentage chance of winningon
 //STUFF TO ADD:
 //position, moneyIn/potCont, player personality
+
+   /**
+   *Simulates RUNS number of possible outcomes from current game, returns
+   *probability of current Player winning the hand.
+   *
+   *@param t Current table from which to run simulations.
+   *@return Number between zero and one, indicating percentage chance of winning.
+   */
    public double handStrength(Table t)
    {
       ArrayList<Player> activePlayers = new ArrayList<Player>();
       ArrayList<Card> tieCards;
       Table tSim;
       Card[] cards;
-      int count, j;
+      int count = 0, j, i;
+      Player curPlayer;
    
-      Player curPlayer = new Player(t.getPlayer(t.getCurPlayer()).getName(), t.getPlayer(t.getCurPlayer()).getMoney());
-    
-              
+      curPlayer = new Player(t.getPlayer(t.getCurPlayer()).getName(), t.getPlayer(t.getCurPlayer()).getMoney());
       activePlayers.add(curPlayer);
    
-      for(int i = 0; i < t.getPlayers().size(); i++)
+      for(i = 0; i < t.getPlayers().size(); i++)
       {
          if(t.getPlayer(i).isActive() && i != t.getCurPlayer())
             activePlayers.add(new Player(t.getPlayer(i).getName(), t.getPlayer(i).getMoney()));
       }     
    
       tSim = new Table(activePlayers, 0, 0);
-   
-   //do ties
-      
-      count = 0;
-      for(int i = 0; i < RUNS; i++)
+      for(i = 0; i < RUNS; i++)
       {
-         
          curPlayer.addToPreFlop(t.getPlayer(t.getCurPlayer()).getPreFlop().getCard(0));
          curPlayer.addToPreFlop(t.getPlayer(t.getCurPlayer()).getPreFlop().getCard(1));
          tSim.getDeck().removeCard(curPlayer.getPreFlop().getCard(0));
@@ -170,16 +175,19 @@ public class Data
             tSim.addToTableCards(t.getTableCards().get(j));
             tSim.getDeck().removeCard(t.getTableCards().get(j));
          } 
+         
          for(j = 1; j < activePlayers.size(); j++)
          {
             cards = randomPossibleHand(tSim);
             tSim.getPlayer(j).addToPreFlop(tSim.getDeck().removeCard(cards[0]));
             tSim.getPlayer(j).addToPreFlop(tSim.getDeck().removeCard(cards[1]));       
          }
+         
          for(j = tSim.numTableCards(); j < 5; j++)
          {
             tSim.dealTurn();
          }
+         
          tSim.findBestHand(curPlayer);
          for(j = 1; j < activePlayers.size(); j++)
          {
@@ -189,10 +197,9 @@ public class Data
                break;
             }
          }
+         
          if(j == activePlayers.size())
-         {
             count++;
-         }
             
          for(j = 1; j < activePlayers.size(); j++)
          {
@@ -200,6 +207,7 @@ public class Data
             tSim.getDeck().addCard(activePlayers.get(j).getPreFlop().getCard(1));
             activePlayers.get(j).clearCards();
          }
+         
          for(j = 4; j >= t.numTableCards(); j--)
          {
             tSim.getDeck().addCard(tSim.getTableCards().remove(j));
