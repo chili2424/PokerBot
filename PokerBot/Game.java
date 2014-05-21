@@ -4,6 +4,7 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.*;
 
 public class Game
 { 
@@ -19,12 +20,17 @@ public class Game
       players.add(new AI("Charlie", initMoney));
       players.add(new AI("Delta", initMoney));
       players.add(new AI("Echo", initMoney));
-      players.add(new AI("FoxTrot", initMoney));
+      players.add(new AI("Fox Trot", initMoney));
       players.add(new AI("Golf", initMoney));
       players.add(new AI("Hotel", initMoney));
       
+      StdDraw.setCanvasSize(900,700);
+      StdDraw.setXscale(0, 100);
+      StdDraw.setYscale(0, 100);
+      
    
       t = new Table(players, smallBlind, bigBlind);
+       
       while(players.size() > 1)
       {
          if(handsPlayed % RAISE_BLINDS == 0)
@@ -34,21 +40,25 @@ public class Game
          System.out.println("Dealer: " + t.getPlayer(t.getDealer()).getName());
          t.handleBlinds();
          t.dealPreFlop();
-                    
+         
+         t.drawTable();         
          runTurn(t);
       
          t.dealFlop();
+         t.drawTable();
          System.out.println("======== FLOP ========");
          t.printTableCards();         
          runTurn(t);  
       
          t.dealTurn(); 
+         t.drawTable();
          System.out.println("======== TURN ========");
          t.printTableCards();         
       
          runTurn(t);
       
          t.dealRiver(); 
+         t.drawTable();
          System.out.println("======== RIVER ========");
          t.printTableCards();         
       
@@ -127,6 +137,8 @@ public class Game
          numPlayed++;
       }
    }
+   
+            
 }
    
    

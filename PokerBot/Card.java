@@ -11,6 +11,7 @@ public class Card
    private static final int CLUB = 2;
    private static final int DIAMOND = 3;
    
+   
    /**
    *Initializes suit and rank of Card, takes in suit
    *as number between 0-3.
@@ -111,6 +112,59 @@ public class Card
          
       return false;
    }
+   
+   public String getPath()
+   {
+     String path = "cards/card_";
+      switch(value){
+         case 1:
+            path += "one";
+            break;
+         case 2:
+            path += "two";
+            break;
+         case 3:
+            path += "three";
+            break;
+         case 4:
+            path += "four";
+            break;
+         case 5:
+            path += "five";
+            break;
+         case 6:
+            path += "six";
+            break;
+         case 7:
+            path += "seven";
+            break;
+         case 8:
+            path += "eight";
+            break;
+         case 9:
+            path += "nine";
+            break;
+         case 10:
+            path += "ten";
+            break;
+         case 11:
+            path += "jack";
+            break;
+         case 12:
+            path += "queen";
+            break;
+         case 13:
+            path += "king";
+            break;
+         case 14:
+            path += "ace";
+            break;
+      }
+            
+      path += "_"+suit+".png";
+      
+      return path;
+  }
 }
          
    
