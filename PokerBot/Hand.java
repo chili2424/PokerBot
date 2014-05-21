@@ -21,7 +21,7 @@ public class Hand
    */
    public Hand(Card c1, Card c2, double expected)
    {
-      preflopEV = expected;
+      preflopEV = expected + (.04 + expected/25); // (.01 + expected/100) * 4 -> changes baseline EV to EV of last player to act.
       hand.add(c1);
       hand.add(c2);
       orderByRank();

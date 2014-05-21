@@ -34,6 +34,8 @@ public class AI extends Player
       if(t.numTableCards() == 0)
       {
          EV = data.findEV(super.getPreFlop());
+         System.out.println("Distance from Last to Act: " + t.distanceFromLastToAct());
+         EV -= t.distanceFromLastToAct() * (.01 + EV/100);
       
          if(EV < 0)
             return FOLD;
@@ -119,9 +121,9 @@ public class AI extends Player
    */
    public int raiseAmount(double handStrength, Table t, int callAmount)
    {
-      Random r = new Random();
       double mult, critPercent, ratio, estHandStrength, baseBet;
       int bet, rand, toCall, potThreshold;
+      Random r = new Random();
       
       rand = (int)((.10 * t.getPot()) * r.nextDouble());
       toCall = callAmount;
@@ -134,9 +136,13 @@ public class AI extends Player
       if(t.getPot() < 3 * t.getBigBlind())
          return t.getBigBlind();
          
-      if(t.getPot() > potThreshold)
-         if(toCall > .75 * t.getPot())
-            estHandStrength *= 1.5;
+      //if(t.getPot() > potThreshold)
+        // if(toCall > .75 * t.getPot())
+          //  estHandStrength *= 1.5;
+      //should we add other levels?
+      //over a certain estHS we should just fold, for a certain amount up to that threshold, use it as another factor to modify bet.
+      //should that threshold be solid number, or ratio to our own hand strength
+      //also, ratio of toCall to our own money
       
       if(ratio > 1)
          bet = (int)(baseBet + (ratio * rand));              

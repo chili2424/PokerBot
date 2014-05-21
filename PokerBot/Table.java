@@ -339,7 +339,7 @@ public class Table
          if(dealer == 1)
             return 0;
       }
-   /************is this right?*******************/     
+           
       if(tableCards.size() > 0 && players.size() > 2)
       {
          for(int i = dealer + 1; i <= players.size() + dealer; i++)
@@ -531,7 +531,6 @@ public class Table
    }
    
 /**********how much have we tested this?***********/
-   
    /**
    *Sorts players by hand, if tied, players are sorted by amount contributed to the pot.
    *
@@ -614,6 +613,12 @@ public class Table
       ArrayList<ArrayList<Integer>> sortedP = getSortedPlayers();
       int potCont, totalWinnings, indiWinnings;
       
+      for(Player p: players)
+      {
+         p.addToPotCont(p.getMoneyIn());   
+         p.setMoneyIn(0);
+      }
+      
       for(int i = 0; i < sortedP.size(); i++)
          for(int j = 0; j < sortedP.get(i).size(); j++)
          {
@@ -686,6 +691,34 @@ public class Table
    public int numTableCards()
    {
       return tableCards.size();
-   }          
-}     
+   }
+   
+   /**
+   *Returns current player's position in relation to last player.
+   *
+   *@return disatnce from last player.
+   */
+   public int distanceFromLastToAct()
+   {
+      int activePos = 0, temp = 0, position;
+      for (int i = 0; i < players.size(); i++)
+      {
+         if(i + firstToAct() > players.size() - 1)
+            temp = i + firstToAct() - players.size();
+         else 
+            temp = i + firstToAct();
+         if(players.get(temp).isActive() && temp != curPlayer)        
+            activePos++;
+            
+         if(temp == curPlayer)
+            break;
+      }
+      
+      position = activeCount - activePos;
+      if(position >= 0)
+         return position - 1;
+      
+      return position + players.size() - 1;         
+   } 
+}
        
