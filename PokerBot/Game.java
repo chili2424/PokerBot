@@ -13,7 +13,10 @@ public class Game
       final int RAISE_BLINDS = 15;
       int bigBlind = 20, smallBlind = 10, initMoney = 400, handsPlayed = 1;
       Table t;
-      ArrayList<Player> players = new ArrayList<Player>();
+      ArrayList<Player> players;
+      GUI gui = new GUI();
+      
+      players = new ArrayList<Player>();
       players.add(new Player("User", initMoney));
       players.add(new AI("Alpha", initMoney));
       players.add(new AI("Bravo", initMoney));
@@ -41,28 +44,36 @@ public class Game
          t.handleBlinds();
          t.dealPreFlop();
          
-         t.drawTable();         
-         runTurn(t);
+         gui.drawTable(t);         
+         runTurn(t, gui);
       
+        
          t.dealFlop();
-         t.drawTable();
+         if(t.activeCount() > 1)
+            gui.drawTable(t);
+            
          System.out.println("======== FLOP ========");
          t.printTableCards();         
-         runTurn(t);  
+         runTurn(t, gui);  
       
          t.dealTurn(); 
-         t.drawTable();
+         if(t.activeCount() > 1)
+            gui.drawTable(t);
+         
          System.out.println("======== TURN ========");
          t.printTableCards();         
       
-         runTurn(t);
+         runTurn(t, gui);
       
          t.dealRiver(); 
-         t.drawTable();
+         
+         if(t.activeCount() > 1)
+            gui.drawTable(t);
          System.out.println("======== RIVER ========");
          t.printTableCards();         
       
-         runTurn(t);
+         runTurn(t, gui);
+         
          
          t.handleWinners();  
          t.removePlayers();
@@ -71,7 +82,7 @@ public class Game
       }
    }
 
-   private static void runTurn(Table t)
+   private static void runTurn(Table t, GUI gui)
    {
       final int CALL = -2;
       final int FLOP = 3;
@@ -84,6 +95,13 @@ public class Game
       
       while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
       {   
+         try {
+            Thread.sleep(1000);
+         } 
+         catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+         }
+         
          if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
          {
             System.out.println(" ");
@@ -96,8 +114,10 @@ public class Game
          
             System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
            
+            t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
+            gui.drawTable(t);
+            decision = gui.handleMouse(t);
             
-            decision = sc.nextInt();
             if(decision == CALL)
                decision = t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
                
@@ -135,6 +155,7 @@ public class Game
             t.moveCurPlayer();
       
          numPlayed++;
+         gui.drawTable(t);
       }
    }
    

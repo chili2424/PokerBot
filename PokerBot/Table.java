@@ -2,8 +2,8 @@
 *Defines Table where Game is played, which has Players, a Deck of Cards, and the pot.
 */
 
+
 import java.util.ArrayList;
-import java.awt.*;
 
 public class Table
 {
@@ -18,8 +18,9 @@ public class Table
    private int activeCount;
    private int pot;
    private int highestRaise;
-            
-
+   private ArrayList<String> textBox = new ArrayList<String>();
+   private final int MAX_LENGTH = 10;
+   
    /**
    *Initializes players and small/big blind amounts.
    *
@@ -36,7 +37,7 @@ public class Table
       deck = new Deck();
       dealer = 0;
       activeCount = players.size();
-
+   
    }
    
    /**
@@ -423,28 +424,41 @@ public class Table
    */
    public void handleDecision(int decision)
    {  
+      
+      String text = players.get(curPlayer).getName();
       if(decision < 0)
       {
          players.get(curPlayer).setActive(false);
          activeCount--;
+         text += " folded!";
       }
       else if(decision > 0)
       {
+      
+         if(decision + players.get(curPlayer).getMoneyIn() == highestBet)
+            text += " called.";
+         else
+            text += " raised by " + Integer.toString(decision + players.get(curPlayer).getMoneyIn() - highestBet) + ".";
+         
          pot += players.get(curPlayer).takeMoney(decision);
          
-         if(decision != highestBet - players.get(curPlayer).getMoneyIn())
-         {
-            if(tableCards.size() == 0 && players.get(curPlayer).getMoneyIn() == 0)       
-               if(highestBet < bigBlind)
-                  highestRaise = bigBlind;
-               else
-                  highestRaise = decision - highestBet;
-         }
-            
+         if(tableCards.size() == 0 && players.get(curPlayer).getMoneyIn() == 0)       
+            if(highestBet < bigBlind)
+               highestRaise = bigBlind;
+            else
+               highestRaise = decision - highestBet;
+                              
          if(players.get(curPlayer).getMoneyIn() > highestBet)
             highestBet += players.get(curPlayer).getMoneyIn() - highestBet;
-      }           
+      }  
+      else if(decision == 0)
+         text += " checked."; 
+                 
       moveCurPlayer();
+      
+      textBox.add(text);
+      if(textBox.size() > MAX_LENGTH)
+         textBox.remove(0);
    }
    
    /**
@@ -724,104 +738,26 @@ public class Table
       return position + players.size() - 1;         
    }
    
-   
-   public void drawTable()
-   {
-           
-      StdDraw.setFont();
-      //Draw Table
-      StdDraw.setPenColor(new Color(0, 120, 0));
-      StdDraw.filledEllipse(50, 50, 40,30);
-      
-      //Draw Players
-      StdDraw.setPenColor(new Color(0, 0, 0));
-      StdDraw.circle(50, 12, 5);
-      
-      StdDraw.text(50, 12, "user");
-   
-      if(playerIn("Hotel")){
-         StdDraw.circle(75, 18, 5);
-         StdDraw.text(75, 18, "Hotel");
-      }
-      else{
-         StdDraw.filledCircle(75, 18, 5);
-      }
-   
-      if(playerIn("Alpha")){
-         StdDraw.circle(25, 18, 5);
-         StdDraw.text(25, 18, "Alpha");
-      }
-      else{
-         StdDraw.filledCircle(25, 18, 5);
-      }
-   
-      if(playerIn("Delta")){
-         StdDraw.circle(50, 88, 5);
-         StdDraw.text(50,88, "Delta");
-      }
-      else{
-         StdDraw.filledCircle(50, 88, 5);
-      }
-   
-      if(playerIn("Echo")){
-         StdDraw.circle(75, 82, 5);
-         StdDraw.text(75, 82, "Echo");
-      }
-      else{
-         StdDraw.filledCircle(75, 82, 5);
-      }
-   
-      if(playerIn("Charlie")){
-         StdDraw.circle(25, 82, 5);
-         StdDraw.text(25, 82, "Charlie");
-      }
-      else{
-         StdDraw.filledCircle(25, 82, 5);
-      }
-   
-      if(playerIn("Bravo")){
-         StdDraw.circle(2, 50, 5);
-         StdDraw.text(2,50, "Bravo");
-      }
-      else{
-         StdDraw.filledCircle(2, 50, 5);
-      }
-   
-      if(playerIn("Fox Trot")){
-         StdDraw.circle(96, 58, 5);
-         StdDraw.text(96, 58, "Fox Trot");
-      }
-      else{
-         StdDraw.filledCircle(96, 58, 5);
-      }
-      
-      if(playerIn("Golf")){
-         StdDraw.circle(92, 30, 5);
-         StdDraw.text(92, 30, "Golf");
-      }
-      else{
-         StdDraw.filledCircle(92, 30, 5);
-      }
-   
-      //Draw Table Cards
-      for(int i = 0; i < tableCards.size(); i++)
-      {
-         StdDraw.picture(25 + i*12, 50, tableCards.get(i).getPath());
-      }
-      
-      StdDraw.setFont(new Font("SanSerif", Font.BOLD, 30));
-      StdDraw.text(50, 30, "Pot: " + pot);
-   
-   
-   }
-   
-   public boolean playerIn(String s)
+   public Player playerIn(String s)
    {
       for(Player p: players)
          if(p.getName() == s)
-            return true;
+            return p;
             
-      return false;
+      return null;
    } 
+   
+   public ArrayList<String> textBox()
+   {
+      return textBox;
+   }
+   
+   public void addText(String s)
+   {
+      textBox.add(s);
+      if(textBox.size() > 10)
+         textBox.remove(0);
+   }
+      
 }
        
