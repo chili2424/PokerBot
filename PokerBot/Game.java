@@ -95,12 +95,7 @@ public class Game
       
       while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
       {   
-         try {
-            Thread.sleep(1000);
-         } 
-         catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-         }
+         StdDraw.show(1000);
          
          if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
          {
@@ -116,7 +111,9 @@ public class Game
            
             t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
             gui.drawTable(t);
+            StdDraw.show(100);
             decision = gui.handleMouse(t);
+            
             
             if(decision == CALL)
                decision = t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
@@ -156,6 +153,7 @@ public class Game
       
          numPlayed++;
          gui.drawTable(t);
+         StdDraw.show(100);
       }
    }
    

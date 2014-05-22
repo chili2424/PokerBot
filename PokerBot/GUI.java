@@ -79,7 +79,7 @@ public class GUI
       }
       
       StdDraw.setFont(new Font("SanSerif", Font.BOLD, 30));
-      StdDraw.text(50, 70, "Pot: " + t.getPot());
+      StdDraw.text(50, 70, "Pot: $" + t.getPot());
       
       //Draw buttons
       StdDraw.setPenColor(new Color(139,69,19));
