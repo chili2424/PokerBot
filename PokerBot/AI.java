@@ -37,10 +37,29 @@ public class AI extends Player
          System.out.println("Distance from Last to Act: " + t.distanceFromLastToAct());
          EV -= t.distanceFromLastToAct() * (.01 + EV/100);
       
-         if(EV < 0)
-            return FOLD;
+         
+         if(t.getNumRaises() == 0 && EV >= .2)
+         {
+            t.incrNumRaises();
+            return 3 * t.getBigBlind();
+         }
+         else if(EV - t.getNumRaises() * t.getNumRaises() * .2 >= .2)
+         {
+            t.incrNumRaises();
+            return 3 * toCall;
+         }
+         else if(EV - t.getNumRaises() * t.getNumRaises() * .1 >= 0) //might be problematic for HUGE raises/all-ins
+         {
+            return toCall;
+         }
+         else if(EV < 0 && toCall == 0)
+         {
+            return toCall;
+         }
          else
-            return toCall;    
+         {
+            return FOLD;
+         }
       }
       
       handStrength = data.handStrength(t);
@@ -52,19 +71,19 @@ public class AI extends Player
          System.out.println("returnRatio: " + returnRatio);
          System.out.println("Rand Int: " + randInt);
       
-         if(returnRatio > 3)
+         if(returnRatio > 3.5)
          {
             if(randInt > 10)
                return raiseAmount(handStrength, t, toCall);
          }
             
-         else if(returnRatio > 2.5)
+         else if(returnRatio > 3.0)
          {
             if(randInt > 30)
                return raiseAmount(handStrength, t, toCall);
          }
                
-         else if(returnRatio > 1.5)
+         else if(returnRatio > 2.0)
          {
             if(randInt > 80)
                return raiseAmount(handStrength, t, toCall);

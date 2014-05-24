@@ -11,7 +11,7 @@ public class Game
    public static void main(String[] args)
    {
       final int RAISE_BLINDS = 15;
-      int bigBlind = 20, smallBlind = 10, initMoney = 400, handsPlayed = 1;
+      int bigBlind = 20, smallBlind = 10, initMoney = 200, handsPlayed = 1;
       Table t;
       ArrayList<Player> players;
       GUI gui = new GUI();

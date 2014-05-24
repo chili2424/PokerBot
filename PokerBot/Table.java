@@ -20,6 +20,7 @@ public class Table
    private int highestRaise;
    private ArrayList<String> textBox = new ArrayList<String>();
    private final int MAX_LENGTH = 10;
+   private int numRaises;
    
    /**
    *Initializes players and small/big blind amounts.
@@ -92,16 +93,14 @@ public class Table
       int h1Type = h1.classifyHand();
       int h2Type = h2.classifyHand();
       int handDiff = h1Type - h2Type;
-      int h1Kicker, h2Kicker, jStart, kStart, j, k;
+      int h1Kicker, h2Kicker, jStart, kStart, j = h1.getCard(4).getValue(), k = h2.getCard(4).getValue();
       
       if(handDiff == 0)
       {
          switch(h1Type)
          {
             case 0:
-            case 4:
             case 5:
-            case 8:
                for(int i = 4; i >= 0; i--)
                {
                   if(h1.getCard(i).getValue() != h2.getCard(i).getValue())
@@ -111,6 +110,20 @@ public class Table
                   }
                }
                break;
+            case 4:
+            case 8:
+               //If you have A-5 straight hand strength = 0
+               //Default case, hand strength = highest card in hand
+               if(h1.getCard(4).getValue() == 14 && h1.getCard(0).getValue() == 2)
+                  j = 0;                  
+               if(h2.getCard(4).getValue() == 14 && h2.getCard(0).getValue() == 2)
+                  k = 0;
+
+               handDiff = j - k;
+               
+                    
+               break;
+            
             default:
                if(h1.getMR1() != h2.getMR1())
                   handDiff = h1.getMR1() - h2.getMR1();
@@ -202,6 +215,8 @@ public class Table
    */
    public void dealFlop()
    {
+   
+      numRaises = 0;
       Card c1, c2, c3;
    
       highestBet = 0;
@@ -232,6 +247,7 @@ public class Table
    */
    public void dealTurn()
    {
+      numRaises = 0;
       Card c1;
       
       highestBet = 0;
@@ -276,6 +292,7 @@ public class Table
       activeCount = players.size();
       tableCards.clear();
       highestRaise = bigBlind;
+      numRaises = 0;
    }
 
    /**
@@ -757,6 +774,16 @@ public class Table
       textBox.add(s);
       if(textBox.size() > 10)
          textBox.remove(0);
+   }
+   
+   public int getNumRaises()
+   {
+      return numRaises;
+   }
+   
+   public int incrNumRaises()
+   {
+      return numRaises++;
    }
       
 }
