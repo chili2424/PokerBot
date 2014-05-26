@@ -2,6 +2,9 @@
 *Runs the entire Poker Game, including Players and Table.
 */
 
+//they'll keep raising even if the only other person is already all-in
+//ties are definitely not being handled correctly
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.*;

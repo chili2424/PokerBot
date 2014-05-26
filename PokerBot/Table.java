@@ -324,7 +324,7 @@ public class Table
    */
    public void moveDealer()
    {
-      if(dealer == players.size() - 1)
+      if(dealer >= players.size() - 1)
          dealer = 0;
       else
          dealer++;

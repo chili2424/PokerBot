@@ -10,6 +10,7 @@ import java.util.ArrayList;
 //make raise work
 //make button EITHER Call OR Check
 //FIX FLICKERING
+//fix print out when bot goes all in
 
 public class GUI
 {
