@@ -237,6 +237,7 @@ public class Table
          p.addToAllCards(c1);
          p.addToAllCards(c2);
          p.addToAllCards(c3);
+         findBestHand(p);
          
       }
       curPlayer = firstToAct();
@@ -451,13 +452,16 @@ public class Table
       }
       else if(decision > 0)
       {
-      
-         if(decision + players.get(curPlayer).getMoneyIn() == highestBet)
+         decision = players.get(curPlayer).takeMoney(decision);
+
+         if(players.get(curPlayer).getMoneyIn() == highestBet)
             text += " called.";
+         else if(players.get(curPlayer).getMoneyIn() > highestBet)
+            text += " raised by " + Integer.toString(players.get(curPlayer).getMoneyIn() - highestBet) + ".";
          else
-            text += " raised by " + Integer.toString(decision + players.get(curPlayer).getMoneyIn() - highestBet) + ".";
+            text += " went all in!";
          
-         pot += players.get(curPlayer).takeMoney(decision);
+         pot += decision;
          
          if(tableCards.size() == 0 && players.get(curPlayer).getMoneyIn() == 0)       
             if(highestBet < bigBlind)
@@ -642,10 +646,31 @@ public class Table
    /**
    *Distributes pot to winners. A Player can only win as much from each opponent as he contributed to the pot.
    */
-   public void handleWinners()
+   public void handleWinners(GUI gui)
    {
       ArrayList<ArrayList<Integer>> sortedP = getSortedPlayers();
       int potCont, totalWinnings, indiWinnings;
+      String s = "";
+      
+            
+      //print out winners
+      if(sortedP.get(0).size() == 1 && activeCount > 1)
+      {
+         addText(players.get(sortedP.get(0).get(0)).getName() + " won with a ");
+         addText(players.get(sortedP.get(0).get(0)).getBestHand().toString() + "!");
+      }
+      else if(activeCount > 1)
+      {
+         int i;
+         for(i = 0; i < sortedP.get(0).size() - 1; i++)
+         {
+            s+= players.get(sortedP.get(0).get(i)).getName() + ", ";
+         }
+         s += " and " + players.get(sortedP.get(0).get(i)).getName() + " tied";
+         addText(s);
+         addText("with a " + players.get(sortedP.get(0).get(0)).getBestHand().toString()); 
+
+      }
       
       for(Player p: players)
       {
@@ -665,7 +690,19 @@ public class Table
          } 
          
       System.out.println("\n" + players.get(sortedP.get(0).get(0)).getName() + ": " + players.get(sortedP.get(0).get(0)).getMoney());       
-      players.get(sortedP.get(0).get(0)).getBestHand().printHand();      
+      players.get(sortedP.get(0).get(0)).getBestHand().printHand(); 
+      
+      if(activeCount > 1)
+      {
+         gui.drawTable(this, true);
+         StdDraw.show(4000 + 2000* activeCount);
+      }
+      else
+      {
+         gui.drawTable(this, false);     
+         StdDraw.show(3000);
+      }
+     
    }
  
    /**

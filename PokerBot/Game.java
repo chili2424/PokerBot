@@ -4,6 +4,7 @@
 
 //they'll keep raising even if the only other person is already all-in
 //ties are definitely not being handled correctly
+//
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,8 +15,9 @@ public class Game
    public static void main(String[] args)
    {
       final int RAISE_BLINDS = 15;
-      int bigBlind = 20, smallBlind = 10, initMoney = 200, handsPlayed = 1;
+      int bigBlind = 20, smallBlind = 10, initMoney = 2000, handsPlayed = 1;
       Table t;
+      boolean display = false;
       ArrayList<Player> players;
       GUI gui = new GUI();
       
@@ -47,45 +49,45 @@ public class Game
          t.handleBlinds();
          t.dealPreFlop();
          
-         gui.drawTable(t);         
-         runTurn(t, gui);
+         gui.drawTable(t, display);         
+         runTurn(t, gui, display);
       
         
          t.dealFlop();
          if(t.activeCount() > 1)
-            gui.drawTable(t);
+            gui.drawTable(t, display);
             
          System.out.println("======== FLOP ========");
          t.printTableCards();         
-         runTurn(t, gui);  
+         runTurn(t, gui, display);  
       
          t.dealTurn(); 
          if(t.activeCount() > 1)
-            gui.drawTable(t);
+            gui.drawTable(t, display);
          
          System.out.println("======== TURN ========");
          t.printTableCards();         
       
-         runTurn(t, gui);
+         runTurn(t, gui, display);
       
          t.dealRiver(); 
          
          if(t.activeCount() > 1)
-            gui.drawTable(t);
+            gui.drawTable(t, display);
          System.out.println("======== RIVER ========");
          t.printTableCards();         
       
-         runTurn(t, gui);
+         runTurn(t, gui, display);
          
          
-         t.handleWinners();  
+         t.handleWinners(gui);  
          t.removePlayers();
          handsPlayed++;
          t.resetTable();
       }
    }
 
-   private static void runTurn(Table t, GUI gui)
+   private static void runTurn(Table t, GUI gui, boolean display)
    {
       final int CALL = -2;
       final int FLOP = 3;
@@ -113,7 +115,7 @@ public class Game
             System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
            
             t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
-            gui.drawTable(t);
+            gui.drawTable(t, display);
             StdDraw.show(100);
             decision = gui.handleMouse(t);
             
@@ -155,8 +157,8 @@ public class Game
             t.moveCurPlayer();
       
          numPlayed++;
-         gui.drawTable(t);
-         StdDraw.show(100);
+         gui.drawTable(t, display);
+         StdDraw.show(10);
       }
    }
    

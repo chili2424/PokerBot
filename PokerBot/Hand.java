@@ -348,7 +348,7 @@ public class Hand
    *
    *@return Hand type.
    */ 
-   public String handToString()
+   public String toString()
    {
       if(isRoyalFlush())
          return "Royal Flush";

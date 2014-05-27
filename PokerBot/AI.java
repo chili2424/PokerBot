@@ -9,6 +9,7 @@ public class AI extends Player
 {
    private final static int FOLD = -1;
    private final static int THRESHOLD = 6;
+   double handStrength;
    /**
    *Initializes player.
    */
@@ -27,7 +28,7 @@ public class AI extends Player
    {
       Random rand = new Random();
       Data data = new Data();
-      double handStrength, returnRatio, potOdds, highMult, lowMult, critPercent, EV;
+      double returnRatio, potOdds, highMult, lowMult, critPercent, EV;
       int randInt, toCall;
       toCall = t.getHighestBet() - super.getMoneyIn();
    
@@ -36,7 +37,7 @@ public class AI extends Player
          EV = data.findEV(super.getPreFlop());
          System.out.println("Distance from Last to Act: " + t.distanceFromLastToAct());
          EV -= t.distanceFromLastToAct() * (.01 + EV/100);
-      
+         handStrength = EV;
          
          if(t.getNumRaises() == 0 && EV >= .2)
          {
@@ -175,5 +176,10 @@ public class AI extends Player
       
       return bet;
    } 
+   
+   public double handStrength()
+   {
+      return handStrength;
+   }
 }
 
