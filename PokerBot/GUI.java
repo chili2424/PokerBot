@@ -108,7 +108,11 @@ public class GUI
          int sliderMax = t.getPlayer(0).getMoney();
          
          if(sliderMin < sliderMax){
+            
+         StdDraw.setPenColor(new Color(139,69,19));
             StdDraw.filledRectangle(50,5,8,5);
+            
+         StdDraw.setPenColor(new Color(0,0,0));
             if(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() > 0)
                StdDraw.text(50,5,"Call: $" + (t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()));
             else
