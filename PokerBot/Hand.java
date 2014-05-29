@@ -351,31 +351,31 @@ public class Hand
    public String toString()
    {
       if(isRoyalFlush())
-         return "Royal Flush";
+         return "a Royal Flush";
       
       else if(isStraightFlush())
-         return "Straight Flush";
+         return "a Straight Flush";
        
       else if(isFour())
-         return "Four of a kind";
+         return "four of a kind";
       
       else if(isFullHouse())
-         return "Full House";
+         return "a Full House";
       
       else if(isFlush())
-         return "Flush";
+         return "a Flush";
       
       else if(isStraight())
-         return "Straight";
+         return "a Straight";
       
       else if(isThree())
-         return "Three of a kind";
+         return "three of a kind";
       
       else if(numPairs() == 2)
-         return "Two pair";
+         return "two pairs";
       
       else if(numPairs() == 1)
-         return "Pair";
+         return "a pair";
       
       else
          return "High Card";

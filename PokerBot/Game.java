@@ -15,7 +15,7 @@ public class Game
    public static void main(String[] args)
    {
       final int RAISE_BLINDS = 10;
-      int bigBlind = 20, smallBlind = 10, initMoney = 1000, handsPlayed = 1;
+      int bigBlind = 20, smallBlind = 10, initMoney = 20, handsPlayed = 1;
       Table t;
       boolean display = false;
       ArrayList<Player> players;
@@ -49,13 +49,13 @@ public class Game
          t.handleBlinds();
          t.dealPreFlop();
          
-         gui.drawTable(t, display);         
+         gui.drawTable(t, display, false);         
          runTurn(t, gui, display);
       
         
          t.dealFlop();
          if(t.activeCount() > 1)
-            gui.drawTable(t, display);
+            gui.drawTable(t, display, false);
             
          System.out.println("======== FLOP ========");
          t.printTableCards();         
@@ -63,7 +63,7 @@ public class Game
       
          t.dealTurn(); 
          if(t.activeCount() > 1)
-            gui.drawTable(t, display);
+            gui.drawTable(t, display, false);
          
          System.out.println("======== TURN ========");
          t.printTableCards();         
@@ -73,7 +73,7 @@ public class Game
          t.dealRiver(); 
          
          if(t.activeCount() > 1)
-            gui.drawTable(t, display);
+            gui.drawTable(t, display, false);
          System.out.println("======== RIVER ========");
          t.printTableCards();         
       
@@ -85,6 +85,7 @@ public class Game
          handsPlayed++;
          t.resetTable();
       }
+      gui.endGame(players.get(0).getName());
    }
 
    private static void runTurn(Table t, GUI gui, boolean display)
@@ -114,8 +115,8 @@ public class Game
          
             System.out.println("\nmoney: " + t.getPlayer(0).getMoney());
            
-            t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
-            gui.drawTable(t, display);
+            //t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
+            gui.drawTable(t, display, true);
             StdDraw.show(100);
             decision = gui.handleMouse(t);
             
@@ -129,7 +130,6 @@ public class Game
              decision < t.getHighestRaise() + t.getHighestBet() && decision != t.getPlayer(t.getCurPlayer()).getMoney())
             {     
                System.out.println("Invalid bet");
-               decision = gui.handleMouse(t);
             }
             
             t.handleDecision(decision);
@@ -159,7 +159,7 @@ public class Game
             t.moveCurPlayer();
       
          numPlayed++;
-         gui.drawTable(t, display);
+         gui.drawTable(t, display, false);
          StdDraw.show(10);
       }
    }

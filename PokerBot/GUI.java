@@ -1,6 +1,7 @@
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.text.*;
 
 //To Do:
 //tell user what type of hand they have
@@ -12,12 +13,13 @@ public class GUI
    private String names[] = {"User", "Alpha", "Bravo", "Charlie", "Delta", "Echo", "Fox Trot", "Golf", "Hotel"};
    private int cardPositions[][] = {{50, 20}, {31, 36}, {14, 53}, {25, 76}, {45, 83}, {71, 78}, {85, 64}, {81, 47}, {70, 37}};
    private double sliderY;
+   private DecimalFormat truncate = new DecimalFormat("#.##");
    
    /**
    *This function draws the entire screen including table, players, their cards, and a box for text updates.
    *
    */
-   public void drawTable(Table t, boolean showCards)
+   public void drawTable(Table t, boolean showCards, boolean playersTurn)
    {
            
       StdDraw.setFont();
@@ -53,7 +55,7 @@ public class GUI
                StdDraw.picture(cardPositions[i][0], cardPositions[i][1],p.getPreFlop().getCard(0).getPath() , 6, 12);
                StdDraw.picture(cardPositions[i][0] + 3, cardPositions[i][1], p.getPreFlop().getCard(1).getPath(), 6, 12);
                //print hand strengths
-               StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + Double.toString(((AI)p).handStrength()));
+               StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + truncate.format(((AI)p).handStrength()));
              //  if(t.numTableCards() >= 3)
              //     StdDraw.text(positions[i][0], positions[i][1] - 10, p.getBestHand().toString());
               
@@ -76,7 +78,7 @@ public class GUI
       }
       
       //Draw Player Cards 
-      if(t.getPlayer(0).isActive())
+      if(t.playerIn("User") != null && t.playerIn("User").isActive())
       {
          StdDraw.picture(49, 36, t.getPlayer(0).getPreFlop().getCard(0).getPath(), 8, 16);
          StdDraw.picture(52, 36, t.getPlayer(0).getPreFlop().getCard(1).getPath(), 8, 16);
@@ -93,22 +95,31 @@ public class GUI
       StdDraw.text(50, 70, "Pot: $" + t.getPot());
       
       //Draw buttons
-      StdDraw.setPenColor(new Color(139,69,19));
-      StdDraw.setFont(new Font("SanSerif", Font.BOLD, 20));
-      StdDraw.filledRectangle(30,5,8,5); 
-      StdDraw.filledRectangle(50,5,8,5);
-      StdDraw.filledRectangle(70,5,8,5);
-      StdDraw.setPenColor(new Color(0,0,0));
-      StdDraw.text(30,5,"Fold");
-      StdDraw.text(50,5,"Check/Call");
+      if(playersTurn && t.getPlayer(0).getMoney() > 0){
+         StdDraw.setPenColor(new Color(139,69,19));
+         StdDraw.setFont(new Font("SanSerif", Font.BOLD, 20));
+         StdDraw.filledRectangle(30,5,8,5); 
+         StdDraw.filledRectangle(70,5,8,5);
+         StdDraw.setPenColor(new Color(0,0,0));
+         StdDraw.text(30,5,"Fold");
+         
+         int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
+              t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
+         int sliderMax = t.getPlayer(0).getMoney();
+         
+         if(sliderMin < sliderMax){
+            StdDraw.filledRectangle(50,5,8,5);
+            if(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() > 0)
+               StdDraw.text(50,5,"Call: $" + (t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()));
+            else
+               StdDraw.text(50,5,"Check");
+         }
       
-      int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn();
-      int sliderMax = t.getPlayer(0).getMoney();
-      
-      if(sliderMin < sliderMax)
-         StdDraw.text(70,5,"Raise");   
-      else
-         StdDraw.text(70,5,"All-In");
+         if(sliderMin < sliderMax)
+            StdDraw.text(70,5,"Raise");   
+         else
+            StdDraw.text(70,5,"All-In");
+      }
       
    }
    
@@ -136,24 +147,23 @@ public class GUI
             
             else if(x > 62 && x < 78)
             {
-                int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn();
-                int sliderMax = t.getPlayer(0).getMoney();
-                if(sliderMin < sliderMax)
+               int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
+                  t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
+               int sliderMax = t.getPlayer(0).getMoney();
+               if(sliderMin < sliderMax)
                   return (int)((sliderY/25)*(sliderMax - sliderMin) + sliderMin);
-                else
+               else
                   return t.getPlayer(0).getMoney();
             }
          }
         
-
+      
          if(StdDraw.mousePressed() && x >= 88 && x <= 92 && y <= sliderY + 25 && y >= 0  && y < 25.3 && y > 0)
          {
             sliderY = y;
-            drawTable(t, false);
-     
-         }
-
+            drawTable(t, false, true);
          
+         }
       }
       return 0;
    }
@@ -174,7 +184,8 @@ public class GUI
    
    public void drawSlider(Table t)
    {
-      int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn();
+      int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
+              t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
       int sliderMax = t.getPlayer(0).getMoney();
       
       if(sliderMin < sliderMax)
@@ -197,5 +208,13 @@ public class GUI
          StdDraw.setPenRadius(.002);
       }
       
+   }
+   
+   public void endGame(String s)
+   {
+      StdDraw.setPenColor(StdDraw.WHITE);
+      StdDraw.setPenRadius(20); //help
+      StdDraw.text(50, 70, s + " won!!");
+      StdDraw.show(10000);
    }
 }

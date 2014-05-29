@@ -703,7 +703,7 @@
       //print out winners
          if(sortedP.get(0).size() == 1 && activeCount > 1)
          {
-            addText(players.get(sortedP.get(0).get(0)).getName() + " won with a ");
+            addText(players.get(sortedP.get(0).get(0)).getName() + " won with");
             addText(players.get(sortedP.get(0).get(0)).getBestHand().toString() + "!");
          }
          else if(activeCount > 1)
@@ -713,7 +713,7 @@
             {
                s+= players.get(sortedP.get(0).get(i)).getName() + ", ";
             }
-            s += " and " + players.get(sortedP.get(0).get(i)).getName() + " tied";
+            s += "and " + players.get(sortedP.get(0).get(i)).getName() + " tied";
             addText(s);
             addText("with a " + players.get(sortedP.get(0).get(0)).getBestHand().toString()); 
          
@@ -741,12 +741,12 @@
       
          if(activeCount > 1)
          {
-            gui.drawTable(this, true);
+            gui.drawTable(this, true, false);
             StdDraw.show(4000 + 2000* activeCount);
          }
          else
          {
-            gui.drawTable(this, false);     
+            gui.drawTable(this, false, false);     
             StdDraw.show(3000);
          }
       
