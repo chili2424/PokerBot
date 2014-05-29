@@ -184,8 +184,8 @@ public class AI extends Player
       
       System.out.println("Highest Bet: " + t.getHighestBet());
       
-      if(bet < t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn())
-         bet = 2 * t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
+      if(bet < t.getHighestBet() + t.getHighestRaise())
+         bet = t.getHighestBet() + t.getHighestRaise();
       
       return bet;
    } 

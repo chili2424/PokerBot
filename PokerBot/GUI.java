@@ -13,7 +13,6 @@ public class GUI
    private String names[] = {"User", "Alpha", "Bravo", "Charlie", "Delta", "Echo", "Fox Trot", "Golf", "Hotel"};
    private int cardPositions[][] = {{50, 20}, {31, 36}, {14, 53}, {25, 76}, {45, 83}, {71, 78}, {85, 64}, {81, 47}, {70, 37}};
    private double sliderY;
-   private DecimalFormat truncate = new DecimalFormat("#.##");
    
    /**
    *This function draws the entire screen including table, players, their cards, and a box for text updates.
@@ -43,7 +42,7 @@ public class GUI
          if(p != null && p.isActive())
          {
             StdDraw.circle(positions[i][0], positions[i][1], 6);
-            StdDraw.text(positions[i][0], positions[i][1] + 2, names[i]);
+            StdDraw.text(positions[i][0], positions[i][1] + 3, names[i]);
             StdDraw.text(positions[i][0], positions[i][1] - 3, "$" + Integer.toString(p.getMoney()));
             if(i > 0 && !showCards)
             {
@@ -55,7 +54,12 @@ public class GUI
                StdDraw.picture(cardPositions[i][0], cardPositions[i][1],p.getPreFlop().getCard(0).getPath() , 6, 12);
                StdDraw.picture(cardPositions[i][0] + 3, cardPositions[i][1], p.getPreFlop().getCard(1).getPath(), 6, 12);
                //print hand strengths
-               StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + truncate.format(((AI)p).handStrength()));
+               double hs = ((AI)p).handStrength();
+               if(cardPositions[i][1] > positions[i][1] && t.numTableCards() > 0 && hs >= 0)
+                  StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + (int)(hs * 100) + "%");
+               else if(t.numTableCards() > 0 && hs >= 0)
+                  StdDraw.text(positions[i][0], positions[i][1] + 8, "HS: " + (int)(hs * 100) + "%");
+
              //  if(t.numTableCards() >= 3)
              //     StdDraw.text(positions[i][0], positions[i][1] - 10, p.getBestHand().toString());
               
@@ -66,7 +70,7 @@ public class GUI
             StdDraw.setPenColor(new Color(100, 100, 100));
             StdDraw.filledCircle(positions[i][0], positions[i][1], 6);
             StdDraw.setPenColor(new Color(0, 0, 0));
-            StdDraw.text(positions[i][0], positions[i][1] + 2, names[i]);
+            StdDraw.text(positions[i][0], positions[i][1] + 3, names[i]);
             StdDraw.text(positions[i][0], positions[i][1] - 3, "$" + Integer.toString(p.getMoney()));
          }
          else
@@ -76,6 +80,14 @@ public class GUI
             StdDraw.setPenColor(StdDraw.BLACK);
          }
       }
+      
+      
+      //Draw Dealer Button
+      StdDraw.setPenColor(StdDraw.WHITE);
+      StdDraw.setPenColor(StdDraw.BLACK);
+      StdDraw.setFont(new Font("SanSerif", Font.BOLD, 20));
+      StdDraw.text(positions[t.getDealer()][0],positions[t.getDealer()][1], "D");
+      
       
       //Draw Player Cards 
       if(t.playerIn("User") != null && t.playerIn("User").isActive())
@@ -103,11 +115,12 @@ public class GUI
          StdDraw.setPenColor(new Color(0,0,0));
          StdDraw.text(30,5,"Fold");
          
-         int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
-              t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
+         int sliderMin = t.getHighestRaise() + t.getHighestBet() > t.getHighestBet() + t.getHighestRaise() ? 
+                  t.getHighestRaise() + t.getHighestBet() : t.getHighestBet() + t.getHighestRaise();
+
          int sliderMax = t.getPlayer(0).getMoney();
          
-         if(sliderMin < sliderMax){
+         if(sliderMin < sliderMax && t.getPlayer(t.getCurPlayer()).getMoney() > t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()){
             
          StdDraw.setPenColor(new Color(139,69,19));
             StdDraw.filledRectangle(50,5,8,5);
@@ -127,7 +140,7 @@ public class GUI
       
    }
    
-   public int handleMouse(Table t)
+   public int handleMouse(Table t, boolean showCards)
    {
       sliderY = 0;
       drawSlider(t);
@@ -151,8 +164,8 @@ public class GUI
             
             else if(x > 62 && x < 78)
             {
-               int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
-                  t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
+               int sliderMin = t.getHighestRaise() + t.getHighestBet() > t.getHighestBet() + t.getHighestRaise() ? 
+                  t.getHighestRaise() + t.getHighestBet() : t.getHighestBet() + t.getHighestRaise();
                int sliderMax = t.getPlayer(0).getMoney();
                if(sliderMin < sliderMax)
                   return (int)((sliderY/25)*(sliderMax - sliderMin) + sliderMin);
@@ -162,10 +175,16 @@ public class GUI
          }
         
       
-         if(StdDraw.mousePressed() && x >= 88 && x <= 92 && y <= sliderY + 25 && y >= 0  && y < 25.3 && y > 0)
+         if(StdDraw.mousePressed() && x >= 88 && x <= 92 && y <= sliderY + 25 && y < 25.3 && y > -.3)
          {
-            sliderY = y;
-            drawTable(t, false, true);
+            if(y > 25)   
+               sliderY = 25;
+            else if(y < 0)
+               sliderY = 0;
+            else
+               sliderY = y;
+               
+            drawTable(t, showCards, true);
          
          }
       }
@@ -188,8 +207,8 @@ public class GUI
    
    public void drawSlider(Table t)
    {
-      int sliderMin = t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() > t.getHighestBet() + t.getHighestRaise() ? 
-              t.getHighestBet() * 2 - t.getPlayer(t.getCurPlayer()).getMoneyIn() : t.getHighestBet() + t.getHighestRaise();
+      int sliderMin = t.getHighestRaise() + t.getHighestBet();
+
       int sliderMax = t.getPlayer(0).getMoney();
       
       if(sliderMin < sliderMax)
@@ -216,9 +235,10 @@ public class GUI
    
    public void endGame(String s)
    {
+      StdDraw.filledSquare(0, 0, 150);
       StdDraw.setPenColor(StdDraw.WHITE);
-      StdDraw.setPenRadius(20); //help
-      StdDraw.text(50, 70, s + " won!!");
+      StdDraw.setFont(new Font("SansSerif", Font.PLAIN, 180));
+      StdDraw.text(50, 50, s + " won!!");
       StdDraw.show(10000);
    }
 }

@@ -15,9 +15,9 @@ public class Game
    public static void main(String[] args)
    {
       final int RAISE_BLINDS = 10;
-      int bigBlind = 20, smallBlind = 10, initMoney = 200, handsPlayed = 1;
+      int bigBlind = 20, smallBlind = 10, initMoney = 2000, handsPlayed = 1;
       Table t;
-      boolean display = false;
+      boolean display = true;
       ArrayList<Player> players;
       GUI gui = new GUI();
       
@@ -34,7 +34,7 @@ public class Game
       
       StdDraw.setCanvasSize(900,700);
       StdDraw.setXscale(0, 100);
-      StdDraw.setYscale(0, 100);
+      StdDraw.setYscale(0, 102);
       
    
       t = new Table(players, smallBlind, bigBlind);
@@ -106,7 +106,8 @@ public class Game
          if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
          {
             System.out.println(" ");
-         
+            System.out.println("h raise "  + t.getHighestRaise());
+            System.out.println("h bet " + t.getHighestBet());
             System.out.println("User: ");
             System.out.println("Preflop Hand: ");
             t.getPlayer(0).getPreFlop().printHand();
@@ -118,7 +119,7 @@ public class Game
             //t.addText("To Call: $" + Integer.toString(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()) +".");
             gui.drawTable(t, display, true);
             StdDraw.show(100);
-            decision = gui.handleMouse(t);
+            decision = gui.handleMouse(t, display);
             
             
             if(decision == CALL)
