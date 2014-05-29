@@ -375,7 +375,7 @@ public class Hand
          return "Two pair";
       
       else if(numPairs() == 1)
-         return "One pair";
+         return "Pair";
       
       else
          return "High Card";

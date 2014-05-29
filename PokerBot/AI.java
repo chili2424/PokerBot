@@ -31,6 +31,13 @@ public class AI extends Player
       double returnRatio, potOdds, highMult, lowMult, critPercent, EV;
       int randInt, toCall;
       toCall = t.getHighestBet() - super.getMoneyIn();
+      int averageBet = t.getBigBlind();
+      
+       if(t.getLastRaiser() == 0)
+         {
+            averageBet = t.getPlayer(0).getAverageBet();
+            System.out.println("LAST RAISER, Average Bet of User: " + averageBet);
+         }
    
       if(t.numTableCards() == 0)
       {
@@ -39,17 +46,17 @@ public class AI extends Player
          EV -= t.distanceFromLastToAct() * (.01 + EV/100);
          handStrength = EV;
          
+         
+         
          if(t.getNumRaises() == 0 && EV >= .2)
          {
-            t.incrNumRaises();
             return 3 * t.getBigBlind();
          }
-         else if(EV - t.getNumRaises() * t.getNumRaises() * .2 >= .2)
+         else if(EV - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .2 >= .2)
          {
-            t.incrNumRaises();
             return 3 * toCall;
          }
-         else if(EV - t.getNumRaises() * t.getNumRaises() * .1 >= 0) //might be problematic for HUGE raises/all-ins
+         else if(EV - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .1 >= 0) //might be problematic for HUGE raises/all-ins
          {
             return toCall;
          }
@@ -67,7 +74,7 @@ public class AI extends Player
       potOdds = (double)toCall/(t.getPot() + toCall);
       if(toCall > 0) 
       {
-         returnRatio = handStrength/potOdds;
+         returnRatio = handStrength/potOdds - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .25;
          randInt = rand.nextInt(100);
          System.out.println("returnRatio: " + returnRatio);
          System.out.println("Rand Int: " + randInt);
@@ -75,25 +82,30 @@ public class AI extends Player
          if(returnRatio > 3.5)
          {
             if(randInt > 10)
+            {
                return raiseAmount(handStrength, t, toCall);
+            }
          }
             
          else if(returnRatio > 3.0)
          {
-            if(randInt > 30)
+            if(randInt > 30){
                return raiseAmount(handStrength, t, toCall);
+            }
          }
                
          else if(returnRatio > 2.0)
          {
-            if(randInt > 80)
+            if(randInt > 80){
                return raiseAmount(handStrength, t, toCall);
+            }
          }
                   
          else if(returnRatio > 1)
          {
-            if(randInt > 95)
+            if(randInt > 95){
                return raiseAmount(handStrength, t, toCall);
+            }
          }
                      
          else if(returnRatio <= 1)
@@ -114,7 +126,7 @@ public class AI extends Player
       
          if(handStrength >= critPercent * highMult)
          {
-            if(randInt > 10) 
+            if(randInt > 10)
                return raiseAmount(handStrength, t, toCall);          
          }
          else if(handStrength >= critPercent * lowMult)
@@ -141,6 +153,7 @@ public class AI extends Player
    */
    public int raiseAmount(double handStrength, Table t, int callAmount)
    {
+   
       double mult, critPercent, ratio, estHandStrength, baseBet;
       int bet, rand, toCall, potThreshold;
       Random r = new Random();

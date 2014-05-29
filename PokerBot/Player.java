@@ -14,6 +14,9 @@ public class Player
    private boolean active = true;
    private int moneyIn;
    private int potContribution;
+   private int averageBet;
+   private int sumBet = 20;
+   private int timesBet = 0;
    
    public Player(){}
    
@@ -29,7 +32,20 @@ public class Player
       this.money = money;
       this.active = true;
    }
-   
+   public int getAverageBet()
+   {
+      return averageBet;
+   }
+   public void setAverageBet(int moneyBet)
+   {
+      averageBet = (40 + sumBet) /(1 + timesBet);
+      System.out.println("averageBet:" + averageBet + "= (40 + " + sumBet + ")/(1 + " + timesBet);
+      sumBet += moneyBet;
+   }
+   public void incrTimesBet()
+   {
+      timesBet++;
+   }
    /**
    *Adds card to this Player's ArrayList of all Cards.
    *

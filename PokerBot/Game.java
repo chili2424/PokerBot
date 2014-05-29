@@ -14,8 +14,8 @@ public class Game
 { 
    public static void main(String[] args)
    {
-      final int RAISE_BLINDS = 15;
-      int bigBlind = 20, smallBlind = 10, initMoney = 2000, handsPlayed = 1;
+      final int RAISE_BLINDS = 10;
+      int bigBlind = 20, smallBlind = 10, initMoney = 1000, handsPlayed = 1;
       Table t;
       boolean display = false;
       ArrayList<Player> players;
@@ -122,12 +122,14 @@ public class Game
             
             if(decision == CALL)
                decision = t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn();
-               
+            
+            
+            //irrelevant now we have gui???   
             while(decision >= 0 && decision != t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() &&
              decision < t.getHighestRaise() + t.getHighestBet() && decision != t.getPlayer(t.getCurPlayer()).getMoney())
             {     
                System.out.println("Invalid bet");
-               decision = sc.nextInt();
+               decision = gui.handleMouse(t);
             }
             
             t.handleDecision(decision);

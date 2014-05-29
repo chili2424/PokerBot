@@ -50,8 +50,8 @@ public class GUI
             }
             else if(i > 0 && showCards)
             {
-               StdDraw.picture(cardPositions[i][0], cardPositions[i][1],t.getPlayer(i).getPreFlop().getCard(0).getPath() , 6, 12);
-               StdDraw.picture(cardPositions[i][0] + 3, cardPositions[i][1], t.getPlayer(i).getPreFlop().getCard(1).getPath(), 6, 12);
+               StdDraw.picture(cardPositions[i][0], cardPositions[i][1],p.getPreFlop().getCard(0).getPath() , 6, 12);
+               StdDraw.picture(cardPositions[i][0] + 3, cardPositions[i][1], p.getPreFlop().getCard(1).getPath(), 6, 12);
                //print hand strengths
                StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + Double.toString(((AI)p).handStrength()));
              //  if(t.numTableCards() >= 3)
@@ -69,8 +69,9 @@ public class GUI
          }
          else
          {
-            StdDraw.setPenColor(new Color(0, 0, 0));
+            StdDraw.setPenColor(StdDraw.WHITE);
             StdDraw.filledCircle(positions[i][0], positions[i][1], 6);
+            StdDraw.setPenColor(StdDraw.BLACK);
          }
       }
       
