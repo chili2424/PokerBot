@@ -9,6 +9,8 @@ public class AI extends Player
 {
    private final static int FOLD = -1;
    private final static int THRESHOLD = 6;
+   private final static double e = 2.7182;
+   private final static double a = 0.5;
    double handStrength;
    /**
    *Initializes player.
@@ -32,6 +34,7 @@ public class AI extends Player
       int randInt, toCall;
       toCall = t.getHighestBet() - super.getMoneyIn();
       int averageBet = t.getBigBlind();
+      double raiseAdjustment = 2.0 / (1 + Math.pow(e, -0.2 * Math.pow(t.getNumRaises(),1.625))) - 1;
       
        if(t.getLastRaiser() == 0)
          {
@@ -42,21 +45,27 @@ public class AI extends Player
       if(t.numTableCards() == 0)
       {
          EV = data.findEV(super.getPreFlop());
+         System.out.println("EV: " + EV);
          System.out.println("Distance from Last to Act: " + t.distanceFromLastToAct());
          EV -= t.distanceFromLastToAct() * (.01 + EV/100);
+         System.out.println("EV: " + EV); 
          handStrength = EV;
          
+         System.out.println("\nRaise adjustment: " + raiseAdjustment);
+  
+         
+         System.out.println("EV: " + EV + " toCall / AverageBet * .01 = " + (toCall / averageBet * .01));
          
          
          if(t.getNumRaises() == 0 && EV >= .2)
          {
             return 3 * t.getBigBlind();
          }
-         else if(EV - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .2 >= .2)
+         else if(EV - toCall / averageBet * .01 - raiseAdjustment >= .2)
          {
             return 3 * toCall;
          }
-         else if(EV - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .1 >= 0) //might be problematic for HUGE raises/all-ins
+         else if(EV - toCall / averageBet * .01 - raiseAdjustment >= 0) //might be problematic for HUGE raises/all-ins
          {
             return toCall;
          }
@@ -74,10 +83,11 @@ public class AI extends Player
       potOdds = (double)toCall/(t.getPot() + toCall);
       if(toCall > 0) 
       {
-         returnRatio = handStrength/potOdds - toCall / averageBet * .01 - t.getNumRaises() * t.getNumRaises() * .25;
+         returnRatio = handStrength/potOdds - toCall / averageBet * .01 - raiseAdjustment;
          randInt = rand.nextInt(100);
          System.out.println("returnRatio: " + returnRatio);
          System.out.println("Rand Int: " + randInt);
+         
       
          if(returnRatio > 3.5)
          {

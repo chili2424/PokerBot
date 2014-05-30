@@ -59,7 +59,7 @@ public class GUI
                   StdDraw.text(positions[i][0], positions[i][1] - 8, "HS: " + (int)(hs * 100) + "%");
                else if(t.numTableCards() > 0 && hs >= 0)
                   StdDraw.text(positions[i][0], positions[i][1] + 8, "HS: " + (int)(hs * 100) + "%");
-
+            
              //  if(t.numTableCards() >= 3)
              //     StdDraw.text(positions[i][0], positions[i][1] - 10, p.getBestHand().toString());
               
@@ -117,15 +117,15 @@ public class GUI
          
          int sliderMin = t.getHighestRaise() + t.getHighestBet() > t.getHighestBet() + t.getHighestRaise() ? 
                   t.getHighestRaise() + t.getHighestBet() : t.getHighestBet() + t.getHighestRaise();
-
+      
          int sliderMax = t.getPlayer(0).getMoney();
          
-         if(sliderMin < sliderMax && t.getPlayer(t.getCurPlayer()).getMoney() > t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()){
+         if(t.getPlayer(t.getCurPlayer()).getMoney() > t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()){
             
-         StdDraw.setPenColor(new Color(139,69,19));
+            StdDraw.setPenColor(new Color(139,69,19));
             StdDraw.filledRectangle(50,5,8,5);
             
-         StdDraw.setPenColor(new Color(0,0,0));
+            StdDraw.setPenColor(new Color(0,0,0));
             if(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() > 0)
                StdDraw.text(50,5,"Call: $" + (t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()));
             else
@@ -208,7 +208,7 @@ public class GUI
    public void drawSlider(Table t)
    {
       int sliderMin = t.getHighestRaise() + t.getHighestBet();
-
+   
       int sliderMax = t.getPlayer(0).getMoney();
       
       if(sliderMin < sliderMax)

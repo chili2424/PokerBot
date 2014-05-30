@@ -80,7 +80,7 @@ public class Game
          runTurn(t, gui, display);
          
          
-         t.handleWinners(gui);  
+         t.handleWinners(gui, display);  
          t.removePlayers();
          handsPlayed++;
          t.resetTable();
@@ -102,6 +102,9 @@ public class Game
       while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
       {   
          StdDraw.show(1000);
+         
+         System.out.println(t.getPlayer(t.getCurPlayer()).getName());
+         System.out.println("Money: " + t.getPlayer(t.getCurPlayer()).getMoney());
          
          if(t.getPlayer(t.getCurPlayer()).getName() == "User" && t.getPlayer(0).getMoney() > 0)
          {
@@ -133,6 +136,8 @@ public class Game
                System.out.println("Invalid bet");
             }
             
+            System.out.println("Bet: " + decision);
+            
             t.handleDecision(decision);
          
          }
@@ -156,8 +161,10 @@ public class Game
             System.out.println("Pot size: " +  t.getPot());
          
          }
-         else
+         else{
+            System.out.println("moved");
             t.moveCurPlayer();
+         }
       
          numPlayed++;
          gui.drawTable(t, display, false);

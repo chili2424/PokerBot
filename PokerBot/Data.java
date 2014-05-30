@@ -148,7 +148,7 @@ public class Data
       {   
          for(Hand h2 : possPreflopHands)
          {
-            if(h.equals(h2) == 1)
+            if(h.equals(h2) > 0)
                return h2.getEV();  
          }
       }     

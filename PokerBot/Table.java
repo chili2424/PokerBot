@@ -34,7 +34,7 @@ public class Table
    {
       players = p;
       smallBlind = sB;
-      bigBlind = highestRaise = bB;
+      bigBlind = highestBet = highestRaise = bB;
    
       deck = new Deck();
       dealer = 0;
@@ -150,7 +150,7 @@ public class Table
                            break;
                         }
                      }
-                 
+                  
                                           
                      for(k = kStart; k >= 0; k--)  
                      {
@@ -319,7 +319,7 @@ public class Table
       moveDealer();
       activeCount = players.size();
       tableCards.clear();
-      highestRaise = bigBlind;
+      highestBet = highestRaise = bigBlind;
       numRaises = 0;
       lastRaiser = -1;
    }
@@ -427,11 +427,24 @@ public class Table
 */
    public boolean isTurnOver()
    {
+      boolean over = true;
+      int count = 0;
+      
       for(Player p : players)
+      {
          if(p.isActive() && p.getMoneyIn() != highestBet && p.getMoney() != 0)
-            return false;
-         
-      return true;
+         {
+            System.out.println("Over is false-" + p.getName() + " is active, his money in is " + p.getMoneyIn() + " and the highest bet is" + highestBet + " his money is " + p.getMoney());
+            over = false;
+         }   
+         if(p.isActive() && p.getMoney() > 0)
+            count++;
+      }
+      
+      if(count <= 1)
+         return true;
+      else
+         return over;
    }
 
 /**
@@ -486,7 +499,7 @@ public class Table
       
          if(players.get(curPlayer).getMoneyIn() == highestBet)
             text += " called.";
-         else if(players.get(curPlayer).getMoneyIn() > highestBet)
+         else if(players.get(curPlayer).getMoneyIn() > highestBet && players.get(curPlayer).getMoney() > 0)
          {
             incrNumRaises();
             if(curPlayer == 0) //user
@@ -697,7 +710,7 @@ public class Table
 /**
 *Distributes pot to winners. A Player can only win as much from each opponent as he contributed to the pot.
 */
-   public void handleWinners(GUI gui)
+   public void handleWinners(GUI gui, boolean display)
    {
       ArrayList<ArrayList<Integer>> sortedP = getSortedPlayers();
       int potCont, totalWinnings, indiWinnings;
@@ -746,13 +759,13 @@ public class Table
       if(activeCount > 1)
       {
          addText("Click anywhere.");
-         gui.drawTable(this, true, false);
+         gui.drawTable(this, display, false);
          StdDraw.show(1000);
          while(!StdDraw.mousePressed());
       }
       else
       {
-         gui.drawTable(this, false, false);     
+         gui.drawTable(this, display, false);     
          StdDraw.show(3000);
       }
    
