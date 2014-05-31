@@ -86,7 +86,14 @@ public class GUI
       StdDraw.setPenColor(StdDraw.WHITE);
       StdDraw.setPenColor(StdDraw.BLACK);
       StdDraw.setFont(new Font("SanSerif", Font.BOLD, 20));
-      StdDraw.text(positions[t.getDealer()][0],positions[t.getDealer()][1], "D");
+      
+      Player tempP = t.playerIn(t.getPlayer(t.getDealer()).getName());
+      int temp = 0;
+      while(!names[temp].equals(tempP.getName()))
+      {
+         temp++;
+      }
+      StdDraw.text(positions[temp][0],positions[temp][1], "D");
       
       
       //Draw Player Cards 

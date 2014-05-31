@@ -937,5 +937,10 @@ public class Table
       return maxMoneyIn;
    }
    
+   public Player getCurrentPlayer()
+   {
+      return players.get(curPlayer);
+   }
+   
 }
     

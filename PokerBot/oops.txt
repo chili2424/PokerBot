@@ -1,0 +1,1699 @@
+    Preflop Hand: 
+    10c Jc Distance from Last to Act: 0
+    Bet: 0
+    Money: 246
+    Pot size: 120
+    ======== FLOP ========
+    7d
+    Ad
+    6h
+     
+    User: 
+    Preflop Hand: 
+    5c Kc 
+    Hand Strength: 0.1534
+    
+    money: 1746
+     
+    Alpha
+    Preflop Hand: 
+    10c Jc 
+    Hand Strength: 0.1292
+    Radom Int: 75
+    Bet: 0
+    Money: 246
+    Pot size: 120
+     
+    Hotel
+    Preflop Hand: 
+    10h 10s 
+    Hand Strength: 0.3288
+    Radom Int: 33
+    Bet: 0
+    Money: 142
+    Pot size: 120
+    ======== TURN ========
+    7d
+    Ad
+    6h
+    7h
+     
+    User: 
+    Preflop Hand: 
+    5c Kc 
+    Hand Strength: 0.1402
+    
+    money: 1746
+     
+    Alpha
+    Preflop Hand: 
+    10c Jc 
+    Hand Strength: 0.1335
+    Radom Int: 43
+    Bet: 0
+    Money: 246
+    Pot size: 120
+     
+    Hotel
+    Preflop Hand: 
+    10h 10s 
+    Hand Strength: 0.2842
+    Radom Int: 67
+    Highest Bet: 0
+    Bet: 53
+    Money: 89
+    Pot size: 173
+     
+    User: 
+    Preflop Hand: 
+    5c Kc 
+    Hand Strength: 0.1392
+    
+    money: 1746
+     
+    Alpha
+    Preflop Hand: 
+    10c Jc 
+    Hand Strength: 0.1302
+    returnRatio: 0.6764433962264151
+    Rand Int: 53
+    Bet: -1
+    Money: 246
+    Pot size: 226
+    ======== RIVER ========
+    7d
+    Ad
+    6h
+    7h
+    Ac
+     
+    User: 
+    Preflop Hand: 
+    5c Kc 
+    Hand Strength: 0.5755
+    
+    money: 1693
+     
+    Hotel
+    Preflop Hand: 
+    10h 10s 
+    Hand Strength: 0.6008
+    Radom Int: 77
+    Highest Bet: 0
+    Bet: 110
+    Money: 0
+    Pot size: 315
+     
+    User: 
+    Preflop Hand: 
+    5c Kc 
+    Hand Strength: 0.5689
+    
+    money: 1693
+    
+    Hotel: 404
+    7d 10s 10h Ad Ac 
+    New Hand
+    
+    Dealer: User
+     
+    Delta
+    Preflop Hand: 
+    6d 7s Distance from Last to Act: 6
+    Bet: -1
+    Money: 660
+    Pot size: 60
+     
+    Echo
+    Preflop Hand: 
+    2h 9h Distance from Last to Act: 5
+    Bet: -1
+    Money: 280
+    Pot size: 60
+     
+    Golf
+    Preflop Hand: 
+    3c 3s Distance from Last to Act: 4
+    Bet: -1
+    Money: 110
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    8d Ac Distance from Last to Act: 3
+    Bet: -1
+    Money: 404
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    4c 10d 
+    money: 1604
+     
+    Alpha
+    Preflop Hand: 
+    6h 7c Distance from Last to Act: 1
+    Bet: -1
+    Money: 226
+    Pot size: 100
+     
+    Bravo
+    Preflop Hand: 
+    2s 7h Distance from Last to Act: 0
+    Bet: -1
+    Money: 256
+    Pot size: 100
+    ======== FLOP ========
+    Qs
+    2c
+    Kc
+    ======== TURN ========
+    Qs
+    2c
+    Kc
+    3h
+    ======== RIVER ========
+    Qs
+    2c
+    Kc
+    3h
+    Jd
+    
+    User: 1664
+    4c 10d Jd Qs Kc 
+    New Hand
+    
+    Dealer: Alpha
+     
+    Echo
+    Preflop Hand: 
+    2d Jh Distance from Last to Act: 6
+    Bet: -1
+    Money: 280
+    Pot size: 60
+     
+    Golf
+    Preflop Hand: 
+    5s 6d Distance from Last to Act: 5
+    Bet: -1
+    Money: 110
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    7h Kh Distance from Last to Act: 4
+    Bet: -1
+    Money: 404
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    2s 10s 
+    money: 1664
+     
+    Alpha
+    Preflop Hand: 
+    8d Qd Distance from Last to Act: 2
+    Bet: -1
+    Money: 226
+    Pot size: 100
+     
+    Bravo
+    Preflop Hand: 
+    6h 7d Distance from Last to Act: 1
+    Bet: -1
+    Money: 236
+    Pot size: 100
+     
+    Delta
+    Preflop Hand: 
+    8c As Distance from Last to Act: 0
+    Bet: -1
+    Money: 620
+    Pot size: 100
+    ======== FLOP ========
+    6s
+    3s
+    Ac
+    ======== TURN ========
+    6s
+    3s
+    Ac
+    4d
+    ======== RIVER ========
+    6s
+    3s
+    Ac
+    4d
+    4s
+    
+    User: 1724
+    2s 3s 4s 6s 10s 
+    New Hand
+    
+    Dealer: Bravo
+     
+    Golf
+    Preflop Hand: 
+    5s Kd Distance from Last to Act: 6
+    Bet: -1
+    Money: 110
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    6c 8d Distance from Last to Act: 5
+    Bet: -1
+    Money: 404
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    3h 6h 
+    money: 1724
+     
+    Alpha
+    Preflop Hand: 
+    2h 8c Distance from Last to Act: 3
+    Bet: -1
+    Money: 226
+    Pot size: 100
+     
+    Bravo
+    Preflop Hand: 
+    7h 8s Distance from Last to Act: 2
+    Bet: -1
+    Money: 236
+    Pot size: 100
+     
+    Delta
+    Preflop Hand: 
+    Jd Qs Distance from Last to Act: 1
+    Bet: 20
+    Money: 580
+    Pot size: 120
+     
+    Echo
+    Preflop Hand: 
+    10h Ac Distance from Last to Act: 0
+    Bet: 0
+    Money: 240
+    Pot size: 120
+    ======== FLOP ========
+    4d
+    2c
+    9s
+     
+    Delta
+    Preflop Hand: 
+    Jd Qs 
+    Hand Strength: 0.2329
+    Radom Int: 49
+    Bet: 0
+    Money: 580
+    Pot size: 120
+     
+    Echo
+    Preflop Hand: 
+    10h Ac 
+    Hand Strength: 0.3012
+    Radom Int: 92
+    Highest Bet: 0
+    Bet: 59
+    Money: 181
+    Pot size: 179
+     
+    User: 
+    Preflop Hand: 
+    3h 6h 
+    Hand Strength: 0.2372
+    
+    money: 1684
+     
+    Delta
+    Preflop Hand: 
+    Jd Qs 
+    Hand Strength: 0.2274
+    returnRatio: 1.0973898305084746
+    Rand Int: 13
+    Bet: 59
+    Money: 521
+    Pot size: 297
+    ======== TURN ========
+    4d
+    2c
+    9s
+    6s
+     
+    Delta
+    Preflop Hand: 
+    Jd Qs 
+    Hand Strength: 0.1214
+    Radom Int: 2
+    Bet: 0
+    Money: 521
+    Pot size: 297
+     
+    Echo
+    Preflop Hand: 
+    10h Ac 
+    Hand Strength: 0.19
+    Radom Int: 91
+    Bet: 0
+    Money: 181
+    Pot size: 297
+     
+    User: 
+    Preflop Hand: 
+    3h 6h 
+    Hand Strength: 0.4133
+    
+    money: 1625
+    ======== RIVER ========
+    4d
+    2c
+    9s
+    6s
+    Jc
+     
+    Delta
+    Preflop Hand: 
+    Jd Qs 
+    Hand Strength: 0.6542
+    Radom Int: 32
+    Highest Bet: 0
+    Bet: 184
+    Money: 337
+    Pot size: 481
+     
+    Echo
+    Preflop Hand: 
+    10h Ac 
+    Hand Strength: 0.1055
+    returnRatio: 0.37189402173913044
+    Rand Int: 48
+    Bet: -1
+    Money: 181
+    Pot size: 481
+     
+    User: 
+    Preflop Hand: 
+    3h 6h 
+    Hand Strength: 0.5695
+    
+    money: 1625
+    
+    Delta: 1002
+    2c 4d Jd Jc Qs 
+    New Hand
+    
+    Dealer: Delta
+     
+    Hotel
+    Preflop Hand: 
+    Qd Kd Distance from Last to Act: 6
+    Bet: 40
+    Money: 364
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    9h Ks 
+    money: 1441
+     
+    Alpha
+    Preflop Hand: 
+    5s 10d Distance from Last to Act: 4
+    Bet: -1
+    Money: 226
+    Pot size: 140
+     
+    Bravo
+    Preflop Hand: 
+    2h 3d Distance from Last to Act: 3
+    Bet: -1
+    Money: 236
+    Pot size: 140
+     
+    Delta
+    Preflop Hand: 
+    6s Kh Distance from Last to Act: 2
+    Bet: -1
+    Money: 1002
+    Pot size: 140
+     
+    Echo
+    Preflop Hand: 
+    2d 10s Distance from Last to Act: 1
+    Bet: -1
+    Money: 161
+    Pot size: 140
+     
+    Golf
+    Preflop Hand: 
+    8d Qh Distance from Last to Act: 0
+    Bet: -1
+    Money: 70
+    Pot size: 140
+    ======== FLOP ========
+    Qc
+    5c
+    Jh
+     
+    Hotel
+    Preflop Hand: 
+    Qd Kd 
+    Hand Strength: 0.7359
+    Radom Int: 73
+    Highest Bet: 0
+    Bet: 58
+    Money: 306
+    Pot size: 198
+     
+    User: 
+    Preflop Hand: 
+    9h Ks 
+    Hand Strength: 0.4182
+    
+    money: 1401
+    ======== TURN ========
+    Qc
+    5c
+    Jh
+    Jc
+     
+    Hotel
+    Preflop Hand: 
+    Qd Kd 
+    Hand Strength: 0.6244
+    Radom Int: 75
+    Highest Bet: 0
+    Bet: 115
+    Money: 191
+    Pot size: 371
+     
+    User: 
+    Preflop Hand: 
+    9h Ks 
+    Hand Strength: 0.3102
+    
+    money: 1343
+    ======== RIVER ========
+    Qc
+    5c
+    Jh
+    Jc
+    4s
+     
+    Hotel
+    Preflop Hand: 
+    Qd Kd 
+    Hand Strength: 0.6473
+    Radom Int: 1
+    Bet: 0
+    Money: 191
+    Pot size: 486
+     
+    User: 
+    Preflop Hand: 
+    9h Ks 
+    Hand Strength: 0.2133
+    
+    money: 1228
+    
+    Hotel: 677
+    Jc Jh Qc Qd Kd 
+    New Hand
+    
+    Dealer: Echo
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    money: 1228
+     
+    Alpha
+    Preflop Hand: 
+    7s Jd Distance from Last to Act: 5
+    Bet: -1
+    Money: 226
+    Pot size: 100
+     
+    Bravo
+    Preflop Hand: 
+    2s 5c Distance from Last to Act: 4
+    Bet: -1
+    Money: 236
+    Pot size: 100
+     
+    Delta
+    Preflop Hand: 
+    Qs Ks Distance from Last to Act: 3
+    Bet: 40
+    Money: 962
+    Pot size: 140
+     
+    Echo
+    Preflop Hand: 
+    4s Kh Distance from Last to Act: 2
+    Bet: -1
+    Money: 161
+    Pot size: 140
+     
+    Golf
+    Preflop Hand: 
+    6h 8d Distance from Last to Act: 1
+    Bet: -1
+    Money: 50
+    Pot size: 140
+     
+    Hotel
+    Preflop Hand: 
+    3d 7h Distance from Last to Act: 0
+    Bet: -1
+    Money: 637
+    Pot size: 140
+    ======== FLOP ========
+    Ad
+    9d
+    Js
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    Hand Strength: 0.2674
+    
+    money: 1188
+     
+    Delta
+    Preflop Hand: 
+    Qs Ks 
+    Hand Strength: 0.4888
+    Radom Int: 80
+    Highest Bet: 0
+    Bet: 69
+    Money: 893
+    Pot size: 209
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    Hand Strength: 0.2598
+    
+    money: 1188
+    ======== TURN ========
+    Ad
+    9d
+    Js
+    Ah
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    Hand Strength: 0.2357
+    
+    money: 1119
+     
+    Delta
+    Preflop Hand: 
+    Qs Ks 
+    Hand Strength: 0.4631
+    Radom Int: 34
+    Bet: 0
+    Money: 893
+    Pot size: 278
+    ======== RIVER ========
+    Ad
+    9d
+    Js
+    Ah
+    10h
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    Hand Strength: 0.5033
+    
+    money: 1119
+     
+    Delta
+    Preflop Hand: 
+    Qs Ks 
+    Hand Strength: 0.8975
+    Radom Int: 19
+    Highest Bet: 0
+    Bet: 167
+    Money: 726
+    Pot size: 445
+     
+    User: 
+    Preflop Hand: 
+    3c 10s 
+    Hand Strength: 0.494
+    
+    money: 1119
+    
+    Delta: 1338
+    10h Js Qs Ks Ad 
+    New Hand
+    
+    Dealer: Golf
+     
+    Alpha
+    Preflop Hand: 
+    6s 8c Distance from Last to Act: 6
+    Bet: -1
+    Money: 226
+    Pot size: 60
+     
+    Bravo
+    Preflop Hand: 
+    9d 10c Distance from Last to Act: 5
+    Bet: -1
+    Money: 236
+    Pot size: 60
+     
+    Delta
+    Preflop Hand: 
+    2c 3h Distance from Last to Act: 4
+    Bet: -1
+    Money: 1338
+    Pot size: 60
+     
+    Echo
+    Preflop Hand: 
+    Jd As Distance from Last to Act: 3
+    Bet: 40
+    Money: 121
+    Pot size: 100
+     
+    Golf
+    Preflop Hand: 
+    5s 8s Distance from Last to Act: 2
+    Bet: -1
+    Money: 50
+    Pot size: 100
+     
+    Hotel
+    Preflop Hand: 
+    9h 10d Distance from Last to Act: 1
+    Bet: -1
+    Money: 617
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    6c 7c 
+    money: 912
+    ======== FLOP ========
+    10h
+    7h
+    10s
+     
+    User: 
+    Preflop Hand: 
+    6c 7c 
+    Hand Strength: 0.5612
+    
+    money: 912
+     
+    Echo
+    Preflop Hand: 
+    Jd As 
+    Hand Strength: 0.4982
+    Radom Int: 52
+    Bet: 0
+    Money: 121
+    Pot size: 100
+    ======== TURN ========
+    10h
+    7h
+    10s
+    Kh
+     
+    User: 
+    Preflop Hand: 
+    6c 7c 
+    Hand Strength: 0.4238
+    
+    money: 912
+     
+    Echo
+    Preflop Hand: 
+    Jd As 
+    Hand Strength: 0.3798
+    Radom Int: 83
+    Bet: 0
+    Money: 121
+    Pot size: 100
+    ======== RIVER ========
+    10h
+    7h
+    10s
+    Kh
+    Kc
+     
+    User: 
+    Preflop Hand: 
+    6c 7c 
+    Hand Strength: 0.2309
+    
+    money: 912
+     
+    Echo
+    Preflop Hand: 
+    Jd As 
+    Hand Strength: 0.5226
+    Radom Int: 68
+    Bet: 40
+    Money: 81
+    Pot size: 140
+     
+    User: 
+    Preflop Hand: 
+    6c 7c 
+    Hand Strength: 0.2327
+    
+    money: 912
+    
+    Echo: 261
+    10s 10h Kc Kh As 
+    New Hand
+    
+    Dealer: Hotel
+     
+    Bravo
+    Preflop Hand: 
+    5h 10h Distance from Last to Act: 6
+    Bet: -1
+    Money: 236
+    Pot size: 60
+     
+    Delta
+    Preflop Hand: 
+    Kd Ad Distance from Last to Act: 5
+    Bet: 40
+    Money: 1298
+    Pot size: 100
+     
+    Echo
+    Preflop Hand: 
+    6c Jh Distance from Last to Act: 4
+    Bet: -1
+    Money: 261
+    Pot size: 100
+     
+    Golf
+    Preflop Hand: 
+    6h Kh Distance from Last to Act: 3
+    Bet: -1
+    Money: 50
+    Pot size: 100
+     
+    Hotel
+    Preflop Hand: 
+    3h Ks Distance from Last to Act: 2
+    Bet: -1
+    Money: 617
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    money: 852
+     
+    Alpha
+    Preflop Hand: 
+    2s 9h Distance from Last to Act: 0
+    Bet: -1
+    Money: 186
+    Pot size: 120
+    ======== FLOP ========
+    10d
+    8s
+    5c
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    Hand Strength: 0.4506
+    
+    money: 832
+     
+    Delta
+    Preflop Hand: 
+    Kd Ad 
+    Hand Strength: 0.4946
+    Radom Int: 69
+    Highest Bet: 0
+    Bet: 60
+    Money: 1238
+    Pot size: 180
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    Hand Strength: 0.4414
+    
+    money: 832
+    ======== TURN ========
+    10d
+    8s
+    5c
+    8d
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    Hand Strength: 0.4515
+    
+    money: 772
+     
+    Delta
+    Preflop Hand: 
+    Kd Ad 
+    Hand Strength: 0.5786
+    Radom Int: 78
+    Highest Bet: 0
+    Bet: 111
+    Money: 1127
+    Pot size: 351
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    Hand Strength: 0.4563
+    
+    money: 772
+    ======== RIVER ========
+    10d
+    8s
+    5c
+    8d
+    7h
+     
+    User: 
+    Preflop Hand: 
+    9d Ac 
+    Hand Strength: 0.3629
+    
+    money: 661
+     
+    Delta
+    Preflop Hand: 
+    Kd Ad 
+    Hand Strength: 0.36
+    Radom Int: 92
+    Bet: 0
+    Money: 1127
+    Pot size: 462
+    
+    User: 892
+    8d 8s 9d 10d Ac 
+    New Hand
+    
+    Dealer: User
+     
+    Delta
+    Preflop Hand: 
+    9c As Distance from Last to Act: 6
+    Bet: -1
+    Money: 1358
+    Pot size: 60
+     
+    Echo
+    Preflop Hand: 
+    10s Js Distance from Last to Act: 5
+    Bet: 40
+    Money: 221
+    Pot size: 100
+     
+    Golf
+    Preflop Hand: 
+    6d Ks Distance from Last to Act: 4
+    Bet: -1
+    Money: 50
+    Pot size: 100
+     
+    Hotel
+    Preflop Hand: 
+    6c Jc Distance from Last to Act: 3
+    Bet: -1
+    Money: 617
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    10h Ah 
+    money: 892
+     
+    Alpha
+    Preflop Hand: 
+    2h 9d Distance from Last to Act: 1
+    Bet: -1
+    Money: 166
+    Pot size: 140
+     
+    Bravo
+    Preflop Hand: 
+    5h Qs Distance from Last to Act: 0
+    Bet: -1
+    Money: 196
+    Pot size: 140
+    ======== FLOP ========
+    9s
+    6s
+    8h
+     
+    Echo
+    Preflop Hand: 
+    10s Js 
+    Hand Strength: 0.6306
+    Radom Int: 12
+    Bet: 0
+    Money: 221
+    Pot size: 140
+     
+    User: 
+    Preflop Hand: 
+    10h Ah 
+    Hand Strength: 0.491
+    
+    money: 852
+    ======== TURN ========
+    9s
+    6s
+    8h
+    3s
+     
+    Echo
+    Preflop Hand: 
+    10s Js 
+    Hand Strength: 0.9229
+    Radom Int: 40
+    Highest Bet: 0
+    Bet: 83
+    Money: 138
+    Pot size: 223
+     
+    User: 
+    Preflop Hand: 
+    10h Ah 
+    Hand Strength: 0.3174
+    
+    money: 852
+    ======== RIVER ========
+    9s
+    6s
+    8h
+    3s
+    6h
+     
+    Echo
+    Preflop Hand: 
+    10s Js 
+    Hand Strength: 0.8738
+    Radom Int: 39
+    Highest Bet: 0
+    Bet: 153
+    Money: 0
+    Pot size: 444
+     
+    User: 
+    Preflop Hand: 
+    10h Ah 
+    Hand Strength: 0.2983
+    
+    money: 769
+    
+    Echo: 582
+    3s 6s 9s 10s Js 
+    New Hand
+    
+    Dealer: Alpha
+     
+    Echo
+    Preflop Hand: 
+    9c Jh Distance from Last to Act: 6
+    Bet: -1
+    Money: 582
+    Pot size: 60
+     
+    Golf
+    Preflop Hand: 
+    8c Qc Distance from Last to Act: 5
+    Bet: -1
+    Money: 50
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    4c Qh Distance from Last to Act: 4
+    Bet: -1
+    Money: 617
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    9d 10c 
+    money: 631
+     
+    Alpha
+    Preflop Hand: 
+    4h 7d Distance from Last to Act: 2
+    Bet: -1
+    Money: 166
+    Pot size: 100
+     
+    Bravo
+    Preflop Hand: 
+    8h Js Distance from Last to Act: 1
+    Bet: -1
+    Money: 176
+    Pot size: 100
+     
+    Delta
+    Preflop Hand: 
+    5c 10d Distance from Last to Act: 0
+    Bet: -1
+    Money: 1318
+    Pot size: 100
+    ======== FLOP ========
+    7s
+    5h
+    Qd
+    ======== TURN ========
+    7s
+    5h
+    Qd
+    Kc
+    ======== RIVER ========
+    7s
+    5h
+    Qd
+    Kc
+    Qs
+    
+    User: 691
+    9d 10c Qd Qs Kc 
+    New Hand
+    
+    Dealer: Bravo
+     
+    Golf
+    Preflop Hand: 
+    6s 6h Distance from Last to Act: 6
+    Bet: -1
+    Money: 50
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    4c Ks Distance from Last to Act: 5
+    Bet: -1
+    Money: 617
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    3d 3s 
+    money: 691
+     
+    Alpha
+    Preflop Hand: 
+    4s As Distance from Last to Act: 3
+    Bet: 40
+    Money: 126
+    Pot size: 140
+     
+    Bravo
+    Preflop Hand: 
+    3c 9h Distance from Last to Act: 2
+    Bet: -1
+    Money: 176
+    Pot size: 140
+     
+    Delta
+    Preflop Hand: 
+    5h 6c Distance from Last to Act: 1
+    Bet: -1
+    Money: 1298
+    Pot size: 140
+     
+    Echo
+    Preflop Hand: 
+    Jc Ad Distance from Last to Act: 0
+    Bet: 0
+    Money: 542
+    Pot size: 140
+    ======== FLOP ========
+    Jh
+    5s
+    4d
+     
+    Echo
+    Preflop Hand: 
+    Jc Ad 
+    Hand Strength: 0.6199
+    Radom Int: 64
+    Highest Bet: 0
+    Bet: 74
+    Money: 468
+    Pot size: 214
+     
+    User: 
+    Preflop Hand: 
+    3d 3s 
+    Hand Strength: 0.2419
+    
+    money: 651
+     
+    Alpha
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.3735
+    returnRatio: 1.8285891891891892
+    Rand Int: 74
+    Bet: 74
+    Money: 52
+    Pot size: 362
+    ======== TURN ========
+    Jh
+    5s
+    4d
+    2c
+     
+    Echo
+    Preflop Hand: 
+    Jc Ad 
+    Hand Strength: 0.6914
+    Radom Int: 75
+    Highest Bet: 0
+    Bet: 182
+    Money: 286
+    Pot size: 544
+     
+    User: 
+    Preflop Hand: 
+    3d 3s 
+    Hand Strength: 0.3517
+    
+    money: 577
+     
+    Alpha
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.3945
+    returnRatio: 1.9282527472527473
+    Rand Int: 14
+    Bet: 182
+    Money: 0
+    Pot size: 778
+    ======== RIVER ========
+    Jh
+    5s
+    4d
+    2c
+    Ah
+     
+    Echo
+    Preflop Hand: 
+    Jc Ad 
+    Hand Strength: 0.7338
+    Radom Int: 50
+    Highest Bet: 0
+    Bet: 483
+    Money: 0
+    Pot size: 1064
+     
+    User: 
+    Preflop Hand: 
+    3d 3s 
+    Hand Strength: 1.0
+    
+    money: 395
+    
+    User: 1459
+    2c 3d 4d 5s Ah 
+    New Hand
+    
+    Dealer: Golf
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ad Distance from Last to Act: 4
+    Bet: 40
+    Money: 136
+    Pot size: 100
+     
+    Delta
+    Preflop Hand: 
+    5h As Distance from Last to Act: 3
+    Bet: -1
+    Money: 1298
+    Pot size: 100
+     
+    Golf
+    Preflop Hand: 
+    3h 8s Distance from Last to Act: 2
+    Bet: -1
+    Money: 50
+    Pot size: 100
+     
+    Hotel
+    Preflop Hand: 
+    2c 7s Distance from Last to Act: 1
+    Bet: -1
+    Money: 597
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    4h 5c 
+    money: 1419
+    ======== FLOP ========
+    9d
+    Ks
+    9h
+     
+    User: 
+    Preflop Hand: 
+    4h 5c 
+    Hand Strength: 0.3266
+    
+    money: 1419
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ad 
+    Hand Strength: 0.5195
+    Radom Int: 50
+    Bet: 0
+    Money: 136
+    Pot size: 100
+    ======== TURN ========
+    9d
+    Ks
+    9h
+    6s
+     
+    User: 
+    Preflop Hand: 
+    4h 5c 
+    Hand Strength: 0.2568
+    
+    money: 1419
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ad 
+    Hand Strength: 0.4264
+    Radom Int: 97
+    Bet: 40
+    Money: 96
+    Pot size: 140
+     
+    User: 
+    Preflop Hand: 
+    4h 5c 
+    Hand Strength: 0.2633
+    
+    money: 1419
+    ======== RIVER ========
+    9d
+    Ks
+    9h
+    6s
+    Jd
+     
+    User: 
+    Preflop Hand: 
+    4h 5c 
+    Hand Strength: 0.1836
+    
+    money: 1379
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ad 
+    Hand Strength: 0.3252
+    Radom Int: 87
+    Bet: 0
+    Money: 96
+    Pot size: 180
+    
+    Bravo: 276
+    9h 9d Qc Ks Ad 
+    New Hand
+    
+    Dealer: Hotel
+     
+    Delta
+    Preflop Hand: 
+    4d 9d Distance from Last to Act: 4
+    Bet: -1
+    Money: 1298
+    Pot size: 60
+     
+    Golf
+    Preflop Hand: 
+    7h 10h Distance from Last to Act: 3
+    Bet: -1
+    Money: 50
+    Pot size: 60
+     
+    Hotel
+    Preflop Hand: 
+    7s Jh Distance from Last to Act: 2
+    Bet: -1
+    Money: 597
+    Pot size: 60
+     
+    User: 
+    Preflop Hand: 
+    4s As 
+    money: 1359
+     
+    Bravo
+    Preflop Hand: 
+    9s Ah Distance from Last to Act: 0
+    Bet: 0
+    Money: 236
+    Pot size: 80
+    ======== FLOP ========
+    5c
+    3d
+    4c
+     
+    User: 
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.6119
+    
+    money: 1339
+     
+    Bravo
+    Preflop Hand: 
+    9s Ah 
+    Hand Strength: 0.5201
+    Radom Int: 17
+    Bet: 0
+    Money: 236
+    Pot size: 80
+    ======== TURN ========
+    5c
+    3d
+    4c
+    7c
+     
+    User: 
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.4516
+    
+    money: 1339
+     
+    Bravo
+    Preflop Hand: 
+    9s Ah 
+    Hand Strength: 0.364
+    Radom Int: 96
+    Bet: 40
+    Money: 196
+    Pot size: 120
+     
+    User: 
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.4602
+    
+    money: 1339
+    ======== RIVER ========
+    5c
+    3d
+    4c
+    7c
+    5h
+     
+    User: 
+    Preflop Hand: 
+    4s As 
+    Hand Strength: 0.4372
+    
+    money: 1299
+     
+    Bravo
+    Preflop Hand: 
+    9s Ah 
+    Hand Strength: 0.334
+    Radom Int: 79
+    Bet: 0
+    Money: 196
+    Pot size: 160
+    
+    User: 1459
+    4s 4c 5c 5h As 
+    New Hand
+    
+    Dealer: User
+     
+    Golf
+    Preflop Hand: 
+    10s Qs Distance from Last to Act: 4
+    Bet: 40
+    Money: 10
+    Pot size: 100
+     
+    Hotel
+    Preflop Hand: 
+    5c Qc Distance from Last to Act: 3
+    Bet: -1
+    Money: 597
+    Pot size: 100
+     
+    User: 
+    Preflop Hand: 
+    8c Jh 
+    money: 1459
+     
+    Bravo
+    Preflop Hand: 
+    10c As Distance from Last to Act: 1
+    Bet: 20
+    Money: 156
+    Pot size: 160
+     
+    Delta
+    Preflop Hand: 
+    4s 8s Distance from Last to Act: 0
+    Bet: -1
+    Money: 1258
+    Pot size: 160
+    ======== FLOP ========
+    2d
+    9c
+    6d
+     
+    Bravo
+    Preflop Hand: 
+    10c As 
+    Hand Strength: 0.2465
+    Radom Int: 89
+    Bet: 0
+    Money: 156
+    Pot size: 160
+     
+    Golf
+    Preflop Hand: 
+    10s Qs 
+    Hand Strength: 0.1836
+    Radom Int: 93
+    Bet: 0
+    Money: 10
+    Pot size: 160
+     
+    User: 
+    Preflop Hand: 
+    8c Jh 
+    Hand Strength: 0.1492
+    
+    money: 1419
+    ======== TURN ========
+    2d
+    9c
+    6d
+    5d
+     
+    Bravo
+    Preflop Hand: 
+    10c As 
+    Hand Strength: 0.1159
+    Radom Int: 24
+    Bet: 0
+    Money: 156
+    Pot size: 160
+     
+    Golf
+    Preflop Hand: 
+    10s Qs 
+    Hand Strength: 0.0639
+    Radom Int: 16
+    Bet: 0
+    Money: 10
+    Pot size: 160
+     
+    User: 
+    Preflop Hand: 
+    8c Jh 
+    Hand Strength: 0.0963
+    
+    money: 1419
+    ======== RIVER ========
+    2d
+    9c
+    6d
+    5d
+    7d
+     
+    Bravo
+    Preflop Hand: 
+    10c As 
+    Hand Strength: 0.0174
+    Radom Int: 67
+    Bet: 0
+    Money: 156
+    Pot size: 160
+     
+    Golf
+    Preflop Hand: 
+    10s Qs 
+    Hand Strength: 9.0E-4
+    Radom Int: 7
+    Bet: 0
+    Money: 10
+    Pot size: 160
+     
+    User: 
+    Preflop Hand: 
+    8c Jh 
+    Hand Strength: 0.489
+    
+    money: 1419
+    
+    User: 1579
+    5d 6d 7d 8c 9c 
+    New Hand
+    
+    Dealer: Bravo
+     
+    Hotel
+    Preflop Hand: 
+    9d Jd Distance from Last to Act: 4
+    Bet: 80
+    Money: 517
+    Pot size: 130
+     
+    User: 
+    Preflop Hand: 
+    7c 8d 
+    money: 1579
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ah Distance from Last to Act: 2
+    Bet: 80
+    Money: 76
+    Pot size: 290
+     
+    Delta
+    Preflop Hand: 
+    4s 8c Distance from Last to Act: 1
+    Bet: -1
+    Money: 1218
+    Pot size: 290
+    ======== FLOP ========
+    Kc
+    3s
+    Kd
+     
+    Hotel
+    Preflop Hand: 
+    9d Jd 
+    Hand Strength: 0.141
+    Radom Int: 30
+    Bet: 0
+    Money: 517
+    Pot size: 290
+     
+    User: 
+    Preflop Hand: 
+    7c 8d 
+    Hand Strength: 0.0791
+    
+    money: 1499
+     
+    Bravo
+    Preflop Hand: 
+    Qc Ah 
+    Hand Strength: 0.203
+    Radom Int: 83
+    Highest Bet: 0
+    Bet: 130
+    Money: 0
+    Pot size: 366
+     
+    Hotel
+    Preflop Hand: 
+    9d Jd 
+    Hand Strength: 0.1393
+    returnRatio: 0.8182815789473684
+    Rand Int: 84
+    Bet: -1
+    Money: 517
+    Pot size: 366
+     
+    User: 
+    Preflop Hand: 
+    7c 8d 
+    Hand Strength: 0.146
+    
+    money: 1499
+    ======== TURN ========
+    Kc
+    3s
+    Kd
+    As
+     
+    User: 
+    Preflop Hand: 
+    7c 8d 
+    Hand Strength: 0.1748
+    
+    money: 1423
+    ======== RIVER ========
+    Kc
+    3s
+    Kd
+    As
+    Ks
+     
+    User: 
+    Preflop Hand: 
+    7c 8d 
+    Hand Strength: 0.127
+    
+    money: 1423
+    
+    Golf: 25
+    Ks Kc Kd As Ac 
+    New Hand
+    
+    Dealer: Delta
+     
+    User: 
+    Preflop Hand: 
+    2s Qc 
+    money: 1423
+    
+     ----jGRASP: operation complete.
+    
