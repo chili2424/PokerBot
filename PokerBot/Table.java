@@ -22,6 +22,8 @@ public class Table
    private final int MAX_LENGTH = 10;
    private int numRaises;
    private int lastRaiser = -1;
+   private int sB;
+   private int bB;
 
 /**
 *Initializes players and small/big blind amounts.
@@ -30,11 +32,11 @@ public class Table
 *@param sB Amount of initial small blind.
 *@param bB Amount of initial big blind.
 */
-   public Table(ArrayList<Player> p, int sB, int bB)
+   public Table(ArrayList<Player> p, int sBlind, int bBlind)
    {
       players = p;
-      smallBlind = sB;
-      bigBlind = highestBet = highestRaise = bB;
+      smallBlind = sBlind;
+      bigBlind = highestRaise = bBlind;
    
       deck = new Deck();
       dealer = 0;
@@ -258,7 +260,7 @@ public class Table
    
       for(Player p : players)
       {
-         p.addToPotCont(p.getMoneyIn());   
+         p.addToPotCont(p.getMoneyIn());  
          p.setMoneyIn(0);
          p.addToAllCards(c1);
          p.addToAllCards(c2);
@@ -287,7 +289,7 @@ public class Table
    
       for(Player p : players)
       {
-         p.addToPotCont(p.getMoneyIn());   
+         p.addToPotCont(p.getMoneyIn()); 
          p.setMoneyIn(0);
          p.addToAllCards(c1);
          findBestHand(p);
@@ -312,6 +314,7 @@ public class Table
       pot = 0;
       for(Player p : players)
       {
+         System.out.println("Resetting table");
          p.setMoneyIn(0);
          p.clearCards();
          p.setActive(true);
@@ -319,7 +322,7 @@ public class Table
       moveDealer();
       activeCount = players.size();
       tableCards.clear();
-      highestBet = highestRaise = bigBlind;
+      highestRaise = bigBlind;
       numRaises = 0;
       lastRaiser = -1;
    }
@@ -329,7 +332,6 @@ public class Table
 */
    public void handleBlinds()
    {  
-      int sB, bB;
       if(dealer == players.size() - 1)    
       {
          pot += players.get(sB = 0).takeMoney(smallBlind);
@@ -425,30 +427,36 @@ public class Table
 *
 *@return True if turn is over.
 */
-   public boolean isTurnOver()
+   public boolean isTurnOver(int initActive, int numPlayed)
    {
-      boolean over = true;
-      int count = 0;
+      int canPlay = 0, shouldPlay = 0, maxMoneyIn = 0;
       
       for(Player p : players)
       {
-         if(p.isActive() && p.getMoneyIn() != highestBet && p.getMoney() != 0)
-         {
-            System.out.println("Over is false-" + p.getName() + " is active, his money in is " + p.getMoneyIn() + " and the highest bet is" + highestBet + " his money is " + p.getMoney());
-            over = false;
-         }   
-         if(p.isActive() && p.getMoney() > 0)
-            count++;
+         if(p.isActive() && p.getMoneyIn() > maxMoneyIn)
+            maxMoneyIn = p.getMoneyIn();
       }
       
-      if(count <= 1)
-         return true;
+      for(Player p : players)
+      {
+         if(p.isActive() && p.getMoneyIn() < maxMoneyIn && p.getMoney() != 0)
+         {
+            System.out.println(p.getName() + "'s moneyIn is " + p.getMoneyIn() + "and maxMoney is " + maxMoneyIn);
+            shouldPlay++;
+         }
+            
+         if(p.isActive() && p.getMoney() > 0)
+            canPlay++;
+      }
+      System.out.println("Should play: " + shouldPlay + " Can Play: " + canPlay);
+      if(shouldPlay > 0 || numPlayed < initActive && canPlay > 1)
+         return false;
       else
-         return over;
+         return true;
    }
 
 /**
-*Checks if hand is over before the river has been dealt, by checking each Player's active status.
+*Checks if hand is over before more cards are dealt, by checking each Player's active status.
 *
 *@return True if more than one player is still Active.
 */
@@ -484,7 +492,9 @@ public class Table
    public void handleDecision(int decision)
    {  
    
+      int prevMax = maxMoneyIn();
       String text = players.get(curPlayer).getName();
+      boolean fixSB = false, fixBB = false;
       if(decision < 0)
       {
          players.get(curPlayer).setActive(false);
@@ -494,10 +504,31 @@ public class Table
       else if(decision > 0)
       {
       //SERIOUS ERRORS HERE
+      
+         if(curPlayer == sB && players.get(curPlayer).getMoneyIn() == smallBlind)
+            fixSB = true;
+         else if(curPlayer == bB && players.get(curPlayer).getMoneyIn() == bigBlind && tableCards.size() == 0)
+            fixBB = true;
+            
          decision = players.get(curPlayer).takeMoney(decision);
+            
+         if(fixSB && decision > prevMax && players.get(curPlayer).getMoney() != 0)
+         {
+            players.get(curPlayer).addMoney(smallBlind);
+            players.get(curPlayer).lowerMoneyIn(smallBlind);
+            pot -= smallBlind;
+         }
+         else if(fixBB && decision > prevMax && players.get(curPlayer).getMoney() != 0)
+         {
+            players.get(curPlayer).addMoney(bigBlind);
+            players.get(curPlayer).lowerMoneyIn(bigBlind);
+            pot -= bigBlind;
+         }
+         
+         System.out.println("DECISION: " + decision);
       
       
-         if(players.get(curPlayer).getMoneyIn() == highestBet)
+         if(players.get(curPlayer).getMoneyIn() == prevMax && players.get(curPlayer).getMoney() != 0)
             text += " called.";
          else if(players.get(curPlayer).getMoneyIn() > highestBet && players.get(curPlayer).getMoney() > 0)
          {
@@ -513,10 +544,13 @@ public class Table
             players.get(curPlayer).incrTimesBet();
             players.get(curPlayer).setAverageBet(decision);
          
-            text += " raised by " + Integer.toString(decision - highestBet) + ".";
+            text += " raised by " + Integer.toString(decision - prevMax) + ".";
          }
          else
+         {
+            incrNumRaises();
             text += " went all in!";
+         }
       
          pot += decision;
       
@@ -528,10 +562,11 @@ public class Table
          
             
                            
-         if(players.get(curPlayer).getMoneyIn() > highestBet)
+         if(decision > highestBet)
          {
             highestRaise = decision - highestBet;
             highestBet = decision;
+            System.out.println("Highest bet is now: " + highestBet);
          }
           
           
@@ -739,6 +774,7 @@ public class Table
       for(Player p: players)
       {
          p.addToPotCont(p.getMoneyIn());   
+         System.out.println("Handle Winners");
          p.setMoneyIn(0);
       }
    
@@ -887,6 +923,18 @@ public class Table
    public int incrNumRaises()
    {
       return numRaises++;
+   }
+   
+   public int maxMoneyIn(){
+      int maxMoneyIn = 0;
+      
+      for(Player p : players)
+      {
+         if(p.isActive() && p.getMoneyIn() > maxMoneyIn)
+            maxMoneyIn = p.getMoneyIn();
+      }
+      
+      return maxMoneyIn;
    }
    
 }

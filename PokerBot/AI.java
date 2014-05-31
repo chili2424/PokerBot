@@ -32,15 +32,16 @@ public class AI extends Player
       Data data = new Data();
       double returnRatio, potOdds, highMult, lowMult, critPercent, EV;
       int randInt, toCall;
-      toCall = t.getHighestBet() - super.getMoneyIn();
+      toCall = t.maxMoneyIn() - super.getMoneyIn();
+      System.out.println("toCall is: " + toCall);
       int averageBet = t.getBigBlind();
       double raiseAdjustment = 2.0 / (1 + Math.pow(e, -0.2 * Math.pow(t.getNumRaises(),1.625))) - 1;
       
-       if(t.getLastRaiser() == 0)
-         {
-            averageBet = t.getPlayer(0).getAverageBet();
-            System.out.println("LAST RAISER, Average Bet of User: " + averageBet);
-         }
+      if(t.getLastRaiser() == 0)
+      {
+         averageBet = t.getPlayer(0).getAverageBet();
+         System.out.println("LAST RAISER, Average Bet of User: " + averageBet);
+      }
    
       if(t.numTableCards() == 0)
       {
@@ -52,29 +53,34 @@ public class AI extends Player
          handStrength = EV;
          
          System.out.println("\nRaise adjustment: " + raiseAdjustment);
-  
+      
          
          System.out.println("EV: " + EV + " toCall / AverageBet * .01 = " + (toCall / averageBet * .01));
          
          
          if(t.getNumRaises() == 0 && EV >= .2)
          {
+            System.out.println("1");
             return 3 * t.getBigBlind();
          }
          else if(EV - toCall / averageBet * .01 - raiseAdjustment >= .2)
          {
+            System.out.println("2");
             return 3 * toCall;
          }
          else if(EV - toCall / averageBet * .01 - raiseAdjustment >= 0) //might be problematic for HUGE raises/all-ins
          {
+            System.out.println("3");
             return toCall;
          }
          else if(EV < 0 && toCall == 0)
          {
+            System.out.println("4");
             return toCall;
          }
          else
          {
+            System.out.println("5");
             return FOLD;
          }
       }
@@ -93,6 +99,7 @@ public class AI extends Player
          {
             if(randInt > 10)
             {
+               System.out.println("6");
                return raiseAmount(handStrength, t, toCall);
             }
          }
@@ -100,12 +107,16 @@ public class AI extends Player
          else if(returnRatio > 3.0)
          {
             if(randInt > 30){
+            
+               System.out.println("7");
                return raiseAmount(handStrength, t, toCall);
             }
          }
                
          else if(returnRatio > 2.0)
          {
+            
+            System.out.println("8");      
             if(randInt > 80){
                return raiseAmount(handStrength, t, toCall);
             }
@@ -114,16 +125,21 @@ public class AI extends Player
          else if(returnRatio > 1)
          {
             if(randInt > 95){
+               System.out.println("9");
                return raiseAmount(handStrength, t, toCall);
             }
          }
                      
          else if(returnRatio <= 1)
          {
-            if(randInt > 10)
+            if(randInt > 10){
+               
+               System.out.println("10");
                return FOLD;
+            }
          }
       
+         System.out.println("11");
          return toCall;
       }  
       else 
@@ -136,19 +152,27 @@ public class AI extends Player
       
          if(handStrength >= critPercent * highMult)
          {
-            if(randInt > 10)
-               return raiseAmount(handStrength, t, toCall);          
+            if(randInt > 10){
+               System.out.println("12");
+               return raiseAmount(handStrength, t, toCall); 
+            }         
          }
          else if(handStrength >= critPercent * lowMult)
          {
-            if(randInt > 65)
-               return raiseAmount(handStrength, t, toCall);         
+            if(randInt > 65){
+               System.out.println("13");
+               return raiseAmount(handStrength, t, toCall);
+            }         
          }
          else
          {
-            if(randInt > 95)
+            if(randInt > 95){
+               
+               System.out.println("14");
                return raiseAmount(handStrength, t, toCall);
+            }
          }
+         System.out.println("15");
          return 0;     
       }
    }

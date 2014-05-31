@@ -15,7 +15,7 @@ public class Game
    public static void main(String[] args)
    {
       final int RAISE_BLINDS = 10;
-      int bigBlind = 20, smallBlind = 10, initMoney = 2000, handsPlayed = 1;
+      int bigBlind = 20, smallBlind = 10, initMoney = 200, handsPlayed = 1;
       Table t;
       boolean display = true;
       ArrayList<Player> players;
@@ -99,7 +99,7 @@ public class Game
       int initActive = t.activeCount();
       Data data = new Data();
       
-      while(t.activeCount() > 1 && (numPlayed < initActive || !t.isTurnOver()))
+      while(t.activeCount() > 1 && !t.isTurnOver(initActive, numPlayed))
       {   
          StdDraw.show(1000);
          

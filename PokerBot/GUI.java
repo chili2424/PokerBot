@@ -127,7 +127,7 @@ public class GUI
             
             StdDraw.setPenColor(new Color(0,0,0));
             if(t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn() > 0)
-               StdDraw.text(50,5,"Call: $" + (t.getHighestBet() - t.getPlayer(t.getCurPlayer()).getMoneyIn()));
+               StdDraw.text(50,5,"Call: $" + (t.maxMoneyIn() - t.getPlayer(t.getCurPlayer()).getMoneyIn()));
             else
                StdDraw.text(50,5,"Check");
          }

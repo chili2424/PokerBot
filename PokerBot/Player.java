@@ -167,6 +167,7 @@ public class Player
          money -= m;
       }
       moneyIn += paid;
+      System.out.println(paid + " taken, moneyIn now " + moneyIn);
       return paid;
    }
    
@@ -268,5 +269,10 @@ public class Player
    public void setPotCont(int n)
    {
       potContribution = n;
+   }
+   
+   public void lowerMoneyIn(int amount)
+   {
+      moneyIn -= amount;
    }
 }
